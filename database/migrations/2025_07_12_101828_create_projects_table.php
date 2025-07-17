@@ -19,10 +19,10 @@ return new class extends Migration
             $table->string('witel');
             $table->string('sto');
             $table->string('site');
-            $table->string('priority');
+            $table->string('priority')->nullable();
             $table->string('catuan_id');
             $table->string('ihld');
-            $table->date('plan_survey');
+            $table->date('plan_survey')->nullable();
             $table->date('realisasi_survey')->nullable();
             $table->date('plan_delivery')->nullable();
             $table->date('realisasi_delivery')->nullable();

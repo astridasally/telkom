@@ -35,7 +35,6 @@
                 </select>
             </div>
 
-
             <div class="form-group">
                 <label>STO</label>
                 <input type="text" name="sto" required>
@@ -46,6 +45,7 @@
                 <input type="text" name="site" required>
             </div>
 
+            @if(auth()->user()->role === 'mitra')
             <div class="form-group">
                 <label>Priority</label>
                 <select name="priority">
@@ -64,7 +64,6 @@
             <div class="form-group">
                 <label>Realisasi Survey</label>
                 <input type="date" name="realisasi_survey" />
-
             </div>
 
             <div class="form-group">
@@ -150,7 +149,7 @@
                 <input type="file" name="bukti_drop" accept="application/pdf,image/*">
                 <span class="error text-danger" id="error_bukti_drop"></span>
             </div>
-
+            @endif
 
             <div class="form-group">
                 <label>Catuan ID</label>
@@ -162,6 +161,60 @@
                 <input type="text" name="ihld" required />
             </div>
         </div>
+
+            @if (Auth::user()->role === 'vendor')
+            <div class="form-group">
+                <label>Priority TA</label>
+                <select name="drop_data">
+                    <option value="">-- Pilih --</option>
+                    <option value="P1">P1</option>
+                    <option value="P2">P2</option>
+                    <option value="P3">P3</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label>Dependensi</label>
+                <select name="drop_data">
+                    <option value="">-- Pilih --</option>
+                    <option value="Main">Main</option>
+                    <option value="Dependence">Dependence</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label>Status OSP</label>
+                <select name="drop_data">
+                    <option value="">-- Pilih --</option>
+                    <option value="Finish_Instalasi">Finish Instalasi</option>
+                    <option value="Proses_Instalasi">Proses Instalasi</option>
+                    <option value="Persiapan">Persiapan</option>
+                    <option value="Drop">Drop</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label>Skenario Uplink</label>
+                <select name="drop_data">
+                    <option value="">-- Pilih --</option>
+                    <option value="L2S">L2S</option>
+                    <option value="OTN">OTN</option>
+                    <option value="ONT">ONT</option>
+                    <option value="Direct Core">Direct Core</option>
+                    <option value="Re_engineering">Re-engineering</option>
+                    <option value="SFP Bidi">Re-SFP Bidi</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label>Status Uplink</label>
+                <select name="drop_data">
+                    <option value="">-- Pilih --</option>
+                    <option value="Not Ready">Not Ready</option>
+                    <option value="Ready">Ready</option>
+                </select>
+            </div>
+            @endif
 
         <div style="margin-top: 20px;">
             <button type="submit" class="update-btn">Simpan</button>
