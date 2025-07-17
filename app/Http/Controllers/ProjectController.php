@@ -22,10 +22,10 @@ class ProjectController extends Controller
             'witel' => 'required',
             'sto' => 'required',
             'site' => 'required',
-            'priority' => 'required',
+            'priority' => 'nullable',
             'catuan_id' => 'nullable',
             'ihld' => 'nullable',
-            'plan_survey' => 'required|date',
+            'plan_survey' => 'nullable|date',
             'realisasi_survey' => 'nullable|date|after_or_equal:plan_survey',
             'plan_delivery' => 'nullable|date|after_or_equal:realisasi_survey',
             'realisasi_delivery' => 'nullable|date|after_or_equal:plan_delivery',
@@ -34,7 +34,7 @@ class ProjectController extends Controller
             'plan_integrasi' => 'nullable|date|after_or_equal:realisasi_instalasi',
             'realisasi_integrasi' => 'nullable|date|after_or_equal:plan_integrasi',
 
-            'drop_data' => 'required|in:Yes,No,Relokasi',
+            //'drop_data' => 'required|in:Yes,No,Relokasi',
             'bukti_drop' => 'required_if:drop_data,Yes|nullable|mimes:pdf,jpg,jpeg,png|max:5200', //5mb
             'relok_regional' => 'required_if:drop_data,Relokasi',
             'relok_witel'    => 'required_if:drop_data,Relokasi',
@@ -103,7 +103,7 @@ class ProjectController extends Controller
             'plan_integrasi' => 'nullable|date|after_or_equal:realisasi_instalasi',
             'realisasi_integrasi' => 'nullable|date|after_or_equal:plan_integrasi',
 
-            'drop_data' => 'required|in:Yes,No,Relokasi',
+            //'drop_data' => 'required|in:Yes,No,Relokasi',
             'bukti_drop' => 'required_if:drop_data,Yes|nullable|mimes:pdf,jpg,jpeg,png|max:5200',
             'relok_regional' => 'required_if:drop_data,Relokasi',
             'relok_witel'    => 'required_if:drop_data,Relokasi',
@@ -148,7 +148,7 @@ class ProjectController extends Controller
             'plan_integrasi' => 'nullable|date|after_or_equal:realisasi_instalasi',
             'realisasi_integrasi' => 'nullable|date|after_or_equal:plan_integrasi',
 
-            'drop_data' => 'required|in:Yes,No,Relokasi',
+            //'drop_data' => 'required|in:Yes,No,Relokasi',
             'bukti_drop' => 'required_if:drop_data,Yes|nullable|mimes:pdf,jpg,jpeg,png|max:5200',
             'relok_regional' => 'required_if:drop_data,Relokasi',
             'relok_witel'    => 'required_if:drop_data,Relokasi',
