@@ -125,6 +125,7 @@ class ProjectController extends Controller
 
         return redirect()->route('project_report')->with('success', 'Project berhasil diperbarui.');
     }
+    
     public function store_project_update_admin(Request $request, $id)
     {
         $project = Project::findOrFail($id);

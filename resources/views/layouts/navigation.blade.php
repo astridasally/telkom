@@ -10,10 +10,20 @@
                     </a>
                 </div>
 
-                <!-- Navigation Links -->
+                <!-- Navigation Links for Dashboard-->
                 <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
                     <x-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
                         {{ __('Dashboard') }}
+                    </x-nav-link>
+
+                @if (Auth::user()->role === 'admin')
+                    <x-nav-link :href="route('project_create')" :active="request()->routeIs('project_create')">
+                        {{ __('Form') }}
+                    </x-nav-link>
+                @endif
+
+                    <x-nav-link :href="route('project_report')" :active="request()->routeIs('project_report')">
+                        {{ __('Report') }}
                     </x-nav-link>
                 </div>
             </div>
