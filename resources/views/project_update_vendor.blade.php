@@ -3,7 +3,7 @@
     <h1>UPDATE</h1>
     <br>
     <form method="POST"
-        action="{{ auth()->user()->role == 'admin' ? route('project_store_admin', $project->id) : 
+        action="{{ auth()->user()->role == 'vendor' ? route('project_store_vendor', $project->id) : 
         route('project_store', $project->id) }}" enctype="multipart/form-data">
         @csrf
         @method('PATCH')
@@ -158,7 +158,7 @@
                 <label>IHLD</label>
                 <input type="text" name="ihld" required value="{{ $project->ihld }}" />
             </div>
-            @if (auth()->user()->role == 'admin')
+            @if (auth()->user()->role == 'vendor')
             <div class="form-group">
                 <label>Priority TA</label>
                 <select name="priority_ta">

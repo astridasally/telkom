@@ -8,7 +8,7 @@
         <thead>
             <tr>
                 <th rowspan="2">No</th>
-                @if(auth()->user()->role === 'admin')
+                @if(auth()->user()->role === 'vendor')
                 <th rowspan="2">Mitra</th>
                 @endif
                 <th rowspan="2">Regional</th>
@@ -23,7 +23,7 @@
                 <th rowspan="2">Catuan ID</th>
                 <th rowspan="2">IHLD</th>
                 <th rowspan="2">Remark</th>
-                @if(auth()->user()->role === 'admin')
+                @if(auth()->user()->role === 'vendor')
                 <th rowspan="2">Priority TA</th>
                 <th rowspan="2">Status OSP</th>
                 <th rowspan="2">Dependensi</th>
@@ -49,7 +49,7 @@
             @foreach($projects as $project)
             <tr>
                 <td scope="row">{{ $no++ }}</td>
-                @if(auth()->user()->role === 'admin')
+                @if(auth()->user()->role === 'vendor')
                 <td rowspan="2"><b> {{ $project->user->name }}</b></td>
                 @endif
                 <td scope="row">{{ $project->regional }}</td>
@@ -74,7 +74,7 @@
                 <td scope="row">{{ $project->catuan_id }}</td>
                 <td scope="row">{{ $project->ihld }}</td>
                 <td scope="row">{{ $project->remark }}</td>
-                @if(auth()->user()->role === 'admin')
+                @if(auth()->user()->role === 'vendor')
                 <td scope="row">{{ $project->priority_ta }}</td>
                 <td scope="row">{{ $project->status_osp }}</td>
                 <td scope="row">{{ $project->dependensi }}</td>
