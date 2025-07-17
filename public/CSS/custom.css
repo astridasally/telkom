@@ -1,0 +1,16 @@
+table, th, td {
+    border: 1px solid #000; /* garis hitam */
+    border-collapse: collapse; /* gabungkan border */
+
+}
+
+td {
+    padding: 8px;
+    text-align: center;
+   font-size: 10px;
+}
+thead tr {
+    background-color: #557da8; /* biru */
+    color: white; /* warna teks putih biar kontras */
+    font-size: 12px;
+}
