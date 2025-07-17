@@ -8,9 +8,7 @@
         <thead>
             <tr>
                 <th rowspan="2">No</th>
-                @if(auth()->user()->role === 'vendor')
-                <th rowspan="2">Mitra</th>
-                @endif
+                @if(auth()->user()->role === 'mitra')
                 <th rowspan="2">Regional</th>
                 <th rowspan="2">Witel</th>
                 <th rowspan="2">Priority</th>
@@ -23,6 +21,8 @@
                 <th rowspan="2">Catuan ID</th>
                 <th rowspan="2">IHLD</th>
                 <th rowspan="2">Remark</th>
+                @endif
+                
                 @if(auth()->user()->role === 'vendor')
                 <th rowspan="2">Priority TA</th>
                 <th rowspan="2">Status OSP</th>
@@ -82,7 +82,7 @@
                 <td scope="row">{{ $project->status_uplink }}</td>
                 @endif
                 <td scope="row">
-                    <a href="{{ route('project_update', $project->id) }}">Edit</a>
+                    <a href="{{ route('project_update_vendor', $project->id) }}">Edit</a>
                 </td>
             </tr>
             @endforeach

@@ -20,7 +20,7 @@ Route::middleware('auth')->group(function () {
     Route::get('/form-update/{id}', [ProjectController::class, 'show_project'])->name('project_update');
     Route::patch('/form-update/{id}', [ProjectController::class, 'store_project_update'])->name('project_store');
 
-    Route::patch('/form-update/{id}', [ProjectController::class, 'store_project_update_vendor'])->name('project_store_vendor');
+    Route::patch('/form-update/{id}', [ProjectController::class, 'store_project_update_admin'])->name('project_store_admin');
 
 
 
