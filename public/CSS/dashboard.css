@@ -1,0 +1,254 @@
+.dashboard-wrapper {
+    display: flex;
+    flex-direction: row;
+    padding: 15px;
+    gap: 15px;
+    flex-grow: 1;
+    align-items: flex-start;
+}
+
+/* Graph Placeholder (Left Column) */
+.graph-placeholder {
+    flex: 1;
+    background-color: #ffffff;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+}
+
+.graph-header {
+    background-color: #3f6096; /* DITUKAR: Sekarang warna biru yang lebih gelap */
+    color: #ffffff;
+    padding: 5px; /* Dikembalikan ke ukuran sebelumnya */
+    border-top-left-radius: 8px;
+    border-top-right-radius: 8px;
+    text-align: center;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.graph-header h2 {
+    margin: 0;
+    font-size: 18px; /* Dikembalikan ke ukuran sebelumnya */
+    color: #ffffff;
+    font-weight: 700;
+}
+
+.graph-content {
+    padding: 200px; /* Dikembalikan ke ukuran sebelumnya */
+    text-align: center;
+    color: #6b7280;
+    flex-grow: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 14px; /* Dikembalikan ke ukuran sebelumnya */
+}
+
+
+/* Main Container (Right Column) */
+.main-container {
+    padding: 0px;
+    flex: 1;
+    background-color: #e5e7eb;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    border-radius: 8px;
+    overflow: hidden;
+}
+
+.header-container-main {
+    background-color: #3f6096; /* DITUKAR: Sekarang warna biru yang lebih gelap */
+    color: #ffffff;
+    padding: 5px; /* Dikembalikan ke ukuran sebelumnya */
+    border-top-left-radius: 8px;
+    border-top-right-radius: 8px;
+    text-align: center;
+    margin-bottom: 0px;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.header-container-main .title {
+    margin: 0;
+    font-size: 18px; /* Dikembalikan ke ukuran sebelumnya */
+    color: #ffffff;
+    text-align: center;
+    font-weight: 700;
+}
+
+.dashboard-filters-row {
+    background-color: #ffffff;
+    padding: 10px 20px; /* Dikembalikan ke ukuran sebelumnya */
+    width: 100%;
+    max-width: none;
+    box-sizing: border-box;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 15px; /* Dikembalikan ke ukuran sebelumnya */
+    margin: 0 auto 20px auto; /* Dikembalikan ke ukuran sebelumnya */
+    border-bottom-left-radius: 8px;
+    border-bottom-right-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+}
+
+.filter-item {
+    flex-grow: 1;
+}
+
+.dashboard-filters-row select {
+    width: 100%;
+    padding: 2px 6px; /* Dikembalikan ke ukuran sebelumnya */
+    border-radius: 20px; /* Dikembalikan ke ukuran sebelumnya */
+    border: 1px solid #d1d5db;
+    font-size: 12px; /* Dikembalikan ke ukuran sebelumnya */
+    background-color: #f9fafb;
+    color: #374151;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    background-image: url('data:image/svg+xml;charset=US-ASCII,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22292.4%22%20height%3D%22292.4%22%20viewBox%3D%220%200%20292.4%20292.4%22%3E%3Cpath%20fill%3D%22%236b7280%22%20d%3D%22M287%2C197.915l-14.776-14.776L146.2%2C266.384L14.776%2C197.915L0%2C183.139l146.2%2C146.2l146.2-146.2L287%2C197.915z%22%2F%3E%3C%2Fsvg%3E');
+    background-repeat: no-repeat;
+    background-position: right 10px center; /* Dikembalikan ke ukuran sebelumnya */
+    background-size: 10px; /* Dikembalikan ke ukuran sebelumnya */
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.filter-apply-btn {
+    padding: 5px 8px; /* Dikembalikan ke ukuran sebelumnya */
+    background-color: #557da8; /* DITUKAR: Sekarang warna biru utama */
+    color: #ffffff;
+    border: none;
+    border-radius: 20px; /* Dikembalikan ke ukuran sebelumnya */
+    cursor: pointer;
+    font-size: 14px; /* Dikembalikan ke ukuran sebelumnya */
+    font-weight: 600;
+    transition: background-color 0.3s ease;
+}
+
+.filter-apply-btn:hover {
+    background-color: #7a9fd8;
+}
+
+/* Content Grid and Cards */
+.content-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    max-width: none;
+    width: 100%;
+    margin: 0px auto; /* antara drop ke atas */
+}
+
+.stage-section {
+    display: flex;
+    flex-direction: column;
+    border-radius: 10px; /* Dikembalikan ke ukuran sebelumnya */
+    overflow: hidden;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.05); /* Dikembalikan ke ukuran sebelumnya */
+    margin : 10px; margin-top: 0px;
+}
+
+.card-header-stage {
+    background-color: #557da8; /* DITUKAR: Sekarang warna biru utama */
+    color: #ffffff;
+    padding: 4px; /* Dikembalikan ke ukuran sebelumnya */
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+    text-align: center;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.card-header-stage h2 {
+    margin: 0;
+    font-size: 14px; /* Dikembalikan ke ukuran sebelumnya */
+    color: #ffffff;
+    text-align: center;
+    font-weight: 500;
+}
+
+.card-content-only {
+    background-color: #ffffff;
+    padding: 15px; /* Dikembalikan ke ukuran sebelumnya */
+    border-radius: 10px;
+    border-top-left-radius: 0;
+    border-top-right-radius: 0;
+    margin-top: -1px;
+    flex-grow: 1;
+}
+
+.box-wrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    flex: 1;
+    margin: 0 3px; /* Dikembalikan ke ukuran sebelumnya */
+}
+
+.box-group .box-wrapper:first-child,
+.box-group-three .box-wrapper:first-child {
+    margin-left: 0;
+}
+
+.box-group .box-wrapper:last-child,
+.box-group-three .box-wrapper:last-child {
+    margin-right: 0;
+}
+
+.box-label {
+    font-weight: bold;
+    color: #374151;
+    margin-bottom: 5px; /* Dikembalikan ke ukuran sebelumnya */
+    font-size: 12px; /* Dikembalikan ke ukuran sebelumnya */
+    text-align: center;
+    font-weight: 500;
+}
+
+.box {
+    background-color: #e5e7eb;
+    width: 100%;
+    padding: 0px;
+    text-align: center;
+    border-radius: 6px; /* Dikembalikan ke ukuran sebelumnya */
+    font-weight: bold;
+    color: #374151;
+    min-height: 40px; /* Dikembalikan ke ukuran sebelumnya */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 13px; /* Dikembalikan ke ukuran sebelumnya */
+    font-weight: 400;
+}
+
+.box-group {
+    display: flex;
+    justify-content: space-between;
+}
+
+.box-group-three {
+    display: flex;
+    justify-content: space-around;
+    gap: 8px; /* Dikembalikan ke ukuran sebelumnya */
+}
+
+.status-boxes-grid {
+    display: flex;
+    justify-content: center;
+    max-width: none;
+    width: 100%;
+    margin: 0 auto 20px auto; /* Dikembalikan ke ukuran sebelumnya */
+}
+
+.status-boxes-grid .stage-section {
+    width: 100%;
+}
+
+.filter-sidebar {
+    display: none;
+}

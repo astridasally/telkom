@@ -1,5 +1,5 @@
 <x-app-layout>
-<link rel="stylesheet" href="{{ asset('css/custom.css') }}">
+<link rel="stylesheet" href="{{ asset('css/report.css') }}">
 
     <h1>Mitra {{ Auth::user()->name }} </h1>
     <br>
@@ -9,6 +9,9 @@
     <thead class="border border-gray-400">
     <tr>
         <th rowspan="2">No</th>
+        @if(auth()->user()->role === 'admin'|| auth()->user()->role === 'admin')
+        <th rowspan="2">Mitra</th>
+        @endif
         <th rowspan="2">Regional</th>
         <th rowspan="2">Witel</th>
         <th rowspan="2">STO</th>
@@ -17,7 +20,6 @@
 
         @if(auth()->user()->role === 'mitra' || auth()->user()->role === 'admin')
             <th rowspan="2">Priority</th>
-    
             <th colspan="2" class="header-group">SURVEY</th>
             <th colspan="2" class="header-group">DELIVERY</th>
             <th colspan="2" class="header-group">INSTALASI</th>
@@ -60,7 +62,11 @@
     @foreach($projects as $project)
     <tr>
         <td>{{ $no++ }}</td>
-         <td>{{ $project->regional }}</td>
+        @if(auth()->user()->role === 'vendor' || auth()->user()->role === 'admin')
+        <td>{{ $project->user->name }}</td>
+        @endif
+        
+        <td>{{ $project->regional }}</td>
         <td>{{ $project->witel }}</td>
         <td>{{ $project->sto }}</td>
         <td>{{ $project->site }}</td>
