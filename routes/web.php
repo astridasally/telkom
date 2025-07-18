@@ -17,6 +17,10 @@ Route::middleware('auth')->group(function () {
     Route::post('/form', [ProjectController::class, 'store_projectForm'])->name('project_store');
     Route::get('/report',  [ProjectController::class, 'report'])->name('project_report');
 
+    Route::get('/formta',  [ProjectController::class, 'projectFormTA'])->name('project_create_ta');
+    Route::post('/formta', [ProjectController::class, 'store_projectFormTA'])->name('project_store_ta');
+
+    
     Route::get('/form-update/{id}', [ProjectController::class, 'show_project'])->name('project_update');
     Route::patch('/form-update/{id}', [ProjectController::class, 'store_project_update'])->name('project_store');
 
