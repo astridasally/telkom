@@ -22,6 +22,8 @@ return new class extends Migration
             $table->string('priority')->nullable();
             $table->string('catuan_id');
             $table->string('ihld');
+
+            //khusus Mitra
             $table->date('plan_survey')->nullable();
             $table->date('realisasi_survey')->nullable();
             $table->date('plan_delivery')->nullable();
@@ -44,6 +46,10 @@ return new class extends Migration
             $table->string('status_osp')->nullable();
             $table->string('scenario_uplink')->nullable();
             $table->string('status_uplink')->nullable();
+            $table->string('jumlah_port')->nullable();
+            $table->string('drop_ta')->nullable();
+            $table->string('remark_ta')->nullable();
+
 
             $table->timestamps();
         });

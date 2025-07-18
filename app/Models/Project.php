@@ -35,6 +35,9 @@ class Project extends Model
         'dependensi',
         'scenario_uplink',
         'status_uplink',
+        'jumlah_port',
+        'drop_ta',
+        'remark_ta',
 
         'user_id', // relasi ke user
     ];

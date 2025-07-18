@@ -165,7 +165,7 @@
             @if (Auth::user()->role === 'vendor')
             <div class="form-group">
                 <label>Priority TA</label>
-                <select name="drop_data">
+                <select name="priority_ta">
                     <option value="">-- Pilih --</option>
                     <option value="P1">P1</option>
                     <option value="P2">P2</option>
@@ -175,7 +175,7 @@
 
             <div class="form-group">
                 <label>Dependensi</label>
-                <select name="drop_data">
+                <select name="dependensi">
                     <option value="">-- Pilih --</option>
                     <option value="Main">Main</option>
                     <option value="Dependence">Dependence</option>
@@ -184,7 +184,7 @@
 
             <div class="form-group">
                 <label>Status OSP</label>
-                <select name="drop_data">
+                <select name="status_osp">
                     <option value="">-- Pilih --</option>
                     <option value="Finish_Instalasi">Finish Instalasi</option>
                     <option value="Proses_Instalasi">Proses Instalasi</option>
@@ -195,7 +195,7 @@
 
             <div class="form-group">
                 <label>Skenario Uplink</label>
-                <select name="drop_data">
+                <select name="skenario_uplink">
                     <option value="">-- Pilih --</option>
                     <option value="L2S">L2S</option>
                     <option value="OTN">OTN</option>
@@ -208,7 +208,7 @@
 
             <div class="form-group">
                 <label>Status Uplink</label>
-                <select name="drop_data">
+                <select name="status_uplink">
                     <option value="">-- Pilih --</option>
                     <option value="Not Ready">Not Ready</option>
                     <option value="Ready">Ready</option>

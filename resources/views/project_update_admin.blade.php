@@ -3,7 +3,7 @@
     <h1>UPDATE</h1>
     <br>
     <form method="POST"
-        action="{{ auth()->user()->role == 'vendor' ? route('project_store_vendor', $project->id) : 
+        action="{{ auth()->user()->role == 'admin' ? route('project_store_admin', $project->id) : 
         route('project_store', $project->id) }}" enctype="multipart/form-data">
         @csrf
         @method('PATCH')
