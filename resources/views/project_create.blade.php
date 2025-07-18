@@ -45,6 +45,17 @@
                 <input type="text" name="site" required>
             </div>
 
+            <div class="form-group">
+                <label>IHLD</label>
+                <input type="text" name="ihld" required />
+            </div>
+            
+            <div class="form-group">
+                <label>Catuan ID</label>
+                <input type="text" name="catuan_id" required />
+            </div>
+
+
             @if(auth()->user()->role === 'mitra')
             <div class="form-group">
                 <label>Priority</label>
@@ -96,10 +107,7 @@
                 <input type="date" name="realisasi_integrasi" />
             </div>
 
-            <div class="form-group">
-                <label>Remark</label>
-                <textarea name="remark" rows="3"></textarea>
-            </div>
+            
 
             <div class="form-group">
                 <label>Drop</label>
@@ -149,17 +157,13 @@
                 <input type="file" name="bukti_drop" accept="application/pdf,image/*">
                 <span class="error text-danger" id="error_bukti_drop"></span>
             </div>
+            
+            <div class="form-group">
+                <label>Remark</label>
+                <textarea name="remark" rows="3"></textarea>
+            </div>
             @endif
 
-            <div class="form-group">
-                <label>Catuan ID</label>
-                <input type="text" name="catuan_id" required />
-            </div>
-
-            <div class="form-group">
-                <label>IHLD</label>
-                <input type="text" name="ihld" required />
-            </div>
         </div>
 
             @if (Auth::user()->role === 'vendor')
