@@ -13,7 +13,6 @@ class ProjectController extends Controller
         return view('project_create');
     }
 
-
     public function store_projectForm(Request $request)
     {
         // dd($request->all());
@@ -72,6 +71,35 @@ class ProjectController extends Controller
         }
 
         return view('project_report', compact('projects'));
+    }
+
+
+    //punya TA (form dan report)
+    public function projectFormTA()
+    {
+        return view('project_create_ta');
+    }
+
+    public function store_projectFormTA(Request $request)
+    {
+        // dd($request->all());
+        $validated = $request->validate([
+            'regional' => 'required',
+            'witel' => 'required',
+            'sto' => 'required',
+            'site' => 'required',
+            'ihld' => 'required',
+            'catuan_id' => 'required',
+            'priority_ta' => 'nullable',
+            'status_osp' => 'required',
+            'dependensi' => 'required',
+            'scenario_uplink' => 'required',
+            'status_uplink' => 'required',
+            'jumlah_port' => 'required',
+            'drop_ta' => 'required',
+            'remark_ta' => 'nullable|string',
+
+        ]);
     }
 
 
