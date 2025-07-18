@@ -158,7 +158,7 @@
                 <label>IHLD</label>
                 <input type="text" name="ihld" required value="{{ $project->ihld }}" />
             </div>
-            @if (auth()->user()->role == 'vendor')
+            @if (auth()->user()->role == 'vendor') || auth()->user()->role === 'admin')
             <div class="form-group">
                 <label>Priority TA</label>
                 <select name="priority_ta">
