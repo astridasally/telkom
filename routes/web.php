@@ -8,10 +8,11 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('/dashboard', function () {
-    return view('dashboard');
-})->middleware(['auth', 'verified'])->name('dashboard');
 
+Route::get('/dashboard', [ProjectController::class, 'dashboard'])
+    ->middleware(['auth', 'verified'])
+    ->name('dashboard');
+    
 Route::middleware('auth')->group(function () {
     Route::get('/form',  [ProjectController::class, 'projectForm'])->name('project_create');
     Route::post('/form', [ProjectController::class, 'store_projectForm'])->name('project_store');

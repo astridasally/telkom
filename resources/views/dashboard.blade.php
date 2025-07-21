@@ -1,17 +1,16 @@
 <x-app-layout>
+    {{-- Sesuaikan path CSS Anda --}}
     <link rel="stylesheet" href="{{ asset('css/dashboard.css') }}">
 
-    {{-- Asumsi <x-app-layout> sudah menyediakan navbar di bagian atas --}}
-
-    {{-- Ini adalah wrapper baru untuk semua konten di bawah navbar --}}
     <div class="page-content-wrapper">
 
-        {{-- Ini adalah blok tabel utama --}}
-        {{-- Header "FUNNELING OLT" akan kita tambahkan di sini --}}
+        {{-- Ini adalah bagian tabel utama Funneling OLT --}}
+        {{-- Karena Anda tidak meminta perubahan pada bagian ini, saya akan biarkan struktur dasarnya. --}}
+        {{-- Data di tabel ini perlu diisi secara dinamis jika Anda ingin menampilkan ringkasan per Regional. --}}
         <div class="main-table-container">
             <div class="header-info">
                 <div class="title-left">FUNNELING OLT</div>
-                <div class="date-right">Cut Off Data: </div>
+                <div class="date-right">Cut Off Data: 21 Juli 2025</div> {{-- Bisa dinamis jika dari backend --}}
             </div>
             <div class="table-wrapper">
                 <table>
@@ -41,105 +40,26 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <tr>
-                            <td>REGIONAL 1</td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                        </tr>
-                        <tr>
-                            <td>REGIONAL 2</td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                        </tr>
-                        <tr>
-                            <td>REGIONAL 3</td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                        </tr>
-                        <tr>
-                            <td>REGIONAL 4</td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                        </tr>
-                        <tr>
-                            <td>REGIONAL 5</td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                        </tr>
+                        {{-- Contoh baris statis. Anda mungkin perlu @foreach di sini jika data regional diisi dari $projects --}}
+                        <tr> <td>REGIONAL 1</td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+                        <tr> <td>REGIONAL 2</td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+                        <tr> <td>REGIONAL 3</td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+                        <tr> <td>REGIONAL 4</td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+                        <tr> <td>REGIONAL 5</td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
                     </tbody>
                     <tfoot>
                         <tr>
                             <td><strong>TOTAL</strong></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
+                            {{-- Anda bisa menampilkan total projectCount di sini jika ini adalah total keseluruhan yang Anda inginkan --}}
+                            {{-- Atau Anda perlu menghitung total per kolom secara terpisah di controller --}}
+                            <td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td>
                         </tr>
                     </tfoot>
                 </table>
             </div>
         </div>
-        {{-- Akhir blok tabel utama --}}
 
-        {{-- Ini adalah dashboard-wrapper yang membungkus grafik dan main container --}}
+        {{-- Bagian Graph Placeholder --}}
         <div class="dashboard-wrapper">
             <div class="graph-placeholder">
                 <div class="graph-header">
@@ -150,11 +70,13 @@
                 </div>
             </div>
 
+            {{-- Bagian Main Dashboard dengan kotak-kotak angka --}}
             <div class="main-container">
                 <div class="header-container-main">
                     <h1 class="title">Main Dashboard</h1>
                 </div>
 
+                {{-- Filter (tetap seperti sebelumnya) --}}
                 <div class="dashboard-filters-row">
                     <div class="filter-item">
                         <select id="Mitra">
@@ -222,6 +144,8 @@
                     </div>
                     <button class="filter-apply-btn">Apply Filters</button>
                 </div>
+
+                {{-- Kotak-kotak Angka --}}
                 <div class="content-grid">
                     <div class="stage-section">
                         <div class="card-header-stage">
@@ -231,11 +155,11 @@
                             <div class="box-group">
                                 <div class="box-wrapper">
                                     <span class="box-label">Plan</span>
-                                    <div class="box">100</div>
+                                    <div class="box">{{ $planSurveyCount ?? 0 }}</div>
                                 </div>
                                 <div class="box-wrapper">
                                     <span class="box-label">Realisasi</span>
-                                    <div class="box">75</div>
+                                    <div class="box">{{ $realSurveyCount ?? 0 }} </div>
                                 </div>
                             </div>
                         </div>
@@ -249,11 +173,11 @@
                             <div class="box-group">
                                 <div class="box-wrapper">
                                     <span class="box-label">Plan</span>
-                                    <div class="box">80</div>
+                                    <div class="box">{{ $planDeliveryCount ?? 0 }}</div>
                                 </div>
                                 <div class="box-wrapper">
                                     <span class="box-label">Realisasi</span>
-                                    <div class="box">60</div>
+                                    <div class="box">{{$realDeliveryCount ?? 0 }}</div>
                                 </div>
                             </div>
                         </div>
@@ -267,11 +191,11 @@
                             <div class="box-group">
                                 <div class="box-wrapper">
                                     <span class="box-label">Plan</span>
-                                    <div class="box">120</div>
+                                    <div class="box">{{$planInstalasiCount?? 0 }} </div>
                                 </div>
                                 <div class="box-wrapper">
                                     <span class="box-label">Realisasi</span>
-                                    <div class="box">90</div>
+                                    <div class="box">{{$realInstalasiCount ?? 0 }}</div>
                                 </div>
                             </div>
                         </div>
@@ -285,17 +209,18 @@
                             <div class="box-group">
                                 <div class="box-wrapper">
                                     <span class="box-label">Plan</span>
-                                    <div class="box">95</div>
+                                    <div class="box">{{$planIntegrasiCount?? 0 }}</div>
                                 </div>
                                 <div class="box-wrapper">
                                     <span class="box-label">Realisasi</span>
-                                    <div class="box">70</div>
+                                    <div class="box">{{$realIntegrasiCount?? 0 }}</div>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
 
+                {{-- Kotak Drop --}}
                 <div class="status-boxes-grid">
                     <div class="stage-section">
                         <div class="card-header-stage">
@@ -305,15 +230,15 @@
                             <div class="box-group-three">
                                 <div class="box-wrapper">
                                     <span class="box-label">Yes</span>
-                                    <div class="box">25</div>
+                                    <div class="box">{{ $dropYes ?? 0 }}</div>
                                 </div>
                                 <div class="box-wrapper">
                                     <span class="box-label">No</span>
-                                    <div class="box">5</div>
+                                    <div class="box">{{ $dropNo ?? 0 }}</div>
                                 </div>
                                 <div class="box-wrapper">
                                     <span class="box-label">Relokasi</span>
-                                    <div class="box">10</div>
+                                    <div class="box">{{ $dropRelokasi ?? 0 }}</div>
                                 </div>
                             </div>
                         </div>
