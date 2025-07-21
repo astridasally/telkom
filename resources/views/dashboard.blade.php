@@ -10,7 +10,7 @@
         <div class="main-table-container">
             <div class="header-info">
                 <div class="title-left">FUNNELING OLT</div>
-                <div class="date-right">Cut Off Data: 21 Juli 2025</div> {{-- Bisa dinamis jika dari backend --}}
+                    <div class="date-right">Cut Off Data: {{ date('d F Y') }}</div>
             </div>
             <div class="table-wrapper">
                 <table>

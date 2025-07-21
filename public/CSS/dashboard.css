@@ -37,9 +37,9 @@ body {
 }
 
 .header-info {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
+    display: flex; /* Ini kunci untuk membuat item menjadi satu baris */
+    justify-content: space-between; /* Ini kunci untuk memisahkan ke kiri dan kanan */
+    align-items: center; /* Ini untuk menyejajarkan secara vertikal di tengah */
     margin-bottom: 15px;
     padding-bottom: 10px;
     border-bottom: 1px solid #e0e0e0;
