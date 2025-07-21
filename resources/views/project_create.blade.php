@@ -1,4 +1,5 @@
 <x-app-layout>
+<link rel="stylesheet" href="{{ asset('css/form.css') }}">
 
     @if ($errors->any())
     <div class="alert alert-danger">
@@ -11,10 +12,17 @@
     </div>
     @endif
 
+    <div class="form-container">
+        <h1>Form Update Site</h1>
+    </div>
+    
     <form method="POST" action="{{ route('project_store') }}" enctype="multipart/form-data">
         @csrf
-
+        
         <div>
+            <div class="form-grid">
+            <div class="form-column">
+
             <div class="form-group">
                 <label>Regional</label>
                 <select name="regional" required>
@@ -55,7 +63,6 @@
                 <input type="text" name="catuan_id" required />
             </div>
 
-
             @if(auth()->user()->role === 'mitra')
             <div class="form-group">
                 <label>Priority</label>
@@ -66,48 +73,57 @@
                     <option value="P3">P3</option>
                 </select>
             </div>
-
-            <div class="form-group">
-                <label>Plan Survey</label>
-                <input type="date" name="plan_survey" />
-
-            </div>
-            <div class="form-group">
-                <label>Realisasi Survey</label>
-                <input type="date" name="realisasi_survey" />
             </div>
 
+            <div class="form-column">
+
             <div class="form-group">
-                <label>Plan Delivery</label>
-                <input type="date" name="plan_delivery" />
-            </div>
-            <div class="form-group">
-                <label>Realisasi Delivery</label>
-                <input type="date" name="realisasi_delivery" />
+                <label style="color: #0d6efd; font-weight: 650;"></label>
+                <div style="display: flex; gap: 40px;">
+                    <div style="flex: 1;"><label>Plan Survey</label>
+                        <input type="date" name="plan_survey" placeholder="Plan" class="form-control">
+                    </div>
+                    <div style="flex: 1;"><label>Plan Survey</label>
+                        <input type="date" name="realisasi_survey" placeholder="Realisasi" class="form-control">
+                    </div>
+                </div>
             </div>
 
             <div class="form-group">
-                <label>Plan Instalasi</label>
-                <input type="date" name="plan_instalasi" />
+                <label style="color: #0d6efd; font-weight: 650;"></label>
+                <div style="display: flex; gap: 40px;">
+                    <div style="flex: 1;"><label>Plan Delivery</label>
+                        <input type="date" name="plan_delivery" placeholder="Plan" class="form-control">
+                    </div>
+                    <div style="flex: 1;"><label>Realisasi Delivery</label>
+                        <input type="date" name="realisasi_delivery" placeholder="Realisasi" class="form-control">
+                    </div>
+                </div>  
             </div>
 
             <div class="form-group">
-                <label>Realisasi Instalasi</label>
-                <input type="date" name="realisasi_instalasi" />
-            </div>
+                <label style="color: #0d6efd; font-weight: 650;"></label>
+                <div style="display: flex; gap: 40px;">
+                    <div style="flex: 1;"><label>Plan Instalasi</label>
+                        <input type="date" name="plan_instalasi" placeholder="Plan" class="form-control">
+                    </div>
+                    <div style="flex: 1;"><label>Plan Instalasi</label>
+                        <input type="date" name="realisasi_instalasi" placeholder="Realisasi" class="form-control">
+                    </div>
+                </div>
+            </div>            
 
             <div class="form-group">
-                <label>Plan Integrasi</label>
-                <input type="date" name="plan_integrasi" />
-            </div>
-
-
-            <div class="form-group">
-                <label>Realisasi Integrasi</label>
-                <input type="date" name="realisasi_integrasi" />
-            </div>
-
-            
+                <label style="color: #0d6efd; font-weight: 700;"></label>
+                <div style="display: flex; gap: 40px;">
+                    <div style="flex: 1;"><label>Plan Integrasi</label>
+                        <input type="date" name="plan_integrasi" placeholder="Plan" class="form-control">
+                    </div>
+                    <div style="flex: 1;"><label>Realiasi Integrasi</label>
+                        <input type="date" name="realisasi_integrasi" placeholder="Realisasi" class="form-control">
+                    </div>
+                </div>
+            </div>   
 
             <div class="form-group">
                 <label>Drop</label>
@@ -118,6 +134,7 @@
                     <option value="Relokasi">Relokasi</option>
                 </select>
             </div>
+
             <div id="relokasi-fields" style="display: none;">
 
                 <div class="form-group">
@@ -159,74 +176,61 @@
             </div>
             
             <div class="form-group">
-                <label>Remark</label>
-                <textarea name="remark" rows="3"></textarea>
+                <label for="remark_ta">Remark TA</label>
+                <textarea name="remark_ta" id="remark_ta" rows="3" 
+                    class="form-control" 
+                    placeholder="Masukkan remark di sini...">{{ old('remark_ta') }}</textarea> {{-- old() di antara tag textarea --}}
+            @error('remark_ta')
+                <div class="text-danger">{{ $message }}</div>
+            @enderror
             </div>
             @endif
 
         </div>
-
-            @if (Auth::user()->role === 'vendor')
-            <div class="form-group">
-                <label>Priority TA</label>
-                <select name="priority_ta">
-                    <option value="">-- Pilih --</option>
-                    <option value="P1">P1</option>
-                    <option value="P2">P2</option>
-                    <option value="P3">P3</option>
-                </select>
-            </div>
-
-            <div class="form-group">
-                <label>Dependensi</label>
-                <select name="dependensi">
-                    <option value="">-- Pilih --</option>
-                    <option value="Main">Main</option>
-                    <option value="Dependence">Dependence</option>
-                </select>
-            </div>
-
-            <div class="form-group">
-                <label>Status OSP</label>
-                <select name="status_osp">
-                    <option value="">-- Pilih --</option>
-                    <option value="Finish_Instalasi">Finish Instalasi</option>
-                    <option value="Proses_Instalasi">Proses Instalasi</option>
-                    <option value="Persiapan">Persiapan</option>
-                    <option value="Drop">Drop</option>
-                </select>
-            </div>
-
-            <div class="form-group">
-                <label>Skenario Uplink</label>
-                <select name="skenario_uplink">
-                    <option value="">-- Pilih --</option>
-                    <option value="L2S">L2S</option>
-                    <option value="OTN">OTN</option>
-                    <option value="ONT">ONT</option>
-                    <option value="Direct Core">Direct Core</option>
-                    <option value="Re_engineering">Re-engineering</option>
-                    <option value="SFP Bidi">Re-SFP Bidi</option>
-                </select>
-            </div>
-
-            <div class="form-group">
-                <label>Status Uplink</label>
-                <select name="status_uplink">
-                    <option value="">-- Pilih --</option>
-                    <option value="Not Ready">Not Ready</option>
-                    <option value="Ready">Ready</option>
-                </select>
-            </div>
-            @endif
+    </div>
 
         <div style="margin-top: 20px;">
+            <center>
             <button type="submit" class="update-btn">Simpan</button>
         </div>
+
+</div>
+
+    @if ($errors->any())
+    <div class="alert alert-danger" style="margin-bottom: 20px;">
+        <strong>Periksa kembali input Anda:</strong>
+        <ul>
+            @foreach ($errors->all() as $error)
+            <li>{{ $error }}</li>
+            @endforeach
+        </ul>
+    </div>
+    @endif
+
+    {{-- Notifikasi Success --}}
+    @if(session('success'))
+    <div class="notification-popup success">
+        {{ session('success') }}
+        <button class="close-btn" onclick="this.parentElement.style.display='none';">&times;</button>
+    </div>
+    @endif
+
+    {{-- Notifikasi Error --}}
+    @if(session('error'))
+    <div class="notification-popup error">
+        {{ session('error') }}
+        <button class="close-btn" onclick="this.parentElement.style.display='none';">&times;</button>
+    </div>
+    @endif
+
+    <div class="form-container">
+        {{-- ... (kode form Anda) ... --}}
+    </div>
+
     </form>
 
     <script>
-document.addEventListener('DOMContentLoaded', function () {
+    document.addEventListener('DOMContentLoaded', function () {
     const dropSelect = document.querySelector('[name="drop_data"]');
     const buktiDropGroup = document.getElementById('bukti-drop-group');
 

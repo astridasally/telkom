@@ -1,4 +1,5 @@
 <x-app-layout>
+<link rel="stylesheet" href="{{ asset('css/form.css') }}">
 
     @if ($errors->any())
     <div class="alert alert-danger">
@@ -11,10 +12,17 @@
     </div>
     @endif
 
+    <div class="form-container">
+        <h1>Form Update Site</h1>
+    </div>
+
     <form method="POST" action="{{ route('project_store_ta') }}" enctype="multipart/form-data">
         @csrf
 
         <div>
+            <div class="form-grid">
+            <div class="form-column">
+
             <div class="form-group">
                 <label>Regional</label>
                 <select name="regional" required>
@@ -63,7 +71,11 @@
                     <option value="P2">P2</option>
                     <option value="P3">P3</option>
                 </select>
-            </div>
+            </div>            
+        </div>
+
+            <div class="form-column">
+
 
             <div class="form-group">
                 <label>Dependensi</label>
@@ -75,24 +87,27 @@
             </div>
 
             <div class="form-group">
-                <label>FTTH CSF</label>
-                <input type="number" name="ftth_csf">
-                <span class="error text-danger" id="error_golive_port_client"></span>
+                <label style="color: #0d6efd; font-weight: 650;"></label>
+                <div style="display: flex; gap: 40px;">
+                    <div style="flex: 1;"><label>FTTH CSF</label>
+                        <input type="number" name="ftth_csf" placeholder="FTTH CSF" class="form-control">
+                    </div>
+                    <div style="flex: 1;"><label>FTTH Port</label>
+                        <input type="number" name="ftth_port" placeholder="FTTH Port" class="form-control">
+                    </div>
+                </div>
             </div>
 
             <div class="form-group">
-                <label>FTTH Port</label>
-                <input type="number" name="ftth_port">
-            </div>
-
-            <div class="form-group">
-                <label>Go Live CSF</label>
-                <input type="number" name="golive_csf">
-            </div>
-
-            <div class="form-group">
-                <label>Go Live Port</label>
-                <input type="number" name="golive_port">
+                <label style="color: #0d6efd; font-weight: 650;"></label>
+                <div style="display: flex; gap: 40px;">
+                    <div style="flex: 1;"><label>Go Live CSF</label>
+                        <input type="number" name="golive_csf" placeholder="Go Live CSF" class="form-control">
+                    </div>
+                    <div style="flex: 1;"><label>Go Live Port</label>
+                        <input type="number" name="golive_port" placeholder="Go Live Port" class="form-control">
+                    </div>
+                </div>
             </div>
 
             <div class="form-group">
@@ -129,23 +144,48 @@
             </div>
 
             <div class="form-group">
-                <label>Drop TA</label>
-                <select name="drop_ta">
-                    <option value="">-- Pilih --</option>
-                    <option value="Yes">Not Ready</option>
-                    <option value="No">Ready</option>
-                </select>
-            </div>
-
-            <div class="form-group">
                 <label>Remark TA</label>
                 <input type="text" name="remark_ta">
             </div>
+        </div>
+        </div>
 
             <div style="margin-top: 20px;">
-            <button type="submit" class="update-btn">Simpan</button>
-        </div>
+                <center>
+                <button type="submit" class="update-btn">Simpan</button>
+            </div>
 
         </div>
+        
+    @if ($errors->any())
+    <div class="alert alert-danger" style="margin-bottom: 20px;">
+        <strong>Periksa kembali input Anda:</strong>
+        <ul>
+            @foreach ($errors->all() as $error)
+            <li>{{ $error }}</li>
+            @endforeach
+        </ul>
+    </div>
+    @endif
+
+    {{-- Notifikasi Success --}}
+    @if(session('success'))
+    <div class="notification-popup success">
+        {{ session('success') }}
+        <button class="close-btn" onclick="this.parentElement.style.display='none';">&times;</button>
+    </div>
+    @endif
+
+    {{-- Notifikasi Error --}}
+    @if(session('error'))
+    <div class="notification-popup error">
+        {{ session('error') }}
+        <button class="close-btn" onclick="this.parentElement.style.display='none';">&times;</button>
+    </div>
+    @endif
+
+    <div class="form-container">
+        {{-- ... (kode form Anda) ... --}}
+    </div>
 
 </x-app-layout>

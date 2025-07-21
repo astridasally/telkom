@@ -1,0 +1,163 @@
+/* === Header Form === */
+.form-container{
+    max-width: 900px; /* Samakan dengan max-width form-container */
+    margin: 40px auto 0 auto; /* Margin atas 40px, pusatkan, margin bawah 0 */
+    background-color: #3b5998; /* Warna biru sesuai contoh gambar */
+    color: white; /* Teks putih */
+    font-size: 1.5rem; /* Ukuran font */
+    font-weight: bold;
+    text-align: center; /* Teks rata kiri */
+    border-radius: 8px 8px 0 0; /* Sudut membulat hanya di atas */
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+}
+
+/* === Container Grid 2 Kolom === */
+.form-grid {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 15px;
+}
+
+/* === Kolom Kiri & Kanan === */
+.form-column {
+    flex: 1;
+    min-width: 350px;
+}
+
+.form-group-nested {
+    margin-bottom: 25px;
+}
+
+/* === General Styling === */
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: #f5f5f5;
+}
+
+/* === Form Container === */
+form {
+    max-width: 900px;
+    margin: 0px auto;
+    background-color: #fff;
+    padding: 30px;
+    border-radius: 0 0 10px 10px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+}
+
+/* === Form Group === */
+.form-group {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 20px;
+}
+
+/* === Label === */
+.form-group label {
+    font-weight: 600;
+    color: #0d6efd; /* Biru Telkom */
+    margin-bottom: 4px;
+}
+
+/* Remark Column*/
+.form-group textarea { /* Pastikan 'textarea' ada di sini */
+    width: 100%;
+    padding: 10px 12px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    font-size: 1rem;
+    box-sizing: border-box;
+    /* Anda bisa tambahkan: */
+    resize: vertical; /* Memungkinkan pengguna mengubah ukuran textarea secara vertikal */
+}
+
+/* === Input dan Select === */
+.form-group input,
+.form-group select {
+    padding: 10px 12px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    font-size: 15px;
+}
+
+/* === Tombol Simpan === */
+.update-btn {
+    background-color: #32b92e; 
+    color: white;
+    border: none;
+    padding: 10px 30px;
+    border-radius: 6px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: 0.2s ease-in-out;
+}
+
+.update-btn:hover {
+    background-color: #58cb62;
+}
+
+/* === Error Alert === */
+.alert.alert-danger {
+    background-color: #f8d7da;
+    border: 1px solid #f5c6cb;
+    color: #721c24;
+    padding: 12px;
+    border-radius: 6px;
+    margin-bottom: 16px;
+}
+
+.button-wrapper {
+    margin-top: 30px;
+    text-align: center;
+}
+
+/* === Optional: Date Picker Icon Support === */
+input[type="date"] {
+    padding-right: 40px;
+}
+
+.notification-popup {
+    position: fixed; /* Tetap di posisi tertentu meskipun halaman di-scroll */
+    top: 30px; /* Jarak dari atas */
+    right: 30px; /* Jarak dari kanan */
+    padding: 15px 25px;
+    border-radius: 8px;
+    font-size: 1rem;
+    font-weight: 30px;
+    color: white;
+    z-index: 1000; /* Pastikan muncul di atas elemen lain */
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+    display: flex; /* Untuk menata teks dan tombol close */
+    align-items: center;
+    justify-content: space-between;
+    animation: fadeInOut 7s forwards; /* Animasi muncul dan menghilang */
+}
+
+.notification-popup.success {
+    background-color: #4CAF50; /* Hijau untuk sukses */
+}
+
+.notification-popup.error {
+    background-color: #f44336; /* Merah untuk error */
+}
+
+.notification-popup .close-btn {
+    background: none;
+    border: none;
+    color: white;
+    font-size: 1.5rem;
+    cursor: pointer;
+    margin-left: 15px;
+    line-height: 1; /* Agar posisi X lebih rapi */
+}
+
+.notification-popup .close-btn:hover {
+    color: #ddd;
+}
+
+/* Keyframes untuk animasi fade in dan fade out */
+@keyframes fadeInOut {
+    0% { opacity: 0; transform: translateY(-20px); } /* Mulai dari tidak terlihat, sedikit di atas */
+    10% { opacity: 1; transform: translateY(0); } /* Muncul penuh */
+    90% { opacity: 1; transform: translateY(0); } /* Tetap terlihat selama beberapa detik */
+    100% { opacity: 0; transform: translateY(-20px); display: none; } /* Menghilang dan disembunyikan */
+}
