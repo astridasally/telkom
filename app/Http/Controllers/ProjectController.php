@@ -74,7 +74,7 @@ class ProjectController extends Controller
     }
 
 
-    //punya TA (form dan report)
+//punya TA (form dan report)
     public function projectFormTA()
     {
         return view('project_create_ta');
@@ -91,15 +91,23 @@ class ProjectController extends Controller
             'ihld' => 'required',
             'catuan_id' => 'required',
             'priority_ta' => 'nullable',
-            'status_osp' => 'required',
+            'status_osp' => 'nullable',
             'dependensi' => 'required',
-            'scenario_uplink' => 'required',
-            'status_uplink' => 'required',
-            'jumlah_port' => 'required',
-            'drop_ta' => 'required',
+            'scenario_uplink' => 'nullable',
+            'status_uplink' => 'nullable',
             'remark_ta' => 'nullable|string',
+            'ftth_csf' => 'nullable',
+            'ftth_port' => 'nullable',
+            'golive_csf' => 'nullable',
+            'golive_port' => 'nullable',
 
         ]);
+            
+        $validated['user_id'] = auth()->id();
+        
+        Project::create($validated);
+
+        return redirect()->back()->with('success', 'Data berhasil disimpan!');
     }
 
 

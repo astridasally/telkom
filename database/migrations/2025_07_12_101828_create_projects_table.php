@@ -46,9 +46,11 @@ return new class extends Migration
             $table->string('status_osp')->nullable();
             $table->string('scenario_uplink')->nullable();
             $table->string('status_uplink')->nullable();
-            $table->string('jumlah_port')->nullable();
-            $table->string('drop_ta')->nullable();
             $table->string('remark_ta')->nullable();
+            $table->string('ftth_csf')->nullable();
+            $table->string('ftth_port')->nullable();
+            $table->string('golive_csf')->nullable();
+            $table->string('golive_port')->nullable();
 
 
             $table->timestamps();

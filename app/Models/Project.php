@@ -35,9 +35,12 @@ class Project extends Model
         'dependensi',
         'scenario_uplink',
         'status_uplink',
-        'jumlah_port',
         'drop_ta',
         'remark_ta',
+        'ftth_csf' => 'nullable',
+        'ftth_port' => 'nullable',
+        'golive_csf' => 'nullable',
+        'golive_port' => 'nullable',
 
         'user_id', // relasi ke user
     ];

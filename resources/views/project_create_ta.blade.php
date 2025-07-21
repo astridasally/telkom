@@ -75,6 +75,27 @@
             </div>
 
             <div class="form-group">
+                <label>FTTH CSF</label>
+                <input type="number" name="ftth_csf">
+                <span class="error text-danger" id="error_golive_port_client"></span>
+            </div>
+
+            <div class="form-group">
+                <label>FTTH Port</label>
+                <input type="number" name="ftth_port">
+            </div>
+
+            <div class="form-group">
+                <label>Go Live CSF</label>
+                <input type="number" name="golive_csf">
+            </div>
+
+            <div class="form-group">
+                <label>Go Live Port</label>
+                <input type="number" name="golive_port">
+            </div>
+
+            <div class="form-group">
                 <label>Status OSP</label>
                 <select name="status_osp">
                     <option value="">-- Pilih --</option>
@@ -108,11 +129,6 @@
             </div>
 
             <div class="form-group">
-                <label>Jumlah Port</label>
-                <input type="text" name="jumlah_port">
-            </div>
-
-            <div class="form-group">
                 <label>Drop TA</label>
                 <select name="drop_ta">
                     <option value="">-- Pilih --</option>
@@ -125,6 +141,10 @@
                 <label>Remark TA</label>
                 <input type="text" name="remark_ta">
             </div>
+
+            <div style="margin-top: 20px;">
+            <button type="submit" class="update-btn">Simpan</button>
+        </div>
 
         </div>
 

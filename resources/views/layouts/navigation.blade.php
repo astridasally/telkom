@@ -16,9 +16,17 @@
                         {{ __('Dashboard') }}
                     </x-nav-link>
 
+                    @if (Auth::user()->role === 'mitra' || Auth::user()->role === 'admin')
                     <x-nav-link :href="route('project_create')" :active="request()->routeIs('project_create')">
                         {{ __('Form') }}
                     </x-nav-link>
+                    @endif
+
+                    @if (Auth::user()->role === 'vendor')
+                    <x-nav-link :href="route('project_create_ta')" :active="request()->routeIs('project_create_ta')">
+                        {{ __('Form') }}
+                    </x-nav-link>
+                    @endif
 
                     <x-nav-link :href="route('project_report')" :active="request()->routeIs('project_report')">
                         {{ __('Report') }}
