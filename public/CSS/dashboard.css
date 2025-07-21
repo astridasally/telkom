@@ -1,15 +1,131 @@
-.dashboard-wrapper {
-    display: flex;
-    flex-direction: row;
-    padding: 15px;
-    gap: 15px;
-    flex-grow: 1;
-    align-items: flex-start;
+/* --- CSS AWAL YANG SUDAH ADA --- */
+body {
+    font-family: Arial, sans-serif;
+    margin: 0; /* Pastikan tidak ada margin default pada body */
+    padding: 0; /* Pastikan tidak ada padding default pada body */
+    background-color: #f0f2f5;
+    min-height: 100vh;
 }
 
-/* Graph Placeholder (Left Column) */
+/* Asumsi ini adalah style untuk navigasi paling atas (dari x-app-layout) */
+/* Pastikan ini tidak memiliki margin/padding yang mengganggu page-content-wrapper */
+.x-app-layout-container {
+    /* Jika x-app-layout punya div pembungkus, atur style di sini jika perlu */
+}
+
+/* NEW: Wrapper untuk semua konten di bawah navbar */
+.page-content-wrapper {
+    padding: 20px; /* Ini adalah padding yang Anda inginkan di sekeliling semua konten dashboard */
+    width: 100%; /* Ambil lebar penuh dari parent */
+    box-sizing: border-box; /* Penting untuk padding agar tidak menambah lebar */
+    display: flex;
+    flex-direction: column; /* Konten di dalamnya akan berjejer vertikal */
+    gap: 20px; /* Jarak antara tabel utama dan dashboard-wrapper di bawahnya */
+}
+
+/* --- STYLE UNTUK TABEL UTAMA DAN HEADER "FUNNELING OLT" --- */
+.main-table-container {
+    background-color: #ffffff; /* Latar belakang putih untuk kotak tabel */
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    padding: 20px; /* Padding di dalam kotak tabel */
+    width: 100%; /* Tabel akan mengisi lebar kontainer */
+    max-width: 1200px; /* Batasi lebar maksimal tabel utama */
+    margin: 0 auto; /* Menengahkan tabel utama */
+    box-sizing: border-box;
+    overflow-x: auto; /* Untuk responsivitas tabel */
+}
+
+.header-info {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 15px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid #e0e0e0;
+}
+
+.title-left {
+    font-size: 20px;
+    font-weight: bold;
+    color: #333;
+}
+
+.date-right {
+    font-size: 14px;
+    color: #666;
+}
+
+.table-wrapper {
+    /* Dihapus overflow-x: auto di sini dan dipindahkan ke .main-table-container */
+    /* Karena .main-table-container sekarang yang mengontrol overflow */
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 14px;
+    text-align: center;
+}
+
+/* Header Tabel */
+thead th {
+    background-color: #3f6096;
+    color: #ffffff;
+    padding: 8px;
+    border: 1px solid #5a7ea8;
+    white-space: nowrap;
+}
+
+thead th:first-child { border-top-left-radius: 0x; }
+thead th:last-child { border-top-right-radius: 0x; }
+
+/* Body Tabel */
+tbody td {
+    padding: 8px;
+    border: 1px solid #dddddd;
+    color: #333;
+    background-color: #f9f9f9;
+}
+
+tbody tr:nth-child(even) td { background-color: #ffffff; }
+
+/* Highlight (tetap ada untuk referensi) */
+.highlight-done { background-color: #e6ffe6; border: 1px solid #aaffaa; color: #1a7a1a; font-weight: bold; }
+.highlight-ogp { background-color: #e6ffe6; border: 1px solid #aaffaa; color: #1a7a1a; font-weight: bold; }
+.highlight-rfi { background-color: #e6ffe6; border: 1px solid #aaffaa; color: #1a7a1a; font-weight: bold; }
+
+/* Footer Tabel (TOTAL) */
+tfoot td {
+    background-color: #e0e0e0;
+    color: #333;
+    font-weight: bold;
+    padding: 10px 8px;
+    border: 1px solid #cccccc;
+    white-space: nowrap;
+}
+
+tfoot tr:last-child td:first-child { border-bottom-left-radius: 6px; }
+tfoot tr:last-child td:last-child { border-bottom-right-radius: 6px; }
+
+
+/* --- STYLE UNTUK DASHBOARD WRAPPER (GRAFIK & MAIN CONTAINER) --- */
+.dashboard-wrapper {
+    display: flex; /* Untuk membuat graph-placeholder dan main-container berdampingan */
+    flex-direction: row;
+    gap: 15px; /* Jarak antara graph-placeholder dan main-container */
+    width: 100%; /* Pastikan mengambil lebar penuh dari page-content-wrapper */
+    align-items: flex-start; /* Untuk perataan atas */
+    /* background-color, border-radius, box-shadow TIDAK perlu di sini lagi
+       karena sudah ada di main-table-container atau diatur secara individual */
+    padding: 0; /* Padding sudah di handle oleh page-content-wrapper */
+    max-width: 1200px; /* Lebar maksimal dashboard-wrapper, sama dengan tabel utama */
+    margin: 0 auto; /* Menengahkan dashboard-wrapper */
+}
+
+/* --- STYLE UNTUK GRAPH PLACEHOLDER DAN MAIN CONTAINER (tetap serupa) --- */
 .graph-placeholder {
-    flex: 1;
+    flex: 1; /* Mengambil ruang yang tersedia */
     background-color: #ffffff;
     border-radius: 8px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
@@ -20,9 +136,9 @@
 }
 
 .graph-header {
-    background-color: #3f6096; /* DITUKAR: Sekarang warna biru yang lebih gelap */
+    background-color: #3f6096;
     color: #ffffff;
-    padding: 5px; /* Dikembalikan ke ukuran sebelumnya */
+    padding: 5px;
     border-top-left-radius: 8px;
     border-top-right-radius: 8px;
     text-align: center;
@@ -32,28 +148,27 @@
 
 .graph-header h2 {
     margin: 0;
-    font-size: 18px; /* Dikembalikan ke ukuran sebelumnya */
+    font-size: 18px;
     color: #ffffff;
     font-weight: 700;
 }
 
 .graph-content {
-    padding: 200px; /* Dikembalikan ke ukuran sebelumnya */
+    padding: 200px;
     text-align: center;
     color: #6b7280;
     flex-grow: 1;
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: 14px; /* Dikembalikan ke ukuran sebelumnya */
+    font-size: 14px;
 }
 
 
-/* Main Container (Right Column) */
 .main-container {
     padding: 0px;
-    flex: 1;
-    background-color: #e5e7eb;
+    flex: 1; /* Mengambil ruang yang tersedia */
+    background-color: #ffffff; /* Warna abu-abu di baliknya filter */
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -62,9 +177,9 @@
 }
 
 .header-container-main {
-    background-color: #3f6096; /* DITUKAR: Sekarang warna biru yang lebih gelap */
+    background-color: #3f6096;
     color: #ffffff;
-    padding: 5px; /* Dikembalikan ke ukuran sebelumnya */
+    padding: 5px;
     border-top-left-radius: 8px;
     border-top-right-radius: 8px;
     text-align: center;
@@ -75,25 +190,25 @@
 
 .header-container-main .title {
     margin: 0;
-    font-size: 18px; /* Dikembalikan ke ukuran sebelumnya */
+    font-size: 18px;
     color: #ffffff;
     text-align: center;
     font-weight: 700;
 }
 
 .dashboard-filters-row {
-    background-color: #ffffff;
-    padding: 10px 20px; /* Dikembalikan ke ukuran sebelumnya */
+    background-color: #e0e2ea;
+    padding: 10px 20px;
     width: 100%;
     max-width: none;
     box-sizing: border-box;
     display: flex;
     justify-content: center;
     align-items: center;
-    gap: 15px; /* Dikembalikan ke ukuran sebelumnya */
-    margin: 0 auto 20px auto; /* Dikembalikan ke ukuran sebelumnya */
-    border-bottom-left-radius: 8px;
-    border-bottom-right-radius: 8px;
+    gap: 15px;
+    margin: 0 auto 20px auto;
+    border-bottom-left-radius: 0px;
+    border-bottom-right-radius: 0px;
     box-shadow: 0 2px 4px rgba(0,0,0,0.05);
 }
 
@@ -103,10 +218,13 @@
 
 .dashboard-filters-row select {
     width: 100%;
-    padding: 2px 6px; /* Dikembalikan ke ukuran sebelumnya */
-    border-radius: 20px; /* Dikembalikan ke ukuran sebelumnya */
+    padding-top: 5px;
+    padding-bottom: 5px;
+    padding-left: 10px;
+    padding-right: 38px;
+    border-radius: 20px;
     border: 1px solid #d1d5db;
-    font-size: 12px; /* Dikembalikan ke ukuran sebelumnya */
+    font-size: 12px;
     background-color: #f9fafb;
     color: #374151;
     -webkit-appearance: none;
@@ -114,50 +232,66 @@
     appearance: none;
     background-image: url('data:image/svg+xml;charset=US-ASCII,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22292.4%22%20height%3D%22292.4%22%20viewBox%3D%220%200%20292.4%20292.4%22%3E%3Cpath%20fill%3D%22%236b7280%22%20d%3D%22M287%2C197.915l-14.776-14.776L146.2%2C266.384L14.776%2C197.915L0%2C183.139l146.2%2C146.2l146.2-146.2L287%2C197.915z%22%2F%3E%3C%2Fsvg%3E');
     background-repeat: no-repeat;
-    background-position: right 10px center; /* Dikembalikan ke ukuran sebelumnya */
-    background-size: 10px; /* Dikembalikan ke ukuran sebelumnya */
+    background-position: right 12px calc(50% - 1px);
+    background-size: 10px;
     cursor: pointer;
     transition: all 0.3s ease;
+    height: 32px;
+    box-sizing: border-box;
+    line-height: 1.5;
+    display: flex;
+    align-items: center;
+    text-indent: 0;
+    outline: none;
+}
+
+.dashboard-filters-row select:focus {
+    border-color: #557da8;
+    box-shadow: 0 0 0 2px rgba(85, 125, 168, 0.3);
 }
 
 .filter-apply-btn {
-    padding: 5px 8px; /* Dikembalikan ke ukuran sebelumnya */
-    background-color: #557da8; /* DITUKAR: Sekarang warna biru utama */
+    padding: 0px 8px;
+    background-color: #557da8;
     color: #ffffff;
     border: none;
-    border-radius: 20px; /* Dikembalikan ke ukuran sebelumnya */
+    border-radius: 20px;
     cursor: pointer;
-    font-size: 14px; /* Dikembalikan ke ukuran sebelumnya */
+    font-size: 14px;
     font-weight: 600;
     transition: background-color 0.3s ease;
+    height: 32px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-grow: 1;
 }
 
 .filter-apply-btn:hover {
     background-color: #7a9fd8;
 }
 
-/* Content Grid and Cards */
 .content-grid {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
     max-width: none;
     width: 100%;
-    margin: 0px auto; /* antara drop ke atas */
+    margin: 0px auto;
 }
 
 .stage-section {
     display: flex;
     flex-direction: column;
-    border-radius: 10px; /* Dikembalikan ke ukuran sebelumnya */
+    border-radius: 10px;
     overflow: hidden;
-    box-shadow: 0 4px 8px rgba(0,0,0,0.05); /* Dikembalikan ke ukuran sebelumnya */
+    box-shadow: 0 4px 8px rgba(0,0,0,0.05);
     margin : 10px; margin-top: 0px;
 }
 
 .card-header-stage {
-    background-color: #557da8; /* DITUKAR: Sekarang warna biru utama */
+    background-color: #557da8;
     color: #ffffff;
-    padding: 4px; /* Dikembalikan ke ukuran sebelumnya */
+    padding: 4px;
     border-top-left-radius: 10px;
     border-top-right-radius: 10px;
     text-align: center;
@@ -167,7 +301,7 @@
 
 .card-header-stage h2 {
     margin: 0;
-    font-size: 14px; /* Dikembalikan ke ukuran sebelumnya */
+    font-size: 14px;
     color: #ffffff;
     text-align: center;
     font-weight: 500;
@@ -175,7 +309,7 @@
 
 .card-content-only {
     background-color: #ffffff;
-    padding: 15px; /* Dikembalikan ke ukuran sebelumnya */
+    padding: 15px;
     border-radius: 10px;
     border-top-left-radius: 0;
     border-top-right-radius: 0;
@@ -188,7 +322,7 @@
     flex-direction: column;
     align-items: center;
     flex: 1;
-    margin: 0 3px; /* Dikembalikan ke ukuran sebelumnya */
+    margin: 0 3px;
 }
 
 .box-group .box-wrapper:first-child,
@@ -204,8 +338,8 @@
 .box-label {
     font-weight: bold;
     color: #374151;
-    margin-bottom: 5px; /* Dikembalikan ke ukuran sebelumnya */
-    font-size: 12px; /* Dikembalikan ke ukuran sebelumnya */
+    margin-bottom: 5px;
+    font-size: 12px;
     text-align: center;
     font-weight: 500;
 }
@@ -215,14 +349,14 @@
     width: 100%;
     padding: 0px;
     text-align: center;
-    border-radius: 6px; /* Dikembalikan ke ukuran sebelumnya */
+    border-radius: 6px;
     font-weight: bold;
     color: #374151;
-    min-height: 40px; /* Dikembalikan ke ukuran sebelumnya */
+    min-height: 40px;
     display: flex;
     justify-content: center;
     align-items: center;
-    font-size: 13px; /* Dikembalikan ke ukuran sebelumnya */
+    font-size: 13px;
     font-weight: 400;
 }
 
@@ -234,7 +368,7 @@
 .box-group-three {
     display: flex;
     justify-content: space-around;
-    gap: 8px; /* Dikembalikan ke ukuran sebelumnya */
+    gap: 8px;
 }
 
 .status-boxes-grid {
@@ -242,7 +376,7 @@
     justify-content: center;
     max-width: none;
     width: 100%;
-    margin: 0 auto 20px auto; /* Dikembalikan ke ukuran sebelumnya */
+    margin: 0 auto 20px auto;
 }
 
 .status-boxes-grid .stage-section {
