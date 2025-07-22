@@ -24,14 +24,10 @@
     min-width: 350px;
 }
 
-.form-group-nested {
-    margin-bottom: 25px;
-}
-
 /* === General Styling === */
 body {
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    background-color: #f5f5f5;
+    background-color: #f5f5f5;   
 }
 
 /* === Form Container === */
@@ -42,6 +38,8 @@ form {
     padding: 30px;
     border-radius: 0 0 10px 10px;
     box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+    margin-bottom: 40px;
+
 }
 
 /* === Form Group === */

@@ -83,7 +83,7 @@
                     <div style="flex: 1;"><label>Plan Survey</label>
                         <input type="date" name="plan_survey" placeholder="Plan" class="form-control">
                     </div>
-                    <div style="flex: 1;"><label>Plan Survey</label>
+                    <div style="flex: 1;"><label>Realisasi Survey</label>
                         <input type="date" name="realisasi_survey" placeholder="Realisasi" class="form-control">
                     </div>
                 </div>

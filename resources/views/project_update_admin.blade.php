@@ -1,6 +1,10 @@
 <x-app-layout>
+<link rel="stylesheet" href="{{ asset('css/form.css') }}">
 
-    <h1>UPDATE</h1>
+    <div class="form-container">
+        <h1>Update Project</h1>
+    </div>
+    
     <br>
     <form method="POST"
         action="{{ auth()->user()->role == 'admin' ? route('project_store_admin', $project->id) : 
@@ -8,8 +12,12 @@
         @csrf
         @method('PATCH')
 
-
         <div>
+
+            @if (Auth::user()->role === 'mitra')
+            <div class="form-grid">
+            <div class="form-column">
+
             <div class="form-group">
                 <label>Regional</label>
                 <select name="regional" required>
@@ -30,7 +38,6 @@
                 </select>
             </div>
 
-
             <div class="form-group">
                 <label>STO</label>
                 <input type="text" name="sto" required value="{{ $project->sto }}">
@@ -42,6 +49,16 @@
             </div>
 
             <div class="form-group">
+                <label>IHLD</label>
+                <input type="text" name="ihld" required value="{{ $project->ihld }}" />
+            </div>
+            
+            <div class="form-group">
+                <label>Catuan ID</label>
+                <input type="text" name="catuan_id" value="{{ $project->catuan_id }}" required>
+            </div>
+
+            <div class="form-group">
                 <label>Priority</label>
                 <select name="priority">
                     <option value="">-- Pilih --</option>
@@ -50,46 +67,56 @@
                     <option value="P3" {{ $project->priority == 'P3' ? 'selected' : '' }}>P3</option>
                 </select>
             </div>
-
-            <div class="form-group">
-                <label>Plan Survey</label>
-                <input type="date" name="plan_survey" value="{{ $project->plan_survey }}" />
-
-            </div>
-            <div class="form-group">
-                <label>Realisasi Survey</label>
-                <input type="date" name="realisasi_survey" value="{{ $project->realisasi_survey }}" />
-
             </div>
 
+            <div class="form-column">
+
             <div class="form-group">
-                <label>Plan Delivery</label>
-                <input type="date" name="plan_delivery" value="{{ $project->plan_delivery }}" />
-            </div>
-            <div class="form-group">
-                <label>Realisasi Delivery</label>
-                <input type="date" name="realisasi_delivery" value="{{ $project->realisasi_delivery }}" />
+                <label style="color: #0d6efd; font-weight: 650;"></label>
+                <div style="display: flex; gap: 40px;">
+                    <div style="flex: 1;"><label>Plan Survey</label>
+                        <input type="date" name="plan_survey" placeholder="Plan" class="form-control" value="{{ $project->plan_survey }}">
+                    </div>
+                    <div style="flex: 1;"><label>Realisasi Survey</label>
+                        <input type="date" name="realisasi_survey" placeholder="Realisasi" class="form-control" value="{{ $project->realisasi_survey }}">
+                    </div>
+                </div>
             </div>
 
             <div class="form-group">
-                <label>Plan Instalasi</label>
-                <input type="date" name="plan_instalasi" value="{{ $project->plan_instalasi }}" />
+                <label style="color: #0d6efd; font-weight: 650;"></label>
+                <div style="display: flex; gap: 40px;">
+                    <div style="flex: 1;"><label>Plan Delivery</label>
+                        <input type="date" name="plan_delivery" placeholder="Plan" class="form-control" value="{{ $project->plan_delivery }}">
+                    </div>
+                    <div style="flex: 1;"><label>Realisasi Delivery</label>
+                        <input type="date" name="realisasi_delivery" placeholder="Realisasi" class="form-control" value="{{ $project->realisasi_delivery }}">
+                    </div>
+                </div>    
             </div>
 
             <div class="form-group">
-                <label>Realisasi Instalasi</label>
-                <input type="date" name="realisasi_instalasi" value="{{ $project->realisasi_instalasi }}" />
+                <label style="color: #0d6efd; font-weight: 650;"></label>
+                <div style="display: flex; gap: 40px;">
+                    <div style="flex: 1;"><label>Plan Instalasi</label>
+                        <input type="date" name="plan_instalasi" placeholder="Plan" class="form-control" value="{{ $project->plan_instalasi }}">
+                    </div>
+                    <div style="flex: 1;"><label>Realisasi Instalasi</label>
+                        <input type="date" name="realisasi_instalasi" placeholder="Realisasi" class="form-control" value="{{ $project->realisasi_instalasi }}">
+                    </div>
+                </div> 
             </div>
 
             <div class="form-group">
-                <label>Plan Integrasi</label>
-                <input type="date" name="plan_integrasi" value="{{ $project->plan_integrasi }}" />
-            </div>
-
-
-            <div class="form-group">
-                <label>Realisasi Integrasi</label>
-                <input type="date" name="realisasi_integrasi" value="{{ $project->realisasi_integrasi }}" />
+                <label style="color: #0d6efd; font-weight: 650;"></label>
+                <div style="display: flex; gap: 40px;">
+                    <div style="flex: 1;"><label>Plan Integrasi</label>
+                        <input type="date" name="plan_integrasi" placeholder="Plan" class="form-control" value="{{ $project->plan_integrasi }}">
+                    </div>
+                    <div style="flex: 1;"><label>Realisasi Integrasi</label>
+                        <input type="date" name="realisasi_integrasi" placeholder="Realisasi" class="form-control" value="{{ $project->realisasi_integrasi }}">
+                    </div>
+                </div>
             </div>
 
             <div class="form-group">
@@ -106,36 +133,41 @@
                     <option value="Relokasi" {{ $project->drop_data == 'Relokasi' ? 'selected' : '' }}>Relokasi</option>
                 </select>
             </div>
+
             <div id="relokasi-fields" style="display: none;">
 
                 <div class="form-group">
-                    <label>Regional (Relokasi)</label>
-                    <select name="relok_regional">
-                        <option value="">-- Pilih Regional --</option>
-                        @foreach (App\Enums\Regional::cases() as $regional)
-                        <option value="{{ $regional->value }}" {{ $project->relok_regional == $regional->value ? 'selected' : '' }}>{{ $regional->value }}</option>
-                        @endforeach
-                    </select>
+                    <label style="color: #0d6efd; font-weight: 650;"></label>
+                    <div style="display: flex; gap: 40px;">
+                        <div style="flex: 1;"><label>Regional (Relokasi)</label>
+                            <select name="relok_regional" id="relok_regional" class="form-control">
+                                <option value="">-- Pilih Regional --</option>
+                                @foreach (App\Enums\Regional::cases() as $regional)
+                                <option value="{{ $regional->value }}" {{ $project->relok_regional == $regional->value ? 'selected' : '' }}>{{ $regional->value }}</option>
+                                @endforeach
+                            </select>                        
+                        </div>
+                        <div style="flex: 1;"><label>Witel (Relokasi)</label>
+                            <select name="relok_witel">
+                                <option value="">-- Pilih Witel --</option>
+                                @foreach (App\Enums\Witel::cases() as $witel)
+                                <option value="{{ $witel->value }}" {{ $project->relok_witel == $witel->value ? 'selected' : '' }}>{{ $witel->value }}</option>
+                                @endforeach
+                            </select>
+                        </div>
+                    </div>
                 </div>
 
                 <div class="form-group">
-                    <label>Witel (Relokasi)</label>
-                    <select name="relok_witel">
-                        <option value="">-- Pilih Witel --</option>
-                        @foreach (App\Enums\Witel::cases() as $witel)
-                        <option value="{{ $witel->value }}" {{ $project->relok_witel == $witel->value ? 'selected' : '' }}>{{ $witel->value }}</option>
-                        @endforeach
-                    </select>
-                </div>
-
-                <div class="form-group">
-                    <label>STO (Relokasi)</label>
-                    <input type="text" name="relok_sto" value="{{ $project->relok_sto }}">
-                </div>
-
-                <div class="form-group">
-                    <label>Site (Relokasi)</label>
-                    <input type="text" name="relok_site" value="{{ $project->relok_site }}">
+                    <label style="color: #0d6efd; font-weight: 650;"></label>
+                    <div style="display: flex; gap: 40px;">
+                        <div style="flex: 1;"><label>STO (Relokasi)</label>
+                            <input type="text" name="relok_sto" class="form-control" value="{{ $project->relok_sto }}">
+                        </div>
+                        <div style="flex: 1;"><label>Site (Relokasi)</label>
+                            <input type="text" name="relok_site" class="form-control" value="{{ $project->relok_site }}">
+                        </div>
+                    </div>
                 </div>
 
             </div>
@@ -147,18 +179,55 @@
                 <p>File saat ini: <a href="{{ asset('storage/'.$project->bukti_drop) }}" target="_blank">Lihat File</a></p>
                 @endif
             </div>
+            </div>
 
+            </div>
+            @endif
+
+            @if (Auth::user()->role === 'vendor' || Auth::user()->role === 'admin')
+            <div class="form-grid">
+            <div class="form-column">
 
             <div class="form-group">
-                <label>Catuan ID</label>
-                <input type="text" name="catuan_id" value="{{ $project->catuan_id }}" required>
+                <label>Regional</label>
+                <select name="regional" required>
+                    <option value="">-- Pilih Regional --</option>
+                    @foreach (App\Enums\Regional::cases() as $regional)
+                    <option value="{{ $regional->value }}" {{ $project->regional == $regional->value ? 'selected' : '' }}>{{ $regional->value }}</option>
+                    @endforeach
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label>Witel</label>
+                <select name="witel" required>
+                    <option value="">-- Pilih Witel --</option>
+                    @foreach (App\Enums\Witel::cases() as $witel)
+                    <option value="{{ $witel->value }}" {{ $project->witel == $witel->value ? 'selected' : '' }}>{{ $witel->value }}</option>
+                    @endforeach
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label>STO</label>
+                <input type="text" name="sto" required value="{{ $project->sto }}">
+            </div>
+
+            <div class="form-group">
+                <label>Site</label>
+                <input type="text" name="site" required value="{{ $project->site }}">
             </div>
 
             <div class="form-group">
                 <label>IHLD</label>
                 <input type="text" name="ihld" required value="{{ $project->ihld }}" />
             </div>
-            @if (auth()->user()->role == 'vendor') || auth()->user()->role === 'admin')
+            
+            <div class="form-group">
+                <label>Catuan ID</label>
+                <input type="text" name="catuan_id" value="{{ $project->catuan_id }}" required>
+            </div>
+
             <div class="form-group">
                 <label>Priority TA</label>
                 <select name="priority_ta">
@@ -168,6 +237,10 @@
                     <option value="P3" {{ $project->priority_ta == 'P#' ? 'selected' : '' }}>P3</option>
                 </select>
             </div>
+            </div>
+
+            <div class="form-column">
+
             <div class="form-group">
                 <label>Dependensi</label>
                 <select name="dependensi">
@@ -176,6 +249,31 @@
                     <option value="Dependence" {{ $project->dependensi == 'Dependence' ? 'selected' : '' }}>Dependence</option>
                 </select>
             </div>
+
+            <div class="form-group">
+                <label style="color: #0d6efd; font-weight: 650;"></label>
+                <div style="display: flex; gap: 40px;">
+                    <div style="flex: 1;"><label>FTTH CSF</label>
+                        <input type="number" name="ftth_csf" class="form-control" value="{{ $project->ftth_csf }}">
+                    </div>
+                    <div style="flex: 1;"><label>FTTH Port</label>
+                        <input type="number" name="ftth_port" class="form-control" value="{{ $project->ftth_port }}">
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label style="color: #0d6efd; font-weight: 650;"></label>
+                <div style="display: flex; gap: 40px;">
+                    <div style="flex: 1;"><label>Go Live CSF</label>
+                        <input type="number" name="golive_csf" class="form-control" value="{{ $project->golive_csf }}">
+                    </div>
+                    <div style="flex: 1;"><label>Go Live Port</label>
+                        <input type="number" name="golive_port" class="form-control" value="{{ $project->golive_port }}">
+                    </div>
+                </div>
+            </div>
+
             <div class="form-group">
                 <label>Status OSP</label>
                 <select name="status_osp">
@@ -186,8 +284,9 @@
                     <option value="Drop" {{ $project->status_osp == 'Drop' ? 'selected' : '' }}>Drop</option>
                 </select>
             </div>
+
             <div class="form-group">
-                <label>Scenario Uplink </label>
+                <label>Skenario Uplink </label>
                 <select name="scenario_uplink">
                     <option value="">-- Pilih --</option>
                     <option value="L2S" {{ $project->scenario_uplink == 'L2S' ? 'selected' : '' }}>L2S</option>
@@ -198,6 +297,7 @@
                     <option value="SFP Bidi" {{ $project->scenario_uplink == 'SFP Bidi' ? 'selected' : '' }}>SFP Bidi</option>
                 </select>
             </div>
+
             <div class="form-group">
                 <label>Status Uplink </label>
                 <select name="status_uplink">
@@ -206,14 +306,56 @@
                     <option value="Ready" {{ $project->status_uplink == 'Ready' ? 'selected' : '' }}>Ready</option>
                 </select>
             </div>
+
+            <div class="form-group">
+                <label>Remark TA</label>
+                <textarea name="remark_ta" rows="3">{{ $project->remark_ta }}</textarea>
+            </div>
+            
+            </div>
+            </div>
             @endif
-
-
         </div>
 
         <div style="margin-top: 20px;">
+            <center>
             <button type="submit" class="update-btn">Simpan</button>
         </div>
+        </div>
+
+        </div>
+
+    @if ($errors->any())
+    <div class="alert alert-danger" style="margin-bottom: 20px;">
+        <strong>Periksa kembali input Anda:</strong>
+        <ul>
+            @foreach ($errors->all() as $error)
+            <li>{{ $error }}</li>
+            @endforeach
+        </ul>
+    </div>
+    @endif
+
+    {{-- Notifikasi Success --}}
+    @if(session('success'))
+    <div class="notification-popup success">
+        {{ session('success') }}
+        <button class="close-btn" onclick="this.parentElement.style.display='none';">&times;</button>
+    </div>
+    @endif
+
+    {{-- Notifikasi Error --}}
+    @if(session('error'))
+    <div class="notification-popup error">
+        {{ session('error') }}
+        <button class="close-btn" onclick="this.parentElement.style.display='none';">&times;</button>
+    </div>
+    @endif
+
+    <div class="form-container">
+        {{-- ... (kode form Anda) ... --}}
+    </div>
+
     </form>
 
     <script>

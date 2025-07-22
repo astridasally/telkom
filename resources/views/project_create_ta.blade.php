@@ -123,7 +123,7 @@
 
             <div class="form-group">
                 <label>Skenario Uplink</label>
-                <select name="skenario_uplink">
+                <select name="scenario_uplink">
                     <option value="">-- Pilih --</option>
                     <option value="L2S">L2S</option>
                     <option value="OTN">OTN</option>
