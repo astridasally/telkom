@@ -13,6 +13,8 @@ Route::get('/dashboard', [ProjectController::class, 'dashboard'])
     ->middleware(['auth', 'verified'])
     ->name('dashboard');
     
+Route::get('/funneling-olt', [ProjectController::class, 'funnelingOltReport'])->name('funneling_olt_report');
+
 Route::middleware('auth')->group(function () {
     Route::get('/form',  [ProjectController::class, 'projectForm'])->name('project_create');
     Route::post('/form', [ProjectController::class, 'store_projectForm'])->name('project_store');

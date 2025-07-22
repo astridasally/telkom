@@ -16,45 +16,66 @@
                 <table>
                     <thead>
                         <tr>
-                            <th rowspan="2">Regional</th>
-                            <th colspan="2">PLAN CSF</th>
-                            <th colspan="2">MOS</th>
-                            <th colspan="2">INSTALASI</th>
-                            <th colspan="2">INTEGRASI</th>
-                            <th colspan="2">GO LIVE</th>
-                            <th colspan="2">UPLINK MINI OLT READINESS</th>
+                            <th rowspan="2" class="regional-header">Regional</th>
+                            <th rowspan="2">PLAN CSF</th>
+                            <th colspan="2" class="header-group">FTTH READY</th>
+                            <th colspan="2" class="header-group">DELIVERY</th>
+                            <th colspan="2" class="header-group">INSTALASI</th>
+                            <th colspan="2" class="header-group">INTEGRASI</th>
+                            <th colspan="2" class="header-group">GO LIVE</th>
+                            <th colspan="2" class="header-group">UPLINK MINI OLT READINESS</th>
                         </tr>
                         <tr>
                             <th>CSF</th>
-                            <th>PORT</th>
-                            <th>DONE</th>
-                            <th>OGP</th>
-                            <th>DONE</th>
-                            <th>OGP</th>
-                            <th>DONE</th>
-                            <th>OGP</th>
+                            <th>Port</th>
+                            <th>Plan</th>
+                            <th>Done</th>
+                            <th>Plan</th>
+                            <th>Done</th>
+                            <th>Plan</th>
+                            <th>Done</th>
                             <th>CSF</th>
-                            <th>PORT</th>
-                            <th>RFI</th>
-                            <th>CHECK</th>
+                            <th>Port</th>
+                            <th>Ready</th>
+                            <th>Not Ready</th>
                         </tr>
                     </thead>
                     <tbody>
-                        {{-- Contoh baris statis. Anda mungkin perlu @foreach di sini jika data regional diisi dari $projects --}}
-                        <tr> <td>REGIONAL 1</td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
-                        <tr> <td>REGIONAL 2</td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
-                        <tr> <td>REGIONAL 3</td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
-                        <tr> <td>REGIONAL 4</td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
-                        <tr> <td>REGIONAL 5</td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
-                    </tbody>
-                    <tfoot>
-                        <tr>
-                            <td><strong>TOTAL</strong></td>
-                            {{-- Anda bisa menampilkan total projectCount di sini jika ini adalah total keseluruhan yang Anda inginkan --}}
-                            {{-- Atau Anda perlu menghitung total per kolom secara terpisah di controller --}}
-                            <td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td>
-                        </tr>
-                    </tfoot>
+                @foreach (\App\Enums\Regional::cases() as $regionalEnum)
+                    <tr>
+                        <td class="regional-header">{{ $regionalEnum->value }}</td>
+                        <td>{{ $funnelingData[$regionalEnum->value]['plan_csf'] ?? 0 }}</td>
+                        <td>{{ $funnelingData[$regionalEnum->value]['ftth_ready_csf'] ?? 0 }}</td>
+                        <td>{{ $funnelingData[$regionalEnum->value]['ftth_ready_port'] ?? 0 }}</td>
+                        <td>{{ $funnelingData[$regionalEnum->value]['delivery_plan'] ?? 0 }}</td>
+                        <td>{{ $funnelingData[$regionalEnum->value]['delivery_done'] ?? 0 }}</td>
+                        <td>{{ $funnelingData[$regionalEnum->value]['instalasi_plan'] ?? 0 }}</td>
+                        <td>{{ $funnelingData[$regionalEnum->value]['instalasi_done'] ?? 0 }}</td>
+                        <td>{{ $funnelingData[$regionalEnum->value]['integrasi_plan'] ?? 0 }}</td>
+                        <td>{{ $funnelingData[$regionalEnum->value]['integrasi_done'] ?? 0 }}</td>
+                        <td>{{ $funnelingData[$regionalEnum->value]['golive_csf'] ?? 0 }}</td>
+                        <td>{{ $funnelingData[$regionalEnum->value]['golive_port'] ?? 0 }}</td>
+                        <td>{{ $funnelingData[$regionalEnum->value]['uplink_ready'] ?? 0 }}</td>
+                        <td>{{ $funnelingData[$regionalEnum->value]['uplink_not_ready'] ?? 0 }}</td>
+                    </tr>
+                @endforeach
+                <tr class="total-row">
+                    <td class="regional-header">TOTAL</td>
+                    <td>{{ $totalFunnelingCounts['plan_csf'] }}</td>
+                    <td>{{ $totalFunnelingCounts['ftth_ready_csf'] }}</td>
+                    <td>{{ $totalFunnelingCounts['ftth_ready_port'] }}</td>
+                    <td>{{ $totalFunnelingCounts['delivery_plan'] }}</td>
+                    <td>{{ $totalFunnelingCounts['delivery_done'] }}</td>
+                    <td>{{ $totalFunnelingCounts['instalasi_plan'] }}</td>
+                    <td>{{ $totalFunnelingCounts['instalasi_done'] }}</td>
+                    <td>{{ $totalFunnelingCounts['integrasi_plan'] }}</td>
+                    <td>{{ $totalFunnelingCounts['integrasi_done'] }}</td>
+                    <td>{{ $totalFunnelingCounts['golive_csf'] }}</td>
+                    <td>{{ $totalFunnelingCounts['golive_port'] }}</td>
+                    <td>{{ $totalFunnelingCounts['uplink_ready'] }}</td>
+                    <td>{{ $totalFunnelingCounts['uplink_not_ready'] }}</td>
+                </tr>
+            </tbody>
                 </table>
             </div>
         </div>

@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use App\Models\User;
 
 class Project extends Model
 {
@@ -37,10 +38,10 @@ class Project extends Model
         'status_uplink',
         'drop_ta',
         'remark_ta',
-        'ftth_csf' => 'nullable',
-        'ftth_port' => 'nullable',
-        'golive_csf' => 'nullable',
-        'golive_port' => 'nullable',
+        'ftth_csf' ,
+        'ftth_port' ,
+        'golive_csf' ,
+        'golive_port',
 
         'user_id', // relasi ke user
     ];
