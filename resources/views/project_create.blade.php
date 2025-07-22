@@ -187,12 +187,12 @@
             @endif
 
         </div>
-    </div>
 
-        <div style="margin-top: 20px;">
-            <center>
+        <div style="margin-top: 20px; text-align: right">
             <button type="submit" class="update-btn">Simpan</button>
         </div>
+        
+    </div>
 
 </div>
 

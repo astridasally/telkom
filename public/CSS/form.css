@@ -1,10 +1,10 @@
 /* === Header Form === */
 .form-container{
     max-width: 900px; /* Samakan dengan max-width form-container */
-    margin: 40px auto 0 auto; /* Margin atas 40px, pusatkan, margin bawah 0 */
+    margin: 20px auto 0 auto; /* Margin atas 40px, pusatkan, margin bawah 0 */
     background-color: #3b5998; /* Warna biru sesuai contoh gambar */
     color: white; /* Teks putih */
-    font-size: 1.5rem; /* Ukuran font */
+    font-size: 1.2rem; /* Ukuran font */
     font-weight: bold;
     text-align: center; /* Teks rata kiri */
     border-radius: 8px 8px 0 0; /* Sudut membulat hanya di atas */
@@ -36,7 +36,7 @@ form {
     margin: 0px auto;
     background-color: #fff;
     padding: 30px;
-    border-radius: 0 0 10px 10px;
+    border-radius: 0 0 5px 5px;
     box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
     margin-bottom: 40px;
 
@@ -46,7 +46,7 @@ form {
 .form-group {
     display: flex;
     flex-direction: column;
-    margin-bottom: 20px;
+    margin-bottom: 8px;
 }
 
 /* === Label === */
@@ -62,7 +62,7 @@ form {
     padding: 10px 12px;
     border: 1px solid #ccc;
     border-radius: 8px;
-    font-size: 1rem;
+    font-size: 14px;
     box-sizing: border-box;
     /* Anda bisa tambahkan: */
     resize: vertical; /* Memungkinkan pengguna mengubah ukuran textarea secara vertikal */
@@ -71,10 +71,10 @@ form {
 /* === Input dan Select === */
 .form-group input,
 .form-group select {
-    padding: 10px 12px;
+    padding: 7px 12px;
     border: 1px solid #ccc;
     border-radius: 8px;
-    font-size: 15px;
+    font-size: 14px;
 }
 
 /* === Tombol Simpan === */
@@ -82,9 +82,9 @@ form {
     background-color: #32b92e; 
     color: white;
     border: none;
-    padding: 10px 30px;
+    padding: 10px 50px;
     border-radius: 6px;
-    font-size: 16px;
+    font-size: 15px;
     cursor: pointer;
     transition: 0.2s ease-in-out;
 }
@@ -119,7 +119,7 @@ input[type="date"] {
     right: 30px; /* Jarak dari kanan */
     padding: 15px 25px;
     border-radius: 8px;
-    font-size: 1rem;
+    font-size: 14px;
     font-weight: 30px;
     color: white;
     z-index: 1000; /* Pastikan muncul di atas elemen lain */

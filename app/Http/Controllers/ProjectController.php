@@ -42,8 +42,9 @@ class ProjectController extends Controller
             'relok_sto'      => 'required_if:drop_data,Relokasi',
             'relok_site'     => 'required_if:drop_data,Relokasi',
 
+            'remark' => 'nullable',
+            'drop_data' => 'nullable',
 
-            'remark' => 'nullable|string',
         ]);
 
 
@@ -58,7 +59,7 @@ class ProjectController extends Controller
         $project = Project::create($validated);
 
         if ($project) {
-            return redirect()->back()->with('success', 'Project berhasil disimpan.');
+            return redirect()->back()->with('success', 'Data berhasil disimpan.');
         } else {
             return redirect()->back()->with('error', 'Gagal menyimpan project.');
         }
@@ -129,10 +130,10 @@ class ProjectController extends Controller
             'witel' => 'required',
             'sto' => 'required',
             'site' => 'required',
-            'priority' => 'required',
-            'catuan_id' => 'nullable',
-            'ihld' => 'nullable',
-            'plan_survey' => 'required|date',
+            'priority' => 'nullable',
+            'catuan_id' => 'required',
+            'ihld' => 'required',
+            'plan_survey' => 'nullable|date',
             'realisasi_survey' => 'nullable|date|after_or_equal:plan_survey',
             'plan_delivery' => 'nullable|date|after_or_equal:realisasi_survey',
             'realisasi_delivery' => 'nullable|date|after_or_equal:plan_delivery',
@@ -140,6 +141,8 @@ class ProjectController extends Controller
             'realisasi_instalasi' => 'nullable|date|after_or_equal:plan_instalasi',
             'plan_integrasi' => 'nullable|date|after_or_equal:realisasi_instalasi',
             'realisasi_integrasi' => 'nullable|date|after_or_equal:plan_integrasi',
+            'remark' => 'nullable',
+            'drop_data' => 'nullable',
 
             //'drop_data' => 'required|in:Yes,No,Relokasi',
             'bukti_drop' => 'required_if:drop_data,Yes|nullable|mimes:pdf,jpg,jpeg,png|max:5200',
@@ -147,6 +150,18 @@ class ProjectController extends Controller
             'relok_witel'    => 'required_if:drop_data,Relokasi',
             'relok_sto'      => 'required_if:drop_data,Relokasi',
             'relok_site'     => 'required_if:drop_data,Relokasi',
+
+            //validate form edit TA 
+            'priority_ta' => 'nullable',
+            'dependensi' => 'nullable',
+            'ftth_csf' => 'nullable',
+            'ftth_port' => 'nullable',
+            'golive_csf' => 'nullable',
+            'golive_port' => 'nullable',
+            'status_osp' => 'nullable',
+            'scenario_uplink' => 'nullable',
+            'status_uplink' => 'nullable',
+            'remark_ta' => 'nullable',
         ]);
 
 
@@ -174,10 +189,10 @@ class ProjectController extends Controller
             'witel' => 'required',
             'sto' => 'required',
             'site' => 'required',
-            'priority' => 'required',
-            'catuan_id' => 'nullable',
-            'ihld' => 'nullable',
-            'plan_survey' => 'required|date',
+            'priority' => 'nullable',
+            'catuan_id' => 'required',
+            'ihld' => 'required',
+            'plan_survey' => 'nullable|date',
             'realisasi_survey' => 'nullable|date|after_or_equal:plan_survey',
             'plan_delivery' => 'nullable|date|after_or_equal:realisasi_survey',
             'realisasi_delivery' => 'nullable|date|after_or_equal:plan_delivery',
@@ -185,6 +200,10 @@ class ProjectController extends Controller
             'realisasi_instalasi' => 'nullable|date|after_or_equal:plan_instalasi',
             'plan_integrasi' => 'nullable|date|after_or_equal:realisasi_instalasi',
             'realisasi_integrasi' => 'nullable|date|after_or_equal:plan_integrasi',
+            
+            'remark' => 'nullable',
+            'drop_data' => 'nullable',
+
 
             //'drop_data' => 'required|in:Yes,No,Relokasi',
             'bukti_drop' => 'required_if:drop_data,Yes|nullable|mimes:pdf,jpg,jpeg,png|max:5200',
@@ -193,12 +212,16 @@ class ProjectController extends Controller
             'relok_sto'      => 'required_if:drop_data,Relokasi',
             'relok_site'     => 'required_if:drop_data,Relokasi',
 
-            'remark' => 'nullable|string',
-            'priority_ta' => 'required',
-            'status_osp' => 'required',
-            'dependensi' => 'required',
-            'scenario_uplink' => 'required',
-            'status_uplink' => 'required',
+            'priority_ta' => 'nullable',
+            'dependensi' => 'nullable',
+            'ftth_csf' => 'nullable',
+            'ftth_port' => 'nullable',
+            'golive_csf' => 'nullable',
+            'golive_port' => 'nullable',
+            'status_osp' => 'nullable',
+            'scenario_uplink' => 'nullable',
+            'status_uplink' => 'nullable',
+            'remark_ta' => 'nullable',
         ]);
 
 
@@ -213,7 +236,7 @@ class ProjectController extends Controller
         // Perbaikan di sini: update bukan create
         $project->update($validated);
 
-        return redirect()->route('project_report')->with('success', 'Project berhasil diperbarui.');
+        return redirect()->route('project_report')->with('success', 'Data berhasil diperbarui.');
     }
 
    public function dashboard(Request $request)

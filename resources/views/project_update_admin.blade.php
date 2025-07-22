@@ -5,14 +5,55 @@
         <h1>Update Project</h1>
     </div>
     
-    <br>
     <form method="POST"
-        action="{{ auth()->user()->role == 'admin' ? route('project_store_admin', $project->id) : 
+        action="{{ auth()->user()->role == 'admin' || auth()->user()->role === 'mitra' || auth()->user()->role === 'vendor' ? route('project_store_admin', $project->id) : 
         route('project_store', $project->id) }}" enctype="multipart/form-data">
         @csrf
         @method('PATCH')
 
-        <div>
+
+            @if (Auth::user()->role === 'admin')
+            <div class="form-group">
+                <label>Regional</label>
+                <select name="regional" required>
+                    <option value="">-- Pilih Regional --</option>
+                    @foreach (App\Enums\Regional::cases() as $regional)
+                    <option value="{{ $regional->value }}" {{ $project->regional == $regional->value ? 'selected' : '' }}>{{ $regional->value }}</option>
+                    @endforeach
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label>Witel</label>
+                <select name="witel" required>
+                    <option value="">-- Pilih Witel --</option>
+                    @foreach (App\Enums\Witel::cases() as $witel)
+                    <option value="{{ $witel->value }}" {{ $project->witel == $witel->value ? 'selected' : '' }}>{{ $witel->value }}</option>
+                    @endforeach
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label>STO</label>
+                <input type="text" name="sto" required value="{{ $project->sto }}">
+            </div>
+
+            <div class="form-group">
+                <label>Site</label>
+                <input type="text" name="site" required value="{{ $project->site }}">
+            </div>
+
+            <div class="form-group">
+                <label>IHLD</label>
+                <input type="text" name="ihld" required value="{{ $project->ihld }}" />
+            </div>
+            
+            <div class="form-group">
+                <label>Catuan ID</label>
+                <input type="text" name="catuan_id" value="{{ $project->catuan_id }}" required>
+            </div>
+            @endif
+ 
 
             @if (Auth::user()->role === 'mitra')
             <div class="form-grid">
@@ -184,7 +225,7 @@
             </div>
             @endif
 
-            @if (Auth::user()->role === 'vendor' || Auth::user()->role === 'admin')
+            @if (Auth::user()->role === 'vendor')
             <div class="form-grid">
             <div class="form-column">
 
@@ -315,12 +356,10 @@
             </div>
             </div>
             @endif
-        </div>
 
-        <div style="margin-top: 20px;">
-            <center>
-            <button type="submit" class="update-btn">Simpan</button>
-        </div>
+            <div style="margin-top: 20px; text-align: right">
+                <button type="submit" class="update-btn">Simpan</button>
+            </div>
         </div>
 
         </div>
