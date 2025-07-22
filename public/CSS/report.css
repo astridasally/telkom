@@ -1,16 +1,74 @@
-table, th, td {
-    border: 1px solid #000; /* garis hitam */
-    border-collapse: collapse; /* gabungkan border */
-
+.report-wrapper {
+    background-color: #ffffff; /* Latar belakang putih untuk kotak tabel */
+    padding: 20px; /* Padding di dalam kotak tabel */
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    width: 100%; /* Tabel akan mengisi lebar kontainer */
+    max-width: 1200px; /* Batasi lebar maksimal tabel */
+    margin: 0 auto; /* Menengahkan tabel */
+    box-sizing: border-box;
+    margin-top: 20px;
 }
 
-td {
-    padding: 8px;
+/* Tabel utama */
+.table-container {
+    overflow-x: auto; /* Agar tabel dapat discroll secara horizontal */
+    
+}
+
+/* Header Info untuk bagian atas tabel */
+.header-info {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 15px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid #e0e0e0;
+}
+
+.title-left {
+    font-size: 20px;
+    font-weight: bold;
+    color: #333;
+}
+
+
+
+/* Style untuk table */
+table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 10px;
     text-align: center;
-   font-size: 10px;
 }
-thead tr {
-    background-color: #557da8; /* biru */
-    color: white; /* warna teks putih biar kontras */
-    font-size: 12px;
+
+/* Header Tabel */
+thead th {
+    background-color: #3f6096;
+    color: #ffffff;
+    padding: 8px;
+    border: 1px solid black;
+    white-space: nowrap;
+}
+
+
+/* Body Tabel */
+tbody td {
+    padding: 8px;
+    border: 1px solid rgb(197, 197, 197);
+    color: #333;
+    background-color: #f9f9f9;
+}
+
+tbody tr:nth-child(even) td {
+    background-color: #ffffff;
+}
+.edit-button {
+    background-color: #4CAF50; /* Green */
+    color: white;
+    padding: 2px 12px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    border-radius: 20px; /* Optional: for rounded corners */
 }
