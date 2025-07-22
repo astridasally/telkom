@@ -220,56 +220,57 @@ class ProjectController extends Controller
         $baseQuery = Project::query();
 
         // 2. Dapatkan nilai filter dari Request
-        // Default ke null jika tidak ada di URL
-        $selectedMitra = $request->input('mitra');
+        $selectedMitra    = $request->input('mitra');
         $selectedRegional = $request->input('regional');
-        $selectedWitel = $request->input('witel');
+        $selectedWitel    = $request->input('witel');
 
         // 3. Terapkan filter berdasarkan input dari Request ke baseQuery
-        // Filter Mitra
+
+        // FILTER MITRA (Menggunakan relasi user)
         if ($selectedMitra && $selectedMitra !== 'All Mitra') {
-            $baseQuery->where('mitra', $selectedMitra);
+            $baseQuery->whereHas('user', function ($query) use ($selectedMitra) {
+                $query->where('name', $selectedMitra); // Filter di kolom 'name' tabel users
+            });
         }
 
-        // Filter Regional
+        // FILTER REGIONAL
         if ($selectedRegional && $selectedRegional !== 'All Regional') {
             $baseQuery->where('regional', $selectedRegional);
         }
 
-        // Filter Witel
+        // FILTER WITEL
         if ($selectedWitel && $selectedWitel !== 'All Witel') {
             $baseQuery->where('witel', $selectedWitel);
         }
 
-        // 4. Ambil data proyek setelah semua filter diterapkan
-        // Penting: Lakukan ->get() hanya sekali setelah semua where diterapkan
+        // 4. Ambil data proyek UTAMA setelah semua filter dasar diterapkan
+        // Ini adalah data yang akan ditampilkan di tabel
         $projects = $baseQuery->get();
 
-        // 5. Hitung semua metrik dari koleksi $projects yang sudah difilter
-        $projectCount = $projects->count();
+        // 5. Hitung semua metrik
+        // PENTING: Gunakan $baseQuery->clone() untuk setiap perhitungan agar tidak saling memengaruhi.
+        $projectCount = $baseQuery->clone()->count();
 
         // SURVEY
-        $planSurveyCount = $projects->whereNotNull('plan_survey')->count();
-        $realSurveyCount = $projects->whereNotNull('realisasi_survey')->count();
+        $planSurveyCount = $baseQuery->clone()->whereNotNull('plan_survey')->count();
+        $realSurveyCount = $baseQuery->clone()->whereNotNull('realisasi_survey')->count();
 
         // DELIVERY
-        $planDeliveryCount = $projects->whereNotNull('plan_delivery')->count();
-        $realDeliveryCount = $projects->whereNotNull('realisasi_delivery')->count();
+        $planDeliveryCount = $baseQuery->clone()->whereNotNull('plan_delivery')->count();
+        $realDeliveryCount = $baseQuery->clone()->whereNotNull('realisasi_delivery')->count();
 
         // INSTALASI
-        $planInstalasiCount = $projects->whereNotNull('plan_instalasi')->count();
-        $realInstalasiCount = $projects->whereNotNull('realisasi_instalasi')->count();
+        $planInstalasiCount = $baseQuery->clone()->whereNotNull('plan_instalasi')->count();
+        $realInstalasiCount = $baseQuery->clone()->whereNotNull('realisasi_instalasi')->count();
 
         // INTEGRASI
-        $planIntegrasiCount = $projects->whereNotNull('plan_integrasi')->count();
-        $realIntegrasiCount = $projects->whereNotNull('realisasi_integrasi')->count();
+        $planIntegrasiCount = $baseQuery->clone()->whereNotNull('plan_integrasi')->count();
+        $realIntegrasiCount = $baseQuery->clone()->whereNotNull('realisasi_integrasi')->count();
 
         // DROP
-        // Perhitungan drop juga akan dilakukan pada koleksi $projects yang sudah difilter
-        $dropYesCount = $projects->where('drop_data', 'yes')->count();
-        $dropNoCount = $projects->where('drop_data', 'no')->count();
-        $dropRelokasiCount = $projects->where('drop_data', 'relokasi')->count();
-
+        $dropYesCount      = $baseQuery->clone()->where('drop_data', 'yes')->count();
+        $dropNoCount       = $baseQuery->clone()->where('drop_data', 'no')->count();
+        $dropRelokasiCount = $baseQuery->clone()->where('drop_data', 'relokasi')->count();
 
         // Mengirimkan semua variabel yang sudah dihitung ke view
         return view('dashboard', compact(
@@ -286,9 +287,9 @@ class ProjectController extends Controller
             'dropYesCount',
             'dropNoCount',
             'dropRelokasiCount',
-            'selectedMitra',    // Kirim nilai filter yang dipilih ke view
-            'selectedRegional', // Kirim nilai filter yang dipilih ke view
-            'selectedWitel'     // Kirim nilai filter yang dipilih ke view
+            'selectedMitra',
+            'selectedRegional',
+            'selectedWitel'
         ));
     }
 }
