@@ -7,6 +7,8 @@ use App\Models\User; // Pastikan ini ada
 use Illuminate\Http\Request;
 use App\Enums\Regional; // Pastikan ini ada
 use App\Enums\Witel; // Pastikan ini ada
+use Carbon\Carbon; // Pastikan ini ada
+
 class ProjectController extends Controller
 {
 
@@ -356,9 +358,53 @@ class ProjectController extends Controller
             }
         }
 
-
         // =======================================================
-        // BAGIAN 3: MENGIRIMKAN SEMUA VARIABEL KE VIEW DASHBOARD
+        // BAGIAN 3: LOGIKA GRAFIK S-CURVE (PLAN & REALISASI INTEGRASI)
+        // =======================================================
+        // =======================================================
+        // BAGIAN 3: LOGIKA GRAFIK S-CURVE (PLAN & REALISASI INTEGRASI)
+        // =======================================================
+        $sCurveLabels = [];
+        $sCurvePlanData = [];
+        $sCurveRealData = [];
+
+        // Tentukan rentang tanggal untuk grafik
+        // Start Date: Selalu 12 bulan yang lalu dari bulan ini
+        $startDate = Carbon::now()->subMonths(11)->startOfMonth(); // Mengambil 12 bulan termasuk bulan ini
+        // End Date: Akhir bulan saat ini atau bulan depan (sesuai kebutuhan Anda)
+        $endDate = Carbon::now()->endOfMonth(); // Hingga akhir bulan ini
+
+        // Atau jika Anda ingin sampai bulan depan:
+        // $endDate = Carbon::now()->addMonth()->startOfMonth();
+
+        $currentDate = $startDate->copy();
+
+        while ($currentDate->lessThanOrEqualTo($endDate)) {
+            $monthYear = $currentDate->format('M Y'); // Contoh: Jun 2025
+            $sCurveLabels[] = $monthYear;
+
+            // Clone base query untuk memastikan filter dashboard diterapkan jika diinginkan
+            // Jika Anda ingin grafik ini TIDAK dipengaruhi filter dashboard, gunakan Project::query()
+            $queryForGraph = $baseQuery->clone(); // Menggunakan filter dashboard
+
+            // Hitung kumulatif PLAN INTEGRASI hingga akhir bulan ini
+            $planIntegrasiCumulative = $queryForGraph->clone()
+                                                    ->whereNotNull('plan_integrasi')
+                                                    ->where('plan_integrasi', '<=', $currentDate->endOfMonth()->toDateString())
+                                                    ->count();
+            $sCurvePlanData[] = $planIntegrasiCumulative;
+
+            // Hitung kumulatif REALISASI INTEGRASI hingga akhir bulan ini
+            $realIntegrasiCumulative = $queryForGraph->clone()
+                                                    ->whereNotNull('realisasi_integrasi')
+                                                    ->where('realisasi_integrasi', '<=', $currentDate->endOfMonth()->toDateString())
+                                                    ->count();
+            $sCurveRealData[] = $realIntegrasiCumulative;
+
+            $currentDate->addMonth(); // Maju ke bulan berikutnya
+        }
+        // =======================================================
+        // BAGIAN 4: MENGIRIMKAN SEMUA VARIABEL KE VIEW DASHBOARD
         // =======================================================
         return view('dashboard', compact(
             'projects',
@@ -379,7 +425,11 @@ class ProjectController extends Controller
             'selectedWitel',
             // Variabel untuk Funneling OLT yang akan digunakan di dashboard.blade.php
             'funnelingData',
-            'totalFunnelingCounts'
+            'totalFunnelingCounts',
+             // Variabel untuk Grafik S-Curve
+            'sCurveLabels',
+            'sCurvePlanData',
+            'sCurveRealData'
         ));
     }
 

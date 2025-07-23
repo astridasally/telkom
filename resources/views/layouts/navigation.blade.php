@@ -16,7 +16,7 @@
                         {{ __('Dashboard') }}
                     </x-nav-link>
 
-                    @if (Auth::user()->role === 'admin')
+                    @if (Auth::user()->role === 'admin' || Auth::user()->role === 'mitra')
                     <x-nav-link :href="route('project_create')" :active="request()->routeIs('project_create')">
                         {{ __('Form') }}
                     </x-nav-link>

@@ -1,6 +1,8 @@
 <x-app-layout>
     {{-- Sesuaikan path CSS Anda --}}
     <link rel="stylesheet" href="{{ asset('css/dashboard.css') }}">
+    {{-- SERTAKAN LIBRARY CHART.JS --}}
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
     <div class="page-content-wrapper">
 
@@ -87,7 +89,8 @@
                     <h2>Grafik Integrasi</h2>
                 </div>
                 <div class="graph-content">
-                    <p>Space for your chart/graph.</p>
+                    {{-- Ganti <p>Space for your chart/graph.</p> dengan elemen canvas --}}
+                    <canvas id="sCurveChart"></canvas>
                 </div>
             </div>
 
@@ -255,4 +258,72 @@
             </div>
         </div>
     </div>
+     {{-- Script untuk Chart.js (HARUS DI BAWAH ELEMEN CANVAS) --}}
+    <script>
+        // Data dari Controller Laravel
+        const sCurveLabels = @json($sCurveLabels);
+        const sCurvePlanData = @json($sCurvePlanData);
+        const sCurveRealData = @json($sCurveRealData);
+
+        // Tambahkan console.log untuk memverifikasi data
+        console.log("Labels for S-Curve:", sCurveLabels);
+        console.log("Plan Data for S-Curve:", sCurvePlanData);
+        console.log("Real Data for S-Curve:", sCurveRealData);
+
+        const ctx = document.getElementById('sCurveChart');
+        if (ctx) {
+            new Chart(ctx, {
+                type: 'line',
+                data: {
+                    labels: sCurveLabels,
+                    datasets: [{
+                        label: 'PLAN',
+                        data: sCurvePlanData,
+                        borderColor: 'rgb(54, 162, 235)',
+                        backgroundColor: 'rgba(54, 162, 235, 0.2)',
+                        tension: 0.3,
+                        fill: false
+                    }, {
+                        label: 'REAL',
+                        data: sCurveRealData,
+                        borderColor: 'rgb(255, 159, 64)',
+                        backgroundColor: 'rgba(255, 159, 64, 0.2)',
+                        tension: 0.3,
+                        fill: false
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    scales: {
+                        x: {
+                            title: {
+                                display: true,
+                                text: 'BULAN'
+                            }
+                        },
+                        y: {
+                            title: {
+                                display: true,
+                                text: 'Jumlah Project'
+                            },
+                            beginAtZero: true
+                        }
+                    },
+                    plugins: {
+                        tooltip: {
+                            mode: 'index',
+                            intersect: false
+                        },
+                        title: {
+                            display: false,
+                            text: 'KURVA S CSF Mini OLT'
+                        }
+                    }
+                }
+            });
+        } else {
+            console.error("Canvas element with ID 'sCurveChart' not found.");
+        }
+    </script>
 </x-app-layout>
