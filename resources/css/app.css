@@ -2,4 +2,17 @@
 @tailwind components;
 @tailwind utilities;
 
+/* resources/css/app.css */
 
+/* Tambahkan di bagian paling bawah file ini */
+body {
+    padding-top: 64px; /* Ini akan memberi ruang di atas konten */
+    background-color: #f3f4f6;
+}
+
+/* Ini opsional tapi direkomendasikan jika Anda ingin `min-h-screen`
+   menghitung tinggi sisa viewport setelah padding body */
+.min-h-screen {
+    min-height: calc(100vh - 64px);
+    background-color: #f3f4f6;
+}

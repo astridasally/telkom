@@ -154,7 +154,6 @@
                 <button type="submit" class="update-btn">Simpan</button>
             </div>
 
-        </div>
         
     @if ($errors->any())
     <div class="alert alert-danger" style="margin-bottom: 20px;">

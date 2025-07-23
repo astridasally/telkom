@@ -47,6 +47,9 @@
                 <label>STO</label>
                 <input type="text" name="sto" required>
             </div>
+            </div>  
+
+            <div class="form-column">
 
             <div class="form-group">
                 <label>Site</label>
@@ -61,6 +64,7 @@
             <div class="form-group">
                 <label>Catuan ID</label>
                 <input type="text" name="catuan_id" required />
+            </div>
             </div>
 
             @if(auth()->user()->role === 'mitra')
