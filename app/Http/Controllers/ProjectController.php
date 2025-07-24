@@ -70,9 +70,9 @@ class ProjectController extends Controller
     public function report()
     {
         if (auth()->user()->role === 'admin') {
-            $projects = Project::all(); // Admin lihat semua
+            $projects = Project::paginate(4); // Admin lihat semua
         } else {
-            $projects = Project::where('user_id', auth()->id())->get(); // Mitra hanya miliknya
+            $projects = Project::where('user_id', auth()->id())->paginate(4); // Mitra hanya miliknya
         }
 
         return view('project_report', compact('projects'));

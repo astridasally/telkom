@@ -5,6 +5,7 @@ body {
     padding: 0; /* Pastikan tidak ada padding default pada body */
     background-color: #f0f2f5;
     min-height: 100vh;
+    margin-top: 65px;
 }
 
 /* Asumsi ini adalah style untuk navigasi paling atas (dari x-app-layout) */
