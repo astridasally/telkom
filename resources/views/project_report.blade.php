@@ -11,6 +11,9 @@
         
     <div class="table-container">
 
+    {{$projects->links()}}
+    <br>
+    
     <table class="sticky-header-table border border-gray-400">
     <thead class="border border-gray-400">
     <tr>
