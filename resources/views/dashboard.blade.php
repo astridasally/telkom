@@ -91,7 +91,6 @@
                     <h2>Grafik Integrasi</h2>
                 </div>
                 <div class="graph-content">
-                    {{-- Ganti <p>Space for your chart/graph.</p> dengan elemen canvas --}}
                     <canvas id="sCurveChart"></canvas>
                 </div>
             </div>
@@ -259,7 +258,24 @@
                 </div>
             </div>
         </div>
+    <div class= "integrasi-wrapper">
+        <div class="sken-area">
+        </div>
+        <div class="daily-area">
+                            </div>
+        <div class="failed-area">
+                            </div>
+
+
+
+
+
     </div>
+
+
+
+
+
      {{-- Script untuk Chart.js (HARUS DI BAWAH ELEMEN CANVAS) --}}
     <script>
         // Data dari Controller Laravel
