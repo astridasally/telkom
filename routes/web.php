@@ -18,7 +18,6 @@ Route::get('/funneling-olt', [ProjectController::class, 'funnelingOltReport'])->
 Route::middleware('auth')->group(function () {
     Route::get('/form',  [ProjectController::class, 'projectForm'])->name('project_create');
     Route::post('/form', [ProjectController::class, 'store_projectForm'])->name('project_store');
-    Route::get('/report',  [ProjectController::class, 'report'])->name('project_report');
 
     Route::get('/formta',  [ProjectController::class, 'projectFormTA'])->name('project_create_ta');
     Route::post('/formta', [ProjectController::class, 'store_projectFormTA'])->name('project_store_ta');
@@ -29,8 +28,6 @@ Route::middleware('auth')->group(function () {
     Route::patch('/form-update/{id}', [ProjectController::class, 'store_project_update'])->name('project_store');
 
     Route::patch('/form-update/{id}', [ProjectController::class, 'store_project_update_admin'])->name('project_store_admin');
-
-
 
 
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');

@@ -1,6 +1,8 @@
 <x-app-layout>
     {{-- Sesuaikan path CSS Anda --}}
     <link rel="stylesheet" href="{{ asset('css/dashboard.css') }}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" integrity="sha512-..." crossorigin="anonymous" referrerpolicy="no-referrer" />
+
     {{-- SERTAKAN LIBRARY CHART.JS --}}
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 

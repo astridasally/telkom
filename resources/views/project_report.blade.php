@@ -1,18 +1,68 @@
 <x-app-layout>
 <link rel="stylesheet" href="{{ asset('css/report.css') }}">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" integrity="sha512-..." crossorigin="anonymous" referrerpolicy="no-referrer" />
 
     
     <div class="report-wrapper">
     <div class="header-info">
         <div class="title-left">Mitra {{ Auth::user()->name }}</div>
-
     </div>
-         
+    
+
+        <div class="search-filter-container">
+        <form action="{{ route('project_report') }}" method="GET" class="filter-form">
         
+        {{-- Input Pencarian Teks Bebas --}}
+        <input type="text" name="search" class="search-input" placeholder="Cari proyek..." value="{{ request('search') }}">
+
+        {{-- Dropdown Filter Regional --}}
+        <select name="filter_regional" class="filter-select">
+            <option value="all">All Regional</option>
+            @foreach($allRegionals as $regional)
+                <option value="{{ $regional }}" {{ $selectedRegionalFilter == $regional ? 'selected' : '' }}>
+                    {{ $regional }}
+                </option>
+            @endforeach
+        </select>
+
+        {{-- Dropdown Filter Witel --}}
+        <select name="filter_witel" class="filter-select">
+            <option value="all">All Witel</option>
+            @foreach($allWitels as $witel)
+                <option value="{{ $witel }}" {{ $selectedWitelFilter == $witel ? 'selected' : '' }}>
+                    {{ $witel }}
+                </option>
+            @endforeach
+        </select>
+
+        {{-- Dropdown Filter STO --}}
+        <select name="filter_sto" class="filter-select">
+            <option value="all">All STO</option>
+            @foreach($allStos as $sto)
+                <option value="{{ $sto }}" {{ $selectedStoFilter == $sto ? 'selected' : '' }}>
+                    {{ $sto }}
+                </option>
+            @endforeach
+        </select>
+
+        {{-- Tombol Search yang akan disamping input search --}}
+        <button type="submit" class="search-button">
+            <i class="fas fa-search"></i>
+        </button>
+
+        @if(request('search') || $selectedRegionalFilter != 'all' || $selectedWitelFilter != 'all' || $selectedStoFilter != 'all')
+            <a href="{{ route('project_report') }}" class="clear-search-button">
+                <i class="fas fa-xmark"></i> 
+            </a>
+        @endif
+    </form>
+</div>
+
+    {{$projects->appends(request()->query())->links()}}
+    <br>  
+    
     <div class="table-container">
 
-    {{$projects->links()}}
-    <br>
     
     <table class="sticky-header-table border border-gray-400">
     <thead class="border border-gray-400">

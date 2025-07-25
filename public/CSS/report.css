@@ -72,3 +72,96 @@ tbody tr:nth-child(even) td {
     display: inline-block;
     border-radius: 20px; /* Optional: for rounded corners */
 }
+
+/******* CONTAINER UTAMA UNTUK FITUR FILTER DAN SEARCH *******/
+/* Ini adalah wrapper untuk seluruh form filter & search.
+   Pastikan struktur HTML Anda punya div dengan class ini yang membungkus form. */
+.search-filter-container {
+    margin-bottom: 20px; /* Jarak di bawah seluruh area filter/search */
+}
+
+/* Form yang membungkus semua elemen filter dan search */
+.filter-form { /* Menggunakan class 'filter-form' seperti yang disarankan di HTML Blade */
+    display: flex; /* Menggunakan flexbox untuk penataan elemen */
+    flex-wrap: wrap; /* Agar elemen bisa wrap ke baris berikutnya di layar kecil */
+    gap: 8px; /* Jarak antara setiap elemen (input, select, button) */
+    align-items: center; /* Menyelaraskan semua elemen secara vertikal */
+    justify-content: flex-start; /* Elemen akan berjejer dari kiri */
+}
+
+
+/******* FITUR FILTER (DROPDOWN) *******/
+/* Styling untuk Dropdown Filter (Regional, Witel, STO) */
+.filter-select {
+    padding: 4px 30px 4px 12px  ; /* Padding vertikal disesuaikan agar sama dengan search-input */
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 14px;
+    background-color: white;
+    cursor: pointer;
+    box-sizing: border-box; /* Penting untuk konsistensi ukuran */
+}
+
+
+/******* FITUR SEARCH (INPUT DAN TOMBOL) *******/
+/* Styling untuk Input Pencarian Teks Bebas */
+.search-input {
+    padding: 6px 12px; /* Padding di dalam input, disesuaikan agar sama dengan filter-select */
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 14px;
+    width: 180px; /* Lebar input, sesuaikan jika perlu */
+    box-sizing: border-box;
+    height: 34px; /* Menentukan tinggi eksplisit agar selaras */
+}
+
+.search-input::placeholder {
+    color: #888;
+}
+
+/* Tombol Cari (Ikon Search) */
+.search-button {
+    background-color: #66a9d9; /* Warna abu-abu yang Anda inginkan */
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 14px; /* Ukuran ikon */
+    transition: background-color 0.3s ease;
+    white-space: nowrap;
+
+    /* UNTUK IKON SEARCH */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 30px; /* Lebar tetap untuk tombol ikon */
+    height: 34px; /* Ketinggian tombol, disesuaikan agar sama dengan input dan select */
+    padding: 0; /* Hapus padding agar ikon mengisi tombol */
+}
+
+.search-button:hover {
+    background-color: #1e7cb6;
+}
+
+/* Tombol Bersihkan Filter / Pencarian */
+.clear-search-button {
+    background-color: #dc3545;
+    color: white;
+    padding: 6px 10px; /* Padding disesuaikan agar tingginya sama */
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 14px;
+    text-decoration: none;
+    display: inline-flex; /* Ganti dari inline-block ke inline-flex untuk alignment yang lebih baik */
+    align-items: center; /* Tengahkan teks secara vertikal */
+    transition: background-color 0.3s ease;
+    white-space: nowrap;
+    width: 30px;
+    height: 34px; /* Sesuaikan tinggi agar seragam dengan elemen lain */
+    box-sizing: border-box;
+}
+
+.clear-search-button:hover {
+    background-color: #b82231;
+}

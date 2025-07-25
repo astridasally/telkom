@@ -1,5 +1,7 @@
 <x-app-layout>
 <link rel="stylesheet" href="{{ asset('css/form.css') }}">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" integrity="sha512-..." crossorigin="anonymous" referrerpolicy="no-referrer" />
+
 
     @if ($errors->any())
     <div class="alert alert-danger">
