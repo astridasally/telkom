@@ -258,19 +258,139 @@
                 </div>
             </div>
         </div>
-    <div class= "integrasi-wrapper">
-        <div class="sken-area">
-        </div>
-        <div class="daily-area">
-                            </div>
-        <div class="failed-area">
-                            </div>
+                      
 
+        <div class="integrasi-wrapper">
+            <div class="sken-area">
+                <h3>Skenario Integrasi</h3>
+                <table class="table table-bordered table-striped" style="width:100%">
+                    <thead>
+                        <tr>
+                            <th>Regional</th>
+                            {{-- Loop melalui kolom-kolom skenario uplink yang sudah didefinisikan di controller --}}
+                            @foreach($skenarioUplinkColumns as $column)
+                                <th>
+                                    @if($column === 'DIRECT')
+                                        Direct
+                                    @elseif($column === 'Re_engineering')
+                                        Re-Eng
+                                    @elseif($column === 'lainnya')
+                                        Lainnya
+                                    @else
+                                        {{ str_replace('_', '-', $column) }} {{-- Untuk format tampilan default, misal SFP Bidi --}}
+                                    @endif
+                                </th>
+                            @endforeach
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {{-- Loop melalui setiap regional --}}
+                        @foreach($regions as $regionalEnum)
+                            @php
+                                $regionName = $regionalEnum->value;
+                                // Pastikan ada data untuk regional ini, jika tidak, tampilkan 0
+                                $rowData = $skenarioIntegrasiByRegional[$regionName] ?? [];
+                            @endphp
+                            <tr>
+                                <td>{{ $regionName }}</td>
+                                {{-- Loop melalui setiap kolom skenario untuk regional saat ini --}}
+                                @foreach($skenarioUplinkColumns as $column)
+                                    <td>{{ $rowData[$column] ?? 0 }}</td>
+                                @endforeach
+                    
+                            </tr>
+                        @endforeach
+                    </tbody>
+                    <tfoot>
+                        <tr class="total-row">
+                            <td>Total</td>
+                            {{-- Loop melalui setiap kolom skenario untuk menampilkan total per kolom --}}
+                            @foreach($skenarioUplinkColumns as $column)
+                                <td>{{ $totalSkenarioIntegrasiPerColumn[$column] ?? 0 }}</td>
+                            @endforeach
+                        </tr>
+                    </tfoot>
+                </table>
+            </div>
 
+            {{-- Di sini nanti bisa tambahkan div untuk Daily Integrasi --}}
+            <div class="daily-area">
+                <h3>Daily Integrasi</h3>
+                <div class="table-scroll-container"> {{-- DIV INI HARUS ADA --}}
+                <table class="table table-bordered table-striped" style="width:100%">
+                    <thead>
+                        <tr class="main-header-row">
+                            <th>No</th>
+                            <th>Mitra</th>
+                            <th>Regional</th>
+                            <th>Witel</th>
+                            <th>STO</th>
+                            <th>IHLD</th>
+                            <th>Catuan ID</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @forelse($dailyIntegrasiProjects as $index => $project)
+                            <tr>
+                                <td>{{ $index + 1 }}</td>
+                                <td>{{ $project->user->name ?? '-' }}</td> {{-- Mengakses nama mitra dari relasi user --}}
+                                <td>{{ $project->regional }}</td>
+                                <td>{{ $project->witel }}</td>
+                                <td>{{ $project->sto }}</td>
+                                <td>{{ $project->ihld }}</td>
+                                <td>{{ $project->catuan_id }}</td>
+                            </tr>
+                        @empty
+                            <tr>
+                                <td colspan="8" class="text-center">Tidak ada proyek dengan plan integrasi hari ini.</td>
+                            </tr>
+                        @endforelse
+                    </tbody>
+                </table>
+                </div>
+                </div>
 
+            {{-- Di sini nanti bisa tambahkan div untuk Failed Integrasi --}}
+            <div class="failed-area">
+                <h3>Failed Integrasi</h3>
+                 <div class="table-scroll-container"> {{-- DIV INI HARUS ADA --}}
 
-
+                <table class="table table-bordered table-striped" style="width:100%">
+                    <thead>
+                        <tr class="main-header-row">
+                            <th>No</th>
+                            <th>Mitra</th>
+                            <th>Regional</th>
+                            <th>Witel</th>
+                            <th>STO</th>
+                            <th>IHLD</th>
+                            <th>Catuan ID</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @forelse($failedIntegrasiProjects as $index => $project)
+                            <tr>
+                                <td>{{ $index + 1 }}</td>
+                                <td>{{ $project->user->name ?? '-' }}</td>
+                                <td>{{ $project->regional }}</td>
+                                <td>{{ $project->witel }}</td>
+                                <td>{{ $project->sto }}</td>
+                                <td>{{ $project->ihld }}</td>
+                                <td>{{ $project->catuan_id }}</td>
+                            </tr>
+                        @empty
+                            <tr>
+                                <td colspan="8" class="text-center">Tidak ada proyek integrasi yang gagal/terlambat.</td>
+                            </tr>
+                        @endforelse
+                    </tbody>
+                </table>
+                </div>
+                </div>
     </div>
+
+
+
 
 
 

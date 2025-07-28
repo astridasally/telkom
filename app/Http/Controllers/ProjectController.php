@@ -393,6 +393,8 @@ class ProjectController extends Controller
 
         // 1. Inisialisasi baseQuery untuk dashboard utama
         $baseQuery = Project::query();
+        $today = Carbon::today(); 
+
 
         // 2. Dapatkan nilai filter dari Request
         $selectedMitra    = $request->input('mitra');
@@ -501,12 +503,85 @@ class ProjectController extends Controller
                 $totalFunnelingCounts[$key] += $count;
             }
         }
+        // =======================================================
+        // BAGIAN 3: LOGIKA SKENARIO INTEGRASI (PER REGIONAL) - BARU
+        // =======================================================
+        $skenarioUplinkColumns = [
+            'DIRECT',
+            'SFP Bidi', // Perhatikan spasi, sesuaikan dengan nilai di database
+            'Cascading',
+            'L2S', // Di form Anda L2S, di gambar L2SW (pastikan konsisten dengan DB)
+            'OTN',
+            'ONT',
+            'Re_engineering', // Di gambar RE-ENG, di form Re-engineering (pakai yang di DB)
+            'lainnya', // Di gambar LAINNYA, di form lainnya (pakai yang di DB)
+        ];
+
+        $skenarioIntegrasiByRegional = [];
+        $totalSkenarioIntegrasiPerColumn = array_fill_keys($skenarioUplinkColumns, 0); // Total per kolom
+        $totalSkenarioIntegrasiOverall = 0; // Total keseluruhan
+
+        // Ambil semua regional unik yang ada di data proyek,
+        // atau gunakan enum Regional jika Anda ingin semua regional ditampilkan
+        // bahkan jika tidak ada data proyek di dalamnya.
+        // Jika ingin hanya regional yang punya data:
+        // $allExistingRegionals = Project::distinct('regional')->pluck('regional')->sort()->toArray();
+        // $regionsForSkenario = array_map(fn($r) => ['value' => $r], $allExistingRegionals);
+
+        // Menggunakan Enum Regional agar semua regional pasti muncul
+        $regionsForSkenario = Regional::cases(); // Sama seperti Funneling OLT
+
+        foreach ($regionsForSkenario as $regionalEnum) {
+            $regionName = $regionalEnum->value;
+            $skenarioIntegrasiByRegional[$regionName] = []; // Inisialisasi untuk regional ini
+            $totalSkenarioIntegrasiPerRegional = 0; // Total baris (per regional)
+
+            // Base query untuk regional spesifik, dengan filter dashboard utama
+            $regionalSkenarioQuery = $baseQuery->clone()->where('regional', $regionName);
+
+            $selectStatements = [];
+            foreach ($skenarioUplinkColumns as $columnName) {
+                // Gunakan nama kolom di database ('scenario_uplink') untuk WHERE
+                $selectStatements[] = "COUNT(CASE WHEN scenario_uplink = '{$columnName}' THEN 1 ELSE NULL END) as " . str_replace([' ', '-', '_'], '', $columnName) . "_count";
+            }
+
+            $rawSkenarioData = $regionalSkenarioQuery->selectRaw(implode(', ', $selectStatements))->first();
+
+            foreach ($skenarioUplinkColumns as $columnName) {
+                $alias = str_replace([' ', '-', '_'], '', $columnName) . '_count';
+                $count = $rawSkenarioData->$alias ?? 0; // Ambil nilai atau 0 jika null
+
+                $skenarioIntegrasiByRegional[$regionName][$columnName] = $count;
+                $totalSkenarioIntegrasiPerRegional += $count;
+                $totalSkenarioIntegrasiPerColumn[$columnName] += $count; // Akumulasi total per kolom
+            }
+            $skenarioIntegrasiByRegional[$regionName]['Total'] = $totalSkenarioIntegrasiPerRegional; // Tambah total baris
+            $totalSkenarioIntegrasiOverall += $totalSkenarioIntegrasiPerRegional; // Akumulasi total keseluruhan
+        }
 
         // =======================================================
-        // BAGIAN 3: LOGIKA GRAFIK S-CURVE (PLAN & REALISASI INTEGRASI)
+        // BAGIAN 5: LOGIKA FAILED INTEGRASI - BARU
         // =======================================================
+        $failedIntegrasiProjects = $baseQuery->clone()
+                                             ->whereNotNull('plan_integrasi') // plan_integrasi sudah diisi
+                                             ->whereNull('realisasi_integrasi')   // realisasi_integrasi masih kosong
+                                             ->whereDate('plan_integrasi', '<=', $today) // plan_integrasi adalah hari ini atau di masa lalu
+                                             ->with('user')
+                                             ->select('regional', 'witel', 'sto', 'site', 'ihld', 'catuan_id', 'user_id')
+                                             ->get();
+
         // =======================================================
-        // BAGIAN 3: LOGIKA GRAFIK S-CURVE (PLAN & REALISASI INTEGRASI)
+        // BAGIAN 4: LOGIKA DAILY INTEGRASI - BARU
+        // =======================================================
+        $today = Carbon::today(); // Dapatkan tanggal hari ini
+
+        $dailyIntegrasiProjects = $baseQuery->clone()
+                                            ->whereDate('plan_integrasi', $today) // Filter berdasarkan tanggal hari ini
+                                            ->with('user') // Eager load user untuk mendapatkan nama mitra
+                                            ->select('regional', 'witel', 'sto', 'site', 'ihld', 'catuan_id', 'user_id') // Pilih kolom yang dibutuhkan
+                                            ->get();
+        // =======================================================
+        // BAGIAN 4: LOGIKA GRAFIK S-CURVE (PLAN & REALISASI INTEGRASI)
         // =======================================================
         $sCurveLabels = [];
         $sCurvePlanData = [];
@@ -548,7 +623,7 @@ class ProjectController extends Controller
             $currentDate->addMonth(); // Maju ke bulan berikutnya
         }
         // =======================================================
-        // BAGIAN 4: MENGIRIMKAN SEMUA VARIABEL KE VIEW DASHBOARD
+        // BAGIAN 5: MENGIRIMKAN SEMUA VARIABEL KE VIEW DASHBOARD
         // =======================================================
         return view('dashboard', compact(
             'projects',
@@ -570,6 +645,16 @@ class ProjectController extends Controller
             // Variabel untuk Funneling OLT yang akan digunakan di dashboard.blade.php
             'funnelingData',
             'totalFunnelingCounts',
+            // Variabel untuk Skenario Integrasi (per Regional)
+            'skenarioUplinkColumns', // Kirim juga daftar kolomnya untuk header tabel
+            'skenarioIntegrasiByRegional',
+            'totalSkenarioIntegrasiPerColumn',
+            'totalSkenarioIntegrasiOverall',
+            // Variabel untuk Daily Integrasi - BARU
+            'dailyIntegrasiProjects',
+            'regions', // Kirim juga list regionalnya untuk loop di view
+            'failedIntegrasiProjects', // Kirim data ini ke view
+
              // Variabel untuk Grafik S-Curve
             'sCurveLabels',
             'sCurvePlanData',

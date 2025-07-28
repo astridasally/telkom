@@ -133,6 +133,10 @@
                     <option value="Direct Core">Direct Core</option>
                     <option value="Re_engineering">Re-engineering</option>
                     <option value="SFP Bidi">Re-SFP Bidi</option>
+                    <option value="Cascading">Cascading</option>
+                    <option value="lainnya">Lainnya</option>
+
+
                 </select>
             </div>
 
