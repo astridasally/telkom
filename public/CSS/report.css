@@ -8,12 +8,17 @@
     margin: 0 auto; /* Menengahkan tabel */
     box-sizing: border-box;
     margin-top: 20px;
+    margin-bottom:20px;
 }
 
 /* Tabel utama */
 .table-container {
     overflow-x: auto; /* Agar tabel dapat discroll secara horizontal */
-    
+     /* Tambahkan ini untuk scroll vertikal */
+    max-height: 500px; /* Atur tinggi maksimum yang Anda inginkan */
+    overflow-y: auto; /* Aktifkan scroll vertikal jika konten melebihi max-height */
+    /* Pastikan background tabel terlihat di bawah header sticky */
+    background-color: #ffffff; /* Tambahkan ini jika table-container tidak memiliki background */
 }
 
 /* Header Info untuk bagian atas tabel */
@@ -51,11 +56,31 @@ thead th {
     white-space: nowrap;
 }
 
+/* Atur position: sticky pada baris header utama */
+.main-header-row th {
+    position: sticky;
+    top: 0; /* Menempel di bagian paling atas */
+    z-index: 20; /* Pastikan selalu di atas */
+    background-color: #3f6096; /* Penting untuk latar belakang saat sticky */
+    /*box-shadow: 0 2px 2px -1px rgba(0, 0, 0, 0.4);  Opsional */
+}
+
+/* Atur position: sticky pada baris sub-header */
+.sub-header-row th {
+    position: sticky;
+    /* top akan dihitung berdasarkan tinggi baris pertama */
+    /* Anda perlu menyesuaikan '40px' ini dengan tinggi aktual baris pertama header Anda */
+    /* Cara terbaik adalah mengukur tinggi baris .main-header-row di browser dev tools */
+    top: 32px; /* Contoh: jika tinggi baris pertama 40px, maka baris kedua menempel di 40px dari atas */
+    z-index: 19; /* Sedikit di bawah main-header-row */
+    background-color: #3f6096; /* Pastikan latar belakang tetap ada */
+    /*box-shadow: 0 2px 2px -1px rgba(0, 0, 0, 0.4);  Opsional */
+}
 
 /* Body Tabel */
 tbody td {
     padding: 8px;
-    border: 1px solid rgb(197, 197, 197);
+    border: 1px solid rgb(0, 0, 0);
     color: #333;
     background-color: #f9f9f9;
 }

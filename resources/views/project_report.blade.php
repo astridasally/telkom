@@ -61,12 +61,12 @@
     {{$projects->appends(request()->query())->links()}}
     <br>  
     
-    <div class="table-container">
 
-    
+    <div class="table-container">
     <table class="sticky-header-table border border-gray-400">
     <thead class="border border-gray-400">
-    <tr>
+    <tr class="main-header-row"
+    >
         <th rowspan="2">No</th>
         @if(auth()->user()->role === 'admin'|| auth()->user()->role === 'vendor')
         <th rowspan="2">Mitra</th>
@@ -78,7 +78,6 @@
         <th rowspan="2">IHLD</th>
         <th rowspan="2">Catuan ID</th>
         
-
 
         @if(auth()->user()->role === 'mitra' || auth()->user()->role === 'admin')
             <th rowspan="2">Priority</th>
@@ -114,8 +113,8 @@
     </tr>
 
     {{-- BARIS 2 - hanya ditampilkan kalau role MITRA/ADMIN --}}
+    <tr class="sub-header-row">
     @if(auth()->user()->role === 'mitra' || auth()->user()->role === 'admin')
-    <tr>
         <th>Plan</th>
         <th>Realisasi</th>
         <th>Plan</th>
@@ -135,14 +134,14 @@
 
      @if(auth()->user()->role === 'vendor' || auth()->user()->role === 'admin')
     
-    <th>CSF</th>
+        <th>CSF</th>
         <th>Port</th>
         <th>CSF</th>
         <th>Port</th>
         <th>Skenario</th>
         <th>Status</th>
-    </tr>
     @endif
+    </tr>
 </thead>
 
 <tbody>
