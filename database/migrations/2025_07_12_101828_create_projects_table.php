@@ -43,6 +43,7 @@ return new class extends Migration
             // Khusus TA
             $table->string('priority_ta')->nullable();
             $table->string('dependensi')->nullable();
+            $table->string('assign_to')->nullable();
             $table->string('status_osp')->nullable();
             $table->string('scenario_uplink')->nullable();
             $table->string('status_uplink')->nullable();
