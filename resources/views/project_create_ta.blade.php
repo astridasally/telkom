@@ -77,36 +77,45 @@
         </div>
 
             <div class="form-column">
-
-
-            <div class="form-group">
-                <label>Dependensi</label>
-                <select name="dependensi">
-                    <option value="">-- Pilih --</option>
-                    <option value="Main">Main</option>
-                    <option value="Dependence">Dependence</option>
-                </select>
-            </div>
-
-            <div class="form-group">
-                <label style="color: #0d6efd; font-weight: 650;"></label>
-                <div style="display: flex; gap: 40px;">
-                    <div style="flex: 1;"><label>FTTH CSF</label>
-                        <input type="number" name="ftth_csf" placeholder="FTTH CSF" class="form-control">
+                <div style="display: flex; gap: 15px; width: 100%;">
+                    <div class="form-group" style="flex: 1;">
+                        <label for="dependensi">Dependensi</label>
+                        <select name="dependensi" id="dependensi" class="form-control">
+                            <option value="">-- Pilih --</option>
+                            <option value="Main">Main</option>
+                            <option value="Dependence">Dependence</option>
+                        </select>
                     </div>
-                    <div style="flex: 1;"><label>FTTH Port</label>
+
+                    <div class="form-group" style="flex: 1;">
+                        <label for="assign_to">Assign To</label>
+                        <select name="assign_to" id="assign_to" class="form-control">
+                            <option value="">-- Pilih --</option>
+                            <option value="ZTE">ZTE</option>
+                            <option value="Huawei">Huawei</option>
+                            <option value="FiberHome">FiberHome</option>
+                        </select>
+                    </div>
+                </div>
+
+
+                <div class="form-group">
+                    <div style="display: flex; gap: 15px; width: 100%;">
+                    <div class="form-group" style="flex: 1;"><label>FTTH CSF</label>
+                            <input type="number" name="ftth_csf" placeholder="FTTH CSF" class="form-control">
+                        </div>
+                     <div class="form-group" style="flex: 1;"><label>FTTH Port</label>
                         <input type="number" name="ftth_port" placeholder="FTTH Port" class="form-control">
                     </div>
                 </div>
             </div>
 
             <div class="form-group">
-                <label style="color: #0d6efd; font-weight: 650;"></label>
-                <div style="display: flex; gap: 40px;">
-                    <div style="flex: 1;"><label>Go Live CSF</label>
+                <div style="display: flex; gap: 15px; width: 100%;">
+                     <div class="form-group" style="flex: 1;"><label>Go Live CSF</label>
                         <input type="number" name="golive_csf" placeholder="Go Live CSF" class="form-control">
                     </div>
-                    <div style="flex: 1;"><label>Go Live Port</label>
+                     <div class="form-group" style="flex: 1;"><label>Go Live Port</label>
                         <input type="number" name="golive_port" placeholder="Go Live Port" class="form-control">
                     </div>
                 </div>

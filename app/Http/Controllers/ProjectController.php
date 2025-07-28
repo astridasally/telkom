@@ -242,6 +242,7 @@ class ProjectController extends Controller
             'priority_ta' => 'nullable',
             'status_osp' => 'nullable',
             'dependensi' => 'required',
+            'assign_to' => 'nullable',
             'scenario_uplink' => 'nullable',
             'status_uplink' => 'nullable',
             'remark_ta' => 'nullable|string',
@@ -300,6 +301,7 @@ class ProjectController extends Controller
             //validate form edit TA 
             'priority_ta' => 'nullable',
             'dependensi' => 'nullable',
+            'assign_to' => 'nullable',
             'ftth_csf' => 'nullable',
             'ftth_port' => 'nullable',
             'golive_csf' => 'nullable',
@@ -360,6 +362,7 @@ class ProjectController extends Controller
 
             'priority_ta' => 'nullable',
             'dependensi' => 'nullable',
+            'assign_to' => 'nullable',
             'ftth_csf' => 'nullable',
             'ftth_port' => 'nullable',
             'golive_csf' => 'nullable',

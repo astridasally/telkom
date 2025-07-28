@@ -34,6 +34,7 @@ class Project extends Model
         'priority_ta',
         'status_osp',
         'dependensi',
+        'assign_to',
         'scenario_uplink',
         'status_uplink',
         'drop_ta',

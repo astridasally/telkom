@@ -101,6 +101,7 @@
         @if(auth()->user()->role === 'vendor' || auth()->user()->role === 'admin')
             <th rowspan="2">Priority TA</th>
             <th rowspan="2">Dependensi</th>
+            <th rowspan="2">Assign to</th>
             <th colspan="2" class="header-group">FTTH</th>
             <th colspan="2" class="header-group">Go Live</th>
             <th rowspan="2">Status OSP</th>
@@ -198,6 +199,7 @@
         @if(auth()->user()->role === 'vendor' || auth()->user()->role === 'admin')
             <td>{{ $project->priority_ta }}</td>
             <td>{{ $project->dependensi }}</td>
+            <td>{{ $project->assign_to }}</td>
             <td>{{ $project->ftth_csf }}</td>
             <td>{{ $project->ftth_port }}</td>
             <td>{{ $project->golive_csf }}</td>
