@@ -54,6 +54,18 @@
                 <label>Catuan ID</label>
                 <input type="text" name="catuan_id" value="{{ $project->catuan_id }}" required>
             </div>
+
+            <div class="form-group">
+                 <label for="assign_to">Assign To</label>
+                        <select name="assign_to" id="assign_to" class="form-control">
+                            <option value="">-- Pilih --</option>
+
+                            {{-- Logika untuk mempertahankan pilihan Assign To --}}
+                            <option value="ZTE" {{ $project->assign_to == 'ZTE' ? 'selected' : '' }}>ZTE</option>
+                            <option value="Huawei" {{ $project->assign_to == 'Huawei' ? 'selected' : '' }}>Huawei</option>
+                            <option value="FiberHome" {{ $project->assign_to == 'FiberHome' ? 'selected' : '' }}>FiberHome</option>
+                        </select>
+            </div>
             @endif
  
 

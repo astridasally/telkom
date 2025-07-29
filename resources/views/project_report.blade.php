@@ -15,6 +15,18 @@
         {{-- Input Pencarian Teks Bebas --}}
         <input type="text" name="search" class="search-input" placeholder="Cari proyek..." value="{{ request('search') }}">
 
+         {{-- Dropdown Filter Assign To (Mitra) - HANYA TAMPIL JIKA ADMIN ATAU VENDOR --}}
+        @if(auth()->user()->role === 'admin'|| auth()->user()->role === 'vendor')
+                    <select name="filter_assign_to" id="filter_assign_to" class="filter-select">
+                <option value="all">All Mitra</option>
+                @foreach($allMitras as $mitraName) {{-- Ubah $mitra menjadi $mitraName --}}
+                    <option value="{{ $mitraName }}" {{ $selectedMitraFilter == $mitraName ? 'selected' : '' }}>
+                        {{ $mitraName }} {{-- Gunakan $mitraName langsung, karena sudah string --}}
+                    </option>
+                @endforeach
+            </select>
+        @endif
+
         {{-- Dropdown Filter Regional --}}
         <select name="filter_regional" class="filter-select">
             <option value="all">All Regional</option>
@@ -45,12 +57,14 @@
             @endforeach
         </select>
 
+          
+
         {{-- Tombol Search yang akan disamping input search --}}
         <button type="submit" class="search-button">
             <i class="fas fa-search"></i>
         </button>
 
-        @if(request('search') || $selectedRegionalFilter != 'all' || $selectedWitelFilter != 'all' || $selectedStoFilter != 'all')
+        @if(request('search') || $selectedRegionalFilter != 'all' || $selectedWitelFilter != 'all' || $selectedMitraFilter != 'all'|| $selectedStoFilter != 'all')
             <a href="{{ route('project_report') }}" class="clear-search-button">
                 <i class="fas fa-xmark"></i> 
             </a>
@@ -59,7 +73,7 @@
 </div>
 
     {{$projects->appends(request()->query())->links()}}
-    <br>  
+
     
 
     <div class="table-container">

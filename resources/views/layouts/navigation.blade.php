@@ -16,7 +16,7 @@
                         {{ __('Dashboard') }}
                     </x-nav-link>
 
-                    @if (Auth::user()->role === 'admin' || Auth::user()->role === 'mitra')
+                    @if (Auth::user()->role === 'admin')
                     <x-nav-link :href="route('project_create')" :active="request()->routeIs('project_create')">
                         {{ __('Form') }}
                     </x-nav-link>
@@ -83,9 +83,28 @@
 
     <!-- Responsive Navigation Menu -->
     <div :class="{'block': open, 'hidden': ! open}" class="hidden sm:hidden">
-        <div class="pt-2 pb-3 space-y-1">
+       <div class="pt-2 pb-3 space-y-1">
             <x-responsive-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
                 {{ __('Dashboard') }}
+            </x-responsive-nav-link>
+
+            {{-- Menambahkan Link Form untuk Admin --}}
+            @if (Auth::user()->role === 'admin')
+            <x-responsive-nav-link :href="route('project_create')" :active="request()->routeIs('project_create')">
+                {{ __('Form') }}
+            </x-responsive-nav-link>
+            @endif
+
+            {{-- Menambahkan Link Form untuk Vendor --}}
+            @if (Auth::user()->role === 'vendor')
+            <x-responsive-nav-link :href="route('project_create_ta')" :active="request()->routeIs('project_create_ta')">
+                {{ __('Form') }}
+            </x-responsive-nav-link>
+            @endif
+
+            {{-- Menambahkan Link Report --}}
+            <x-responsive-nav-link :href="route('project_report')" :active="request()->routeIs('project_report')">
+                {{ __('Report') }}
             </x-responsive-nav-link>
         </div>
 

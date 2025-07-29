@@ -73,9 +73,13 @@ class ProjectController extends Controller
         $user = Auth::user();
         $query = Project::query(); // Mulai query builder
 
-        // Logika filter berdasarkan peran pengguna (mitra hanya melihat proyeknya sendiri)
-        // Ini harus diterapkan pada query builder yang sama
+       // Logika filter berdasarkan peran pengguna (revisi)
         if ($user->role === 'mitra') {
+            // Mitra hanya melihat proyek di mana 'assign_to' adalah nama mitra itu sendiri
+            // PENTING: Pastikan Auth::user()->name untuk role 'mitra' sama dengan nilai di kolom 'assign_to'
+            $query->where('assign_to', $user->name);
+        } elseif ($user->role === 'vendor') {
+            // Vendor hanya melihat proyek yang mereka masukkan (berdasarkan user_id mereka)
             $query->where('user_id', $user->id);
         }
 
@@ -83,6 +87,7 @@ class ProjectController extends Controller
         $selectedRegionalFilter = $request->input('filter_regional');
         $selectedWitelFilter = $request->input('filter_witel');
         $selectedStoFilter = $request->input('filter_sto');
+        $selectedMitraFilter = $request->input('filter_assign_to');
 
         if ($selectedRegionalFilter && $selectedRegionalFilter !== 'all') {
             $query->where('regional', $selectedRegionalFilter);
@@ -94,6 +99,10 @@ class ProjectController extends Controller
 
         if ($selectedStoFilter && $selectedStoFilter !== 'all') {
             $query->where('sto', $selectedStoFilter);
+        }
+
+        if ($selectedMitraFilter && $selectedMitraFilter !== 'all') {
+            $query->where('assign_to', $selectedMitraFilter);
         }
         // --- AKHIR TAMBAHAN UNTUK FILTER DROPDOWN ---
 
@@ -118,6 +127,7 @@ class ProjectController extends Controller
                 if ($user->role === 'vendor' || $user->role === 'admin') {
                     $q->orWhereRaw('LOWER(priority_ta) LIKE ?', ['%' . $searchTerm . '%'])
                       ->orWhereRaw('LOWER(dependensi) LIKE ?', ['%' . $searchTerm . '%'])
+                      ->orWhereRaw('LOWER(assign_to) LIKE ?', ['%' . $searchTerm . '%'])
                       ->orWhereRaw('LOWER(ftth_csf) LIKE ?', ['%' . $searchTerm . '%'])
                       ->orWhereRaw('LOWER(ftth_port) LIKE ?', ['%' . $searchTerm . '%'])
                       ->orWhereRaw('LOWER(golive_csf) LIKE ?', ['%' . $searchTerm . '%'])
@@ -150,6 +160,8 @@ class ProjectController extends Controller
         $allRegionals = Project::distinct('regional')->pluck('regional')->sort()->toArray();
         $allWitels = Project::distinct('witel')->pluck('witel')->sort()->toArray();
         $allStos = Project::distinct('sto')->pluck('sto')->sort()->toArray();
+        $allMitras = Project::distinct('assign_to')->pluck('assign_to')->sort()->toArray();
+
         // --- AKHIR PASTIKAN BAGIAN INI ---
 
         return view('project_report', compact(
@@ -157,9 +169,12 @@ class ProjectController extends Controller
             'allRegionals', // Pastikan ini ada
             'allWitels',    // Pastikan ini ada
             'allStos',      // Pastikan ini ada
+            'allMitras',
             'selectedRegionalFilter',
             'selectedWitelFilter',
-            'selectedStoFilter'
+            'selectedStoFilter',
+            'selectedMitraFilter'
+
         ));
 
         // Logika pencarian utama
@@ -188,6 +203,7 @@ class ProjectController extends Controller
                 if ($user->role === 'vendor' || $user->role === 'admin') {
                     $q->orWhereRaw('LOWER(priority_ta) LIKE ?', ['%' . $searchTerm . '%'])
                       ->orWhereRaw('LOWER(dependensi) LIKE ?', ['%' . $searchTerm . '%'])
+                      ->orWhereRaw('LOWER(assign_to) LIKE ?', ['%' . $searchTerm . '%'])
                       ->orWhereRaw('LOWER(ftth_csf) LIKE ?', ['%' . $searchTerm . '%'])
                       ->orWhereRaw('LOWER(ftth_port) LIKE ?', ['%' . $searchTerm . '%'])
                       ->orWhereRaw('LOWER(golive_csf) LIKE ?', ['%' . $searchTerm . '%'])

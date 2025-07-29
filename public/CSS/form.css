@@ -1,13 +1,13 @@
 /* === Header Form === */
 .form-container{
-    max-width: 900px; /* Samakan dengan max-width form-container */
-    margin: 20px auto 0 auto; /* Margin atas 40px, pusatkan, margin bawah 0 */
-    background-color: #3b5998; /* Warna biru sesuai contoh gambar */
-    color: white; /* Teks putih */
-    font-size: 1.2rem; /* Ukuran font */
+    max-width: 900px;
+    margin: 20px auto 0 auto;
+    background-color: #3b5998;
+    color: white;
+    font-size: 1.2rem;
     font-weight: bold;
-    text-align: center; /* Teks rata kiri */
-    border-radius: 8px 8px 0 0; /* Sudut membulat hanya di atas */
+    text-align: center;
+    border-radius: 8px 8px 0 0;
     box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
 }
 
@@ -27,13 +27,13 @@
 /* === General Styling === */
 body {
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    background-color: #f5f5f5;   
+    background-color: #f5f5f5;
 }
 
 /* === Form Container === */
 form {
     max-width: 900px;
-    margin: 0px auto;
+    margin: auto; /* <-- ini bisa konflik */
     background-color: #fff;
     padding: 30px;
     border-radius: 0 0 5px 5px;
