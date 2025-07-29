@@ -188,10 +188,10 @@
             <td>{{ $project->realisasi_integrasi }}</td>
             <td>{{ $project->drop_data }}</td>
             <td>
-                @if($project->bukti_drop)
-                    <a href="{{ asset('storage/bukti_drop/' . $project->bukti_drop) }}" target="_blank">Lihat</a>
+               @if($project->bukti_drop)
+                    <a href="{{ asset('storage/' . $project->bukti_drop) }}" target="_blank">Lihat</a>
                 @else
-                    -
+    -
                 @endif
             </td>
             <td>{{ $project->relok_regional }}</td>
