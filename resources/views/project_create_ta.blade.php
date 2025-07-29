@@ -125,8 +125,8 @@
                 <label>Status OSP</label>
                 <select name="status_osp">
                     <option value="">-- Pilih --</option>
-                    <option value="Finish_Instalasi">Finish Instalasi</option>
-                    <option value="Proses_Instalasi">Proses Instalasi</option>
+                    <option value="Finish Instalasi">Finish Instalasi</option>
+                    <option value="Proses Instalasi">Proses Instalasi</option>
                     <option value="Persiapan">Persiapan</option>
                     <option value="Drop">Drop</option>
                 </select>
