@@ -87,9 +87,7 @@
         {{-- Bagian Graph Placeholder --}}
         <div class="dashboard-wrapper">
             <div class="graph-placeholder">
-                <div class="graph-header">
-                    <h2>Grafik Integrasi</h2>
-                </div>
+                    <h3>GRAFIK INTEGRASI</h3>
                 <div class="graph-content">
                     <canvas id="sCurveChart"></canvas>
                 </div>
@@ -97,9 +95,7 @@
 
             {{-- Bagian Main Dashboard dengan kotak-kotak angka --}}
             <div class="main-container">
-                <div class="header-container-main">
-                    <h1 class="title">Main Dashboard</h1>
-                </div>
+                <h3>MAIN DASHBOARD</h3>
 
                 {{-- Filter (tetap seperti sebelumnya) --}}
                 <form action="{{ route('dashboard') }}" method="GET">
@@ -159,7 +155,7 @@
 
                 {{-- Kotak-kotak Angka --}}
                 <div class="content-grid">
-                    <div class="stage-section">
+                    <div class="stage-section"> 
                         <div class="card-header-stage">
                             <h2>Survey</h2>
                         </div>
