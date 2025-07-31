@@ -1,46 +1,43 @@
 /* --- CSS AWAL YANG SUDAH ADA --- */
 body {
     font-family: Arial, sans-serif;
-    margin: 0; /* Pastikan tidak ada margin default pada body */
-    padding: 0; /* Pastikan tidak ada padding default pada body */
+    margin: 0;
+    padding: 0;
     background-color: #f0f2f5;
     min-height: 100vh;
     margin-top: 65px;
 }
 
-/* Asumsi ini adalah style untuk navigasi paling atas (dari x-app-layout) */
-/* Pastikan ini tidak memiliki margin/padding yang mengganggu page-content-wrapper */
 .x-app-layout-container {
-    /* Jika x-app-layout punya div pembungkus, atur style di sini jika perlu */
+    /* ... (tidak berubah) ... */
 }
 
-/* NEW: Wrapper untuk semua konten di bawah navbar */
 .page-content-wrapper {
-    padding: 20px; /* Ini adalah padding yang Anda inginkan di sekeliling semua konten dashboard */
-    width: 100%; /* Ambil lebar penuh dari parent */
-    box-sizing: border-box; /* Penting untuk padding agar tidak menambah lebar */
+    padding: 20px;
+    width: 100%;
+    box-sizing: border-box;
     display: flex;
-    flex-direction: column; /* Konten di dalamnya akan berjejer vertikal */
-    gap: 20px; /* Jarak antara tabel utama dan dashboard-wrapper di bawahnya */
+    flex-direction: column;
+    gap: 20px;
 }
 
 /* --- STYLE UNTUK TABEL UTAMA DAN HEADER "FUNNELING OLT" --- */
 .main-table-container {
-    background-color: #ffffff; /* Latar belakang putih untuk kotak tabel */
+    background-color: #ffffff;
     border-radius: 8px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    padding: 20px; /* Padding di dalam kotak tabel */
-    width: 100%; /* Tabel akan mengisi lebar kontainer */
-    max-width: 1200px; /* Batasi lebar maksimal tabel utama */
-    margin: 0 auto; /* Menengahkan tabel utama */
+    padding: 20px;
+    width: 100%;
+    max-width: 1200px;
+    margin: 0 auto;
     box-sizing: border-box;
-    overflow-x: auto; /* Untuk responsivitas tabel */
+    overflow-x: auto;
 }
 
 .header-info {
-    display: flex; /* Ini kunci untuk membuat item menjadi satu baris */
-    justify-content: space-between; /* Ini kunci untuk memisahkan ke kiri dan kanan */
-    align-items: center; /* Ini untuk menyejajarkan secara vertikal di tengah */
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
     margin-bottom: 15px;
     padding-bottom: 10px;
     border-bottom: 1px solid #e0e0e0;
@@ -58,8 +55,7 @@ body {
 }
 
 .table-wrapper {
-    /* Dihapus overflow-x: auto di sini dan dipindahkan ke .main-table-container */
-    /* Karena .main-table-container sekarang yang mengontrol overflow */
+    /* ... (tidak berubah) ... */
 }
 
 table {
@@ -69,7 +65,6 @@ table {
     text-align: center;
 }
 
-/* Header Tabel */
 thead th {
     background-color: #3f6096;
     color: #ffffff;
@@ -81,7 +76,6 @@ thead th {
 thead th:first-child { border-top-left-radius: 0x; }
 thead th:last-child { border-top-right-radius: 0x; }
 
-/* Body Tabel */
 tbody td {
     padding: 8px;
     border: 1px solid rgb(197, 197, 197);
@@ -93,24 +87,23 @@ tbody tr:nth-child(even) td { background-color: #ffffff; }
 
 .total-row { font-weight: bold; background-color: #158cc7; }
 
-
-
 tfoot tr:last-child td:first-child { border-bottom-left-radius: 6px; }
 tfoot tr:last-child td:last-child { border-bottom-right-radius: 6px; }
 
 
 /* --- STYLE UNTUK DASHBOARD WRAPPER (GRAFIK & MAIN CONTAINER) --- */
 .dashboard-wrapper {
-    display: flex; /* Untuk membuat graph-placeholder dan main-container berdampingan */
+    display: flex;
     flex-direction: row;
-    gap: 15px; /* Jarak antara graph-placeholder dan main-container */
-    width: 100%; /* Pastikan mengambil lebar penuh dari page-content-wrapper */
-    align-items: flex-start; /* Untuk perataan atas */
-    /* background-color, border-radius, box-shadow TIDAK perlu di sini lagi
-       karena sudah ada di main-table-container atau diatur secara individual */
-    padding: 0; /* Padding sudah di handle oleh page-content-wrapper */
-    max-width: 1200px; /* Lebar maksimal dashboard-wrapper, sama dengan tabel utama */
-    margin: 0 auto; /* Menengahkan dashboard-wrapper */
+    gap: 15px;
+    width: 100%;
+    align-items: flex-start;
+    padding: 0;
+    max-width: 1200px;
+    margin: 0 auto;
+    /* --- PERBAIKAN UTAMA DI SINI --- */
+    flex-wrap: wrap; /* Izinkan item untuk membungkus ke baris baru */
+    /* --- END PERBAIKAN UTAMA --- */
 }
 .dashboard-wrapper h3 {
     font-size: 20px;
@@ -122,24 +115,22 @@ tfoot tr:last-child td:last-child { border-bottom-right-radius: 6px; }
     padding-bottom: 10px;
     margin-top: 20px;
     margin-left : 30px;
-     margin-right: 30px;
+    margin-right: 30px;
 }
 
-/* --- STYLE UNTUK GRAPH PLACEHOLDER DAN MAIN CONTAINER (tetap serupa) --- */
+/* --- STYLE UNTUK GRAPH PLACEHOLDER DAN MAIN CONTAINER --- */
 .graph-placeholder {
-    flex: 3; /* Mengambil ruang yang tersedia */
+    flex: 3;
     background-color: #ffffff;
-    min-width: 400px;
+    min-width: 400px; /* Pertahankan min-width untuk layar menengah */
     border-radius: 8px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
     padding: 0;
     display: flex;
     flex-direction: column;
     overflow: hidden;
-    height : 530px;
+    height : 510px; /* Pertahankan tinggi untuk desktop */
 }
-
-
 
 .graph-content {
     padding: 25px;
@@ -153,18 +144,19 @@ tfoot tr:last-child td:last-child { border-bottom-right-radius: 6px; }
     height: auto;
 }
 
-.main-container {
+.main-container { /* Ini adalah container untuk kartu-kartu Survey, Delivery, dst. */
     padding: 0px;
-    flex: 2; /* Mengambil ruang yang tersedia */
+    flex: 2;
     background-color: #ffffff ;
     flex-direction: column;
     align-items: center;
     border-radius: 8px;
     overflow: hidden;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
-    max-height: 530px;
-
+    height: 510px; /* Pertahankan tinggi untuk desktop */
 }
+
+/* ... (Bagian dashboard-filters-row dan filter-item, select, button tidak berubah) ... */
 
 .dashboard-filters-row {
     padding: 10px 20px;
@@ -175,16 +167,14 @@ tfoot tr:last-child td:last-child { border-bottom-right-radius: 6px; }
     justify-content: center;
     align-items: center;
     gap: 10px;
-    border-bottom-left-radius: 0px;
-    border-bottom-right-radius: 0px;
     box-shadow: 0 2px 4px rgba(0,0,0,0.05);
 }
 
 .filter-item {
-    flex-grow: 1; /* Biarkan setiap item filter tumbuh mengisi ruang */
-    flex-basis: 0; /* Penting: Biarkan elemen fleksibel menyesuaikan lebar secara merata */
-    min-width: 100px; /* Beri lebar minimum agar tidak terlalu kecil */
-    max-width: 200px; /* Batasi lebar maksimum jika terlalu lebar */
+    flex-grow: 1;
+    flex-basis: 0;
+    min-width: 100px;
+    max-width: 200px;
 }
 
 .dashboard-filters-row select {
@@ -198,8 +188,6 @@ tfoot tr:last-child td:last-child { border-bottom-right-radius: 6px; }
     font-size: 12px;
     background-color: #f9fafb;
     color: #374151;
-    -webkit-appearance: none;
-    -moz-appearance: none;
     appearance: none;
     background-image: url('data:image/svg+xml;charset=US-ASCII,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22292.4%22%20height%3D%22292.4%22%20viewBox%3D%220%200%20292.4%20292.4%22%3E%3Cpath%20fill%3D%22%236b7280%22%20d%3D%22M287%2C197.915l-14.776-14.776L146.2%2C266.384L14.776%2C197.915L0%2C183.139l146.2%2C146.2l146.2-146.2L287%2C197.915z%22%2F%3E%3C%2Fsvg%3E');
     background-repeat: no-repeat;
@@ -223,7 +211,7 @@ tfoot tr:last-child td:last-child { border-bottom-right-radius: 6px; }
 
 .filter-apply-btn {
     padding: 0px 8px;
-    background-color: #557da8;
+    background-color: #4CAF50;
     color: #ffffff;
     border: none;
     border-radius: 20px;
@@ -241,218 +229,250 @@ tfoot tr:last-child td:last-child { border-bottom-right-radius: 6px; }
     background-color: #7a9fd8;
 }
 
+.filter-sidebar {
+    display: none;
+}
+
+/* --- CARD STYLES (DIPERBARUI) --- */
 .content-grid {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
-    max-width: none;
+    gap: 12px;
     width: 100%;
-    margin: 0px auto;
+        margin-bottom: 0px;
+
+    padding: 10px;
 }
 
 
-.stage-section {
+.stage-card {
+    background: #4A607C; /* Dark Slate Blue for card background */
+    border: 1px solid #5C7390; /* Lighter shade for border */
+    border-radius: 10px;
+    padding: 4px 6px;
     display: flex;
     flex-direction: column;
-    border-radius: 10px;
-    overflow: hidden;
-    margin : 10px; margin-top: 0px;
-
-}
-
-.card-header-stage {
-    background-color: #557da8;
-    color: #ffffff;
-    padding: 4px;
-    border-top-left-radius: 10px;
-    border-top-right-radius: 10px;
-    text-align: center;
-    width: 100%;
-    box-sizing: border-box;
-    
-}
-.card-header-stage h2 {
-    margin: 0;
-    font-size: 14px;
-    color: #ffffff;
-    text-align: center;
-    font-weight: 500;
-}
-
-.card-content-only {
-    background-color: #e7eeef;
-    padding: 15px;
-    border-radius: 10px;
-    border-top-left-radius: 0;
-    border-top-right-radius: 0;
-    margin-top: -1px;
-    flex-grow: 1;
-}
-
-.box-wrapper {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    flex: 1;
-    margin: 0 3px;
-}
-
-.box-group .box-wrapper:first-child,
-.box-group-three .box-wrapper:first-child {
-    margin-left: 0;
-}
-
-.box-group .box-wrapper:last-child,
-.box-group-three .box-wrapper:last-child {
-    margin-right: 0;
-}
-
-.box-label {
-    font-weight: bold;
-    color: #374151;
-    margin-bottom: 5px;
-    font-size: 12px;
-    text-align: center;
-    font-weight: 500;
-}
-
-.box {
-    background-color: #ffffff;
-    width: 100%;
-    padding: 0px;
-    text-align: center;
-    border-radius: 6px;
-    font-weight: bold;
-    color: #374151;
-    min-height: 40px;
-    display: flex;
     justify-content: center;
     align-items: center;
-    font-size: 13px;
-    font-weight: 400;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+    transition: all 0.3s ease-in-out;
+    min-height: 80px;
 }
 
-.box-group {
-    display: flex;
-    justify-content: space-between;
+.stage-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
 }
 
-.box-group-three {
+.stage-card .card-header {
     display: flex;
-    justify-content: space-around;
+    align-items: center;
     gap: 8px;
+    font-weight: 800;
+    font-size: 14px;
+    color: #F8F8F8; /* Near white for header text */
+    margin-bottom: 8px;
+    padding-bottom: 4px;
+    border-bottom: 1px solid #9BAEC6; /* Muted light blue-grey for separator line */
+    width: 80%;
+    justify-content: center;
 }
 
+.stage-card .card-header .icon {
+    font-size: 16px;
+    color: #E0E5ED; /* Slightly off-white for icon */
+}
+
+.stage-card .card-body {
+    display: flex;
+    align-items: flex-start;
+    justify-content: flex-start;
+    text-align: center;
+    gap: 10px;
+    width: 90%;
+    margin-bottom: 2px;
+}
+
+.stage-card .card-body .material-symbols-outlined {
+    font-size: 60px;
+    color: #AFC1DA; /* Desaturated light blue for icons in body */
+    flex-shrink: 0;
+    margin-top: 0px;
+    margin-left: 20px;
+    margin-bottom: 5px;
+}
+
+.card-text-group p {
+    margin: 0px 0;
+    margin-left: 10px;
+    font-size: 13px;
+    color: #C6D4EA; /* Light blue-grey for body text */
+    font-weight: bolder;
+}
+/* --- DROP SPECIAL WIDTH --- */
 .status-boxes-grid {
     display: flex;
     justify-content: center;
-    max-width: none;
     width: 100%;
-    margin: 0 auto 20px auto;
+    padding: 10px;
+    
 }
 
-.status-boxes-grid .stage-section {
-    width: 100%;
-}
-
-.filter-sidebar {
-    display: none;
+.status-boxes-grid .stage-card {
+    min-width: 260px;
+    max-width: 100%;
+    margin-top: 0;
 }
 
 /* Pastikan ada di file CSS Anda atau di <style> tag */
 
 .integrasi-wrapper {
-    display: flex; /* Mengaktifkan Flexbox */
-    gap: 10px; /* Memberi jarak antar kolom */
-    margin-top: 0px; /* Opsional: memberi jarak dari elemen i atasnya */
+    display: flex;
+    gap: 10px;
+    margin-top: 0px;
     flex-wrap: wrap; /* Memungkinkan item untuk wrap ke baris baru jika tidak cukup ruang */
-    height: 350px;
+    height: 350px; /* Ini mungkin perlu diubah di media query */
 }
 
 .sken-area{
-    flex: 5; /* Setiap item akan tumbuh dan menyusut secara merata */
-    min-width: 300px; /* Memberi batas minimum lebar agar tidak terlalu kecil di layar sempit */
-    background-color: #fff; /* Warna latar belakang, sesuaikan */
-    padding: 20px; /* Padding di dalam setiap kotak */
-    border-radius: 8px; /* Sudut membulat */
-    box-shadow: 0 2px 4px rgba(0,0,0,0.1); /* Bayangan, sesuaikan */
-    box-sizing: border-box; /* Penting agar padding tidak menambah lebar elemen */
+    flex: 5;
+    min-width: 300px;
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    box-sizing: border-box;
 }
 .daily-area{
-    flex: 4; /* Setiap item akan tumbuh dan menyusut secara merata */
-    min-width: 300px; /* Memberi batas minimum lebar agar tidak terlalu kecil di layar sempit */
-    background-color: #fff; /* Warna latar belakang, sesuaikan */
-    padding: 20px; /* Padding di dalam setiap kotak */
-    border-radius: 8px; /* Sudut membulat */
-    box-shadow: 0 2px 4px rgba(0,0,0,0.1); /* Bayangan, sesuaikan */
-    box-sizing: border-box; /* Penting agar padding tidak menambah lebar elemen */  
+    flex: 4;
+    min-width: 300px;
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    box-sizing: border-box;
 }
 .failed-area {
-    flex: 4; /* Setiap item akan tumbuh dan menyusut secara merata */
-    min-width: 300px; /* Memberi batas minimum lebar agar tidak terlalu kecil di layar sempit */
-    background-color: #fff; /* Warna latar belakang, sesuaikan */
-    padding: 20px; /* Padding di dalam setiap kotak */
-    border-radius: 8px; /* Sudut membulat */
-    box-shadow: 0 2px 4px rgba(0,0,0,0.1); /* Bayangan, sesuaikan */
-    box-sizing: border-box; /* Penting agar padding tidak menambah lebar elemen */
+    flex: 4;
+    min-width: 300px;
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    box-sizing: border-box;
 }
 
 /* Mengatur ukuran font di dalam area ini */
 .integrasi-wrapper h3 {
-    font-size: 1.1em; /* Ukuran font untuk judul area, sesuaikan */
+    font-size: 1.1em;
     margin-bottom: 15px;
-    color: #557da8;
+    color: #3f6096;
     font-weight: bold;
     border-bottom: 1px solid #e0e0e0;
-
-
 }
 
 .integrasi-wrapper table {
-    font-size: 10px; /* Ukuran font untuk teks di tabel, sesuaikan */
-    width: 100%; /* Pastikan tabel mengisi lebar container */
-    border-collapse: collapse; /* Untuk tabel yang rapi */
-  
+    font-size: 10px;
+    width: 100%;
+    border-collapse: collapse;
 }
 .main-header-row th {
     position: sticky;
-    top: 0; /* Menempel di bagian paling atas */
-    z-index: 20; /* Pastikan selalu di atas */
-    background-color: #3f6096; /* Penting untuk latar belakang saat sticky */
-    /*box-shadow: 0 2px 2px -1px rgba(0, 0, 0, 0.4);  Opsional */
+    top: 0;
+    z-index: 20;
+    background-color: #3f6096;
 }
 
 .integrasi-wrapper table th,
 .integrasi-wrapper table td {
-    padding: 8px 5px; /* Padding sel tabel */
-    border: 1px solid #ddd; /* Border sel tabel */
-    text-align: center; /* Pusatkan teks di sel */
-    white-space: nowrap; /* Mencegah teks wrapping di kolom header jika terlalu panjang */
-    white-space: normal; /* PENTING: Memungkinkan teks di body tabel untuk wrap */
-    word-wrap: break-word; /* Memastikan kata panjang pun akan wrap */
-    
+    padding: 8px 5px;
+    border: 1px solid #ddd;
+    text-align: center;
+    white-space: nowrap;
+    white-space: normal;
+    word-wrap: break-word;
 }
 
 .integrasi-wrapper table thead th {
-    background-color: #3f6096; /* Warna latar belakang header tabel */
+    background-color: #3f6096;
     font-weight: bold;
-    
 }
 
 .integrasi-wrapper .total-row td {
-    background-color: #e9e9e9; /* Warna latar belakang baris total */
+    background-color: #e9e9e9;
     font-weight: bold;
 }
 
 .table-scroll-container {
-    max-height: 250px; /* TINGGI MAKSIMUM AREA SCROLL UNTUK TABEL SAJA. Sesuaikan. */
-    overflow-y: auto;  /* Mengaktifkan scroll vertikal */
-    overflow-x: auto;  /* Mengaktifkan scroll horizontal jika lebar tabel melebihi container */
-    width: 100%;       /* Pastikan kontainer ini mengambil lebar penuh dari parent (.daily-area/.failed-area) */
-    /* Jika Anda ingin border di sekitar area scroll tabel: */
+    max-height: 250px;
+    overflow-y: auto;
+    overflow-x: auto;
+    width: 100%;
     border: 1px solid #e0e0e0;
     border-radius: 5px;
     box-sizing: border-box;
-    margin-top: 10px; /* Beri sedikit jarak dari judul h3 di atasnya */
+    margin-top: 10px;
 }
 
+/* --- MEDIA QUERIES UNTUK RESPONSIVITAS --- */
+@media (max-width: 768px) {
+    .dashboard-wrapper {
+        flex-direction: column; /* Ubah arah flex menjadi kolom untuk layar kecil */
+        align-items: stretch; /* Regangkan item agar mengisi lebar penuh */
+    }
 
+    .graph-placeholder,
+    .main-container {
+        flex: none; /* Hapus flex grow/shrink */
+        width: 100%; /* Buat mengambil lebar penuh */
+        min-width: unset; /* Hapus min-width agar bisa menyusut lebih kecil */
+        height: auto; /* Biarkan tinggi menyesuaikan konten */
+    }
+        /* Penyesuaian khusus untuk kartu Drop di layar lebih kecil */
+    .status-boxes-grid {
+        padding: 0 10px; /* Sesuaikan padding agar sama dengan content-grid */
+        margin-bottom: 15px; /* Jarak bawah */
+    }
+    .status-boxes-grid .stage-card {
+        min-width: unset; /* Izinkan kartu Drop menyusut */
+        max-width: 100%; /* Izinkan kartu Drop memenuhi lebar parent */
+        width: 100%; /* Pastikan mengambil lebar penuh di dalam status-boxes-grid */
+    }
+
+    /* Tambahan untuk .integrasi-wrapper jika belum ada */
+    .integrasi-wrapper {
+        flex-direction: column; /* Pastikan kolom di layar kecil */
+        height: auto; /* Biarkan tinggi menyesuaikan konten */
+    }
+
+    .sken-area, .daily-area, .failed-area {
+        min-width: unset; /* Izinkan menyusut lebih kecil */
+        width: 100%; /* Ambil lebar penuh */
+    }
+
+    /* Penyesuaian lain yang sudah ada untuk responsivitas */
+    .content-grid {
+        grid-template-columns: 1fr; /* Stack top cards on smaller screens */
+        padding: 0 10px 15px 10px;
+        gap: 10px;
+    }
+    .status-boxes-grid {
+        padding:  0 10px 15px 10px;
+        margin-bottom: 15px;
+    }
+ 
+    .integration-table {
+        font-size: 11px;
+    }
+    .integration-table th, .integration-table td {
+        padding: 6px;
+    }
+}
+
+@media (max-width: 480px) {
+    .main-container {
+        border-radius: 0;
+        box-shadow: none;
+    }
+
+}

@@ -69,48 +69,63 @@
             @endif
  
 
-            @if (Auth::user()->role === 'mitra')
-            <div class="form-grid">
-            <div class="form-column">
+          
+
+@if (Auth::user()->role === 'mitra')
+    <div class="form-grid">
+        <div class="form-column">
 
             <div class="form-group">
                 <label>Regional</label>
-                <select name="regional" required>
-                    <option value="">-- Pilih Regional --</option>
-                    @foreach (App\Enums\Regional::cases() as $regional)
-                    <option value="{{ $regional->value }}" {{ $project->regional == $regional->value ? 'selected' : '' }}>{{ $regional->value }}</option>
-                    @endforeach
-                </select>
+                {{-- Menggunakan input type="text" dengan atribut readonly --}}
+                <input type="text" 
+                       name="regional_display" 
+                       value="{{ $project->regional ?? '' }}" 
+                       readonly 
+                       class="form-control-readonly"> 
+                
+                {{-- Jika Anda masih perlu mengirimkan nilai ini ke backend,
+                     gunakan input hidden dengan nama yang sama dengan yang diharapkan backend
+                     (misalnya 'regional') --}}
+                <input type="hidden" name="regional" value="{{ $project->regional ?? '' }}">
             </div>
 
+           {{-- Witel --}}
             <div class="form-group">
                 <label>Witel</label>
-                <select name="witel" required>
+                {{-- Untuk select, gunakan disabled dan pastikan option yang benar terpilih --}}
+                <select name="witel" disabled class="form-control-readonly">
                     <option value="">-- Pilih Witel --</option>
                     @foreach (App\Enums\Witel::cases() as $witel)
-                    <option value="{{ $witel->value }}" {{ $project->witel == $witel->value ? 'selected' : '' }}>{{ $witel->value }}</option>
+                        <option value="{{ $witel->value }}" {{ $project->witel == $witel->value ? 'selected' : '' }}>{{ $witel->value }}</option>
                     @endforeach
                 </select>
+                {{-- Penting: Gunakan input hidden untuk mengirimkan nilai Witel ke backend --}}
+                <input type="hidden" name="witel" value="{{ $project->witel ?? '' }}">
             </div>
 
+            {{-- STO --}}
             <div class="form-group">
                 <label>STO</label>
-                <input type="text" name="sto" required value="{{ $project->sto }}">
+                <input type="text" name="sto" required value="{{ $project->sto }}" readonly class="form-control-readonly">
             </div>
 
+            {{-- Site --}}
             <div class="form-group">
                 <label>Site</label>
-                <input type="text" name="site" required value="{{ $project->site }}">
+                <input type="text" name="site" required value="{{ $project->site }}" readonly class="form-control-readonly">
             </div>
 
+            {{-- IHLD --}}
             <div class="form-group">
                 <label>IHLD</label>
-                <input type="text" name="ihld" required value="{{ $project->ihld }}" />
+                <input type="text" name="ihld" required value="{{ $project->ihld }}" readonly class="form-control-readonly" />
             </div>
-            
+
+            {{-- Catuan ID --}}
             <div class="form-group">
                 <label>Catuan ID</label>
-                <input type="text" name="catuan_id" value="{{ $project->catuan_id }}" required>
+                <input type="text" name="catuan_id" value="{{ $project->catuan_id }}" required readonly class="form-control-readonly">
             </div>
 
             <div class="form-group">
@@ -228,7 +243,7 @@
             </div>
 
             <div id="bukti-drop-group" class="form-group" style="display: none;">
-                <label>Bukti Drop</label>
+                <label>Bukti Drop*</label>
                 <input type="file" name="bukti_drop" accept="application/pdf,image/*">
                 @if ($project->bukti_drop)
                 <p>File saat ini: <a href="{{ asset('storage/'.$project->bukti_drop) }}" target="_blank">Lihat File</a></p>
@@ -244,7 +259,7 @@
             <div class="form-column">
 
             <div class="form-group">
-                <label>Regional</label>
+                <label>Regional*</label>
                 <select name="regional" required>
                     <option value="">-- Pilih Regional --</option>
                     @foreach (App\Enums\Regional::cases() as $regional)
@@ -254,7 +269,7 @@
             </div>
 
             <div class="form-group">
-                <label>Witel</label>
+                <label>Witel*</label>
                 <select name="witel" required>
                     <option value="">-- Pilih Witel --</option>
                     @foreach (App\Enums\Witel::cases() as $witel)
@@ -264,22 +279,22 @@
             </div>
 
             <div class="form-group">
-                <label>STO</label>
+                <label>STO*</label>
                 <input type="text" name="sto" required value="{{ $project->sto }}">
             </div>
 
             <div class="form-group">
-                <label>Site</label>
+                <label>Site*</label>
                 <input type="text" name="site" required value="{{ $project->site }}">
             </div>
 
             <div class="form-group">
-                <label>IHLD</label>
+                <label>IHLD*</label>
                 <input type="text" name="ihld" required value="{{ $project->ihld }}" />
             </div>
             
             <div class="form-group">
-                <label>Catuan ID</label>
+                <label>Catuan ID*</label>
                 <input type="text" name="catuan_id" value="{{ $project->catuan_id }}" required>
             </div>
 
@@ -299,7 +314,7 @@
             <div class="form-column">
             <div style="display: flex; gap: 15px; width: 100%;">
                 <div class="form-group" style="flex: 1;">
-                    <label for="dependensi">Dependensi</label>
+                    <label for="dependensi">Dependensi*</label>
                     <select name="dependensi" id="dependensi" class="form-control">
                         <option value="">-- Pilih --</option>
                         {{-- Logika untuk mempertahankan pilihan Dependensi --}}

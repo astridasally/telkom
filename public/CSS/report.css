@@ -97,6 +97,12 @@ tbody tr:nth-child(even) td {
     display: inline-block;
     border-radius: 20px; /* Optional: for rounded corners */
 }
+.edit-button:hover{
+    background-color: #19b31e;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px #8dc18f;
+}
+
 
 /******* CONTAINER UTAMA UNTUK FITUR FILTER DAN SEARCH *******/
 /* Ini adalah wrapper untuk seluruh form filter & search.
@@ -166,7 +172,10 @@ tbody tr:nth-child(even) td {
 
 .search-button:hover {
     background-color: #1e7cb6;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px #80b5d0;
 }
+
 
 /* Tombol Bersihkan Filter / Pencarian */
 .clear-search-button {
@@ -189,4 +198,6 @@ tbody tr:nth-child(even) td {
 
 .clear-search-button:hover {
     background-color: #b82231;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px #c47980;
 }

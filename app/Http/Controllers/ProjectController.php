@@ -462,9 +462,9 @@ class ProjectController extends Controller
         $realIntegrasiCount = $baseQuery->clone()->whereNotNull('realisasi_integrasi')->count();
 
         // DROP
-        $dropYesCount      = $baseQuery->clone()->where('drop_data', 'yes')->count();
-        $dropNoCount       = $baseQuery->clone()->where('drop_data', 'no')->count();
-        $dropRelokasiCount = $baseQuery->clone()->where('drop_data', 'relokasi')->count();
+        $dropYesCount      = $baseQuery->clone()->where('drop_data', 'Yes')->count();
+        $dropNoCount       = $baseQuery->clone()->where('drop_data', 'No')->count();
+        $dropRelokasiCount = $baseQuery->clone()->where('drop_data', 'Relokasi')->count();
 
 
         // =======================================================

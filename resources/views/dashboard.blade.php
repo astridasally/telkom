@@ -2,6 +2,8 @@
     {{-- Sesuaikan path CSS Anda --}}
     <link rel="stylesheet" href="{{ asset('css/dashboard.css') }}">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" integrity="sha512-..." crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet" />
+
 
     {{-- SERTAKAN LIBRARY CHART.JS --}}
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
@@ -153,105 +155,79 @@
                 </div>
             </form>
 
-                {{-- Kotak-kotak Angka --}}
-                <div class="content-grid">
-                    <div class="stage-section"> 
-                        <div class="card-header-stage">
-                            <h2>Survey</h2>
-                        </div>
-                        <div class="card-content-only">
-                            <div class="box-group">
-                                <div class="box-wrapper">
-                                    <span class="box-label">Plan</span>
-                                    <div class="box">{{ $planSurveyCount ?? 0 }}</div>
-                                </div>
-                                <div class="box-wrapper">
-                                    <span class="box-label">Realisasi</span>
-                                    <div class="box">{{ $realSurveyCount ?? 0 }} </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+               {{-- Kotak-kotak Angka --}}
+<div class="content-grid">
+    <div class="stage-card">
+        <div class="card-header">
+            <span>Survey</span>
+        </div>
+        <div class="card-body">
+            <span class="material-symbols-outlined">rate_review</span>
+            <div class="card-text-group">
+                <p>Plan: <strong>{{ $planSurveyCount ?? 0 }}</strong></p>
+                <p>Realisasi: <strong>{{ $realSurveyCount ?? 0 }}</strong></p>
+            </div>
+        </div>
+    </div>
 
-                    <div class="stage-section">
-                        <div class="card-header-stage">
-                            <h2>Delivery</h2>
-                        </div>
-                        <div class="card-content-only">
-                            <div class="box-group">
-                                <div class="box-wrapper">
-                                    <span class="box-label">Plan</span>
-                                    <div class="box">{{ $planDeliveryCount ?? 0 }}</div>
-                                </div>
-                                <div class="box-wrapper">
-                                    <span class="box-label">Realisasi</span>
-                                    <div class="box">{{$realDeliveryCount ?? 0 }}</div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+    <div class="stage-card">
+        <div class="card-header">
+            <span>Delivery</span>
+        </div>
+        <div class="card-body">
+            <span class="material-symbols-outlined">local_shipping</span>
+            <div class="card-text-group">
+                <p>Plan: <strong>{{ $planDeliveryCount ?? 0 }}</strong></p>
+                <p>Realisasi: <strong>{{ $realDeliveryCount ?? 0 }}</strong></p>
+            </div>
+        </div>
+    </div>
 
-                    <div class="stage-section">
-                        <div class="card-header-stage">
-                            <h2>Instalasi</h2>
-                        </div>
-                        <div class="card-content-only">
-                            <div class="box-group">
-                                <div class="box-wrapper">
-                                    <span class="box-label">Plan</span>
-                                    <div class="box">{{$planInstalasiCount?? 0 }} </div>
-                                </div>
-                                <div class="box-wrapper">
-                                    <span class="box-label">Realisasi</span>
-                                    <div class="box">{{$realInstalasiCount ?? 0 }}</div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+    <div class="stage-card">
+        <div class="card-header">
+            <span>Instalasi</span>
+        </div>
+        <div class="card-body">
+            <span class="material-symbols-outlined">build</span>
+            <div class="card-text-group">
+                <p>Plan: <strong>{{ $planInstalasiCount ?? 0 }}</strong></p>
+                <p>Realisasi: <strong>{{ $realInstalasiCount ?? 0 }}</strong></p>
+            </div>
+        </div>
+    </div>
 
-                    <div class="stage-section">
-                        <div class="card-header-stage">
-                            <h2>Integrasi</h2>
-                        </div>
-                        <div class="card-content-only">
-                            <div class="box-group">
-                                <div class="box-wrapper">
-                                    <span class="box-label">Plan</span>
-                                    <div class="box">{{$planIntegrasiCount?? 0 }}</div>
-                                </div>
-                                <div class="box-wrapper">
-                                    <span class="box-label">Realisasi</span>
-                                    <div class="box">{{$realIntegrasiCount?? 0 }}</div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+    <div class="stage-card">
+        <div class="card-header">
+            <span>Integrasi</span>
+        </div>
+        <div class="card-body">
+            <span class="material-symbols-outlined">hub</span>
+            <div class="card-text-group">
+                <p>Plan: <strong>{{ $planIntegrasiCount ?? 0 }}</strong></p>
+                <p>Realisasi: <strong>{{ $realIntegrasiCount ?? 0 }}</strong></p>
+            </div>
+        </div>
+    </div>
+</div>
 
-                {{-- Kotak Drop --}}
-                <div class="status-boxes-grid">
-                    <div class="stage-section">
-                        <div class="card-header-stage">
-                            <h2>Drop</h2>
-                        </div>
-                        <div class="card-content-only">
-                            <div class="box-group-three">
-                                <div class="box-wrapper">
-                                    <span class="box-label">Yes</span>
-                                    <div class="box">{{ $dropYes ?? 0 }}</div>
-                                </div>
-                                <div class="box-wrapper">
-                                    <span class="box-label">No</span>
-                                    <div class="box">{{ $dropNo ?? 0 }}</div>
-                                </div>
-                                <div class="box-wrapper">
-                                    <span class="box-label">Relokasi</span>
-                                    <div class="box">{{ $dropRelokasi ?? 0 }}</div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+{{-- Kotak Drop --}}
+<div class="status-boxes-grid">
+    <div class="stage-card">
+        <div class="card-header">
+            <span>Drop</span>
+        </div>
+        <div class="card-body">
+            <span class="material-symbols-outlined">call_split</span>
+            <div class="card-text-group">
+                <p>Yes: <strong>{{ $dropYesCount ?? 0 }}</strong></p>
+                <p>No: <strong>{{ $dropNoCount ?? 0 }}</strong></p>
+                <p>Relokasi: <strong>{{ $dropRelokasiCount ?? 0 }}</strong></p>
+            </div>
+        </div>
+    </div>
+</div>
+
+
             </div>
         </div>
                       
@@ -418,7 +394,7 @@
                         tension: 0.3,
                         fill: false
                     }, {
-                        label: 'REAL',
+                        label: 'REALISASI',
                         data: sCurveRealData,
                         borderColor: 'rgb(255, 159, 64)',
                         backgroundColor: 'rgba(255, 159, 64, 0.2)',
@@ -427,34 +403,44 @@
                     }]
                 },
                 options: {
-                    responsive: true,
-                    maintainAspectRatio: false,
-                    scales: {
-                        x: {
-                            title: {
-                                display: true,
-                                text: 'BULAN'
-                            }
+                responsive: true,
+                maintainAspectRatio: false,
+                scales: {
+                    x: {
+                        title: {
+                            display: true,
+                            text: 'BULAN'
                         },
-                        y: {
-                            title: {
-                                display: true,
-                                text: 'Jumlah Project'
-                            },
-                            beginAtZero: true
+                        ticks: {
+                            autoSkip: false,   // ✅ Jangan lewati label bulan
+                            maxRotation: 45,
+                            minRotation: 0,
+                            maxTicksLimit: 12,
                         }
                     },
-                    plugins: {
-                        tooltip: {
-                            mode: 'index',
-                            intersect: false
-                        },
+                    y: {
                         title: {
-                            display: false,
-                            text: 'KURVA S CSF Mini OLT'
+                            display: true,
+                            text: 'Jumlah Project'
+                        },
+                        beginAtZero: true,
+                        ticks: {
+                            stepSize: 1       // ✅ Biar diskrit (satuan 1)
                         }
                     }
+                },
+                plugins: {
+                    tooltip: {
+                        mode: 'index',
+                        intersect: false
+                    },
+                    title: {
+                        display: false,
+                        text: 'KURVA S CSF Mini OLT'
+                    }
                 }
+            }
+
             });
         } else {
             console.error("Canvas element with ID 'sCurveChart' not found.");

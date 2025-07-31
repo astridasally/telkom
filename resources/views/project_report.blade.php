@@ -5,7 +5,7 @@
     
     <div class="report-wrapper">
     <div class="header-info">
-        <div class="title-left">Mitra {{ Auth::user()->name }}</div>
+        <div class="title-left">Hello, {{ Auth::user()->name }}!</div>
     </div>
     
 

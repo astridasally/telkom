@@ -91,6 +91,8 @@ form {
 
 .update-btn:hover {
     background-color: #58cb62;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px #7dc37f;
 }
 
 /* === Error Alert === */
