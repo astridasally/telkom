@@ -9,6 +9,7 @@ use App\Enums\Regional; // Pastikan ini ada
 use App\Enums\Witel; // Pastikan ini ada
 use Carbon\Carbon; // Pastikan ini ada
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Storage;
 
 class ProjectController extends Controller
 {
@@ -284,125 +285,156 @@ class ProjectController extends Controller
     }
 
     public function store_project_update(Request $request, $id)
-    {
-        $project = Project::findOrFail($id);
+{
+    $project = Project::findOrFail($id);
 
+    // Definisikan aturan validasi secara terpisah
+    $rules = [
+        'regional' => 'required',
+        'witel' => 'required',
+        'sto' => 'required',
+        'site' => 'required',
+        'priority' => 'nullable',
+        'catuan_id' => 'required',
+        'ihld' => 'required',
+        'plan_survey' => 'nullable|date',
+        'realisasi_survey' => 'nullable|date|after_or_equal:plan_survey',
+        'plan_delivery' => 'nullable|date|after_or_equal:realisasi_survey',
+        'realisasi_delivery' => 'nullable|date|after_or_equal:plan_delivery',
+        'plan_instalasi' => 'nullable|date|after_or_equal:realisasi_delivery',
+        'realisasi_instalasi' => 'nullable|date|after_or_equal:plan_instalasi',
+        'plan_integrasi' => 'nullable|date|after_or_equal:realisasi_instalasi',
+        'realisasi_integrasi' => 'nullable|date|after_or_equal:plan_integrasi',
+        'remark' => 'nullable',
+        'drop_data' => 'nullable|in:Yes,No,Relokasi',
 
-        $validated = $request->validate([
-            'regional' => 'required',
-            'witel' => 'required',
-            'sto' => 'required',
-            'site' => 'required',
-            'priority' => 'nullable',
-            'catuan_id' => 'required',
-            'ihld' => 'required',
-            'plan_survey' => 'nullable|date',
-            'realisasi_survey' => 'nullable|date|after_or_equal:plan_survey',
-            'plan_delivery' => 'nullable|date|after_or_equal:realisasi_survey',
-            'realisasi_delivery' => 'nullable|date|after_or_equal:plan_delivery',
-            'plan_instalasi' => 'nullable|date|after_or_equal:realisasi_delivery',
-            'realisasi_instalasi' => 'nullable|date|after_or_equal:plan_instalasi',
-            'plan_integrasi' => 'nullable|date|after_or_equal:realisasi_instalasi',
-            'realisasi_integrasi' => 'nullable|date|after_or_equal:plan_integrasi',
-            'remark' => 'nullable',
-            'drop_data' => 'nullable',
+        'relok_regional' => 'required_if:drop_data,Relokasi',
+        'relok_witel' => 'required_if:drop_data,Relokasi',
+        'relok_sto' => 'required_if:drop_data,Relokasi',
+        'relok_site' => 'required_if:drop_data,Relokasi',
 
-            //'drop_data' => 'required|in:Yes,No,Relokasi',
-            'bukti_drop' => 'required_if:drop_data,Yes|nullable|mimes:pdf,jpg,jpeg,png|max:5200',
-            'relok_regional' => 'required_if:drop_data,Relokasi',
-            'relok_witel'    => 'required_if:drop_data,Relokasi',
-            'relok_sto'      => 'required_if:drop_data,Relokasi',
-            'relok_site'     => 'required_if:drop_data,Relokasi',
+        //validate form edit TA
+        'priority_ta' => 'nullable',
+        'dependensi' => 'nullable',
+        'assign_to' => 'nullable',
+        'ftth_csf' => 'nullable',
+        'ftth_port' => 'nullable',
+        'golive_csf' => 'nullable',
+        'golive_port' => 'nullable',
+        'status_osp' => 'nullable',
+        'scenario_uplink' => 'nullable',
+        'status_uplink' => 'nullable',
+        'remark_ta' => 'nullable',
+    ];
 
-            //validate form edit TA 
-            'priority_ta' => 'nullable',
-            'dependensi' => 'nullable',
-            'assign_to' => 'nullable',
-            'ftth_csf' => 'nullable',
-            'ftth_port' => 'nullable',
-            'golive_csf' => 'nullable',
-            'golive_port' => 'nullable',
-            'status_osp' => 'nullable',
-            'scenario_uplink' => 'nullable',
-            'status_uplink' => 'nullable',
-            'remark_ta' => 'nullable',
-        ]);
+    // Logika validasi kondisional untuk 'bukti_drop'
+    // Validasi 'required' hanya akan diaktifkan jika drop_data = 'Yes' DAN belum ada file di database.
+    if ($request->input('drop_data') === 'Yes' && is_null($project->bukti_drop)) {
+        $rules['bukti_drop'] = 'required|mimes:pdf,jpg,jpeg,png|max:5200';
+    } else {
+        $rules['bukti_drop'] = 'nullable|mimes:pdf,jpg,jpeg,png|max:5200';
+    }
 
+    // Jalankan validasi
+    $validated = $request->validate($rules);
 
-
-        // Simpan bukti drop (jika ada)
-        if ($request->hasFile('bukti_drop')) {
-            $validated['bukti_drop'] = $request->file('bukti_drop')->store('bukti_drop', 'public');
+    // --- Penanganan File ---
+    if ($request->hasFile('bukti_drop')) {
+        // Hapus file lama jika ada
+        if ($project->bukti_drop) {
+            Storage::disk('public')->delete($project->bukti_drop);
         }
 
-        $validated['user_id'] = auth()->id(); // relasi ke user login
-
-        // Perbaikan di sini: update bukan create
-        $project->update($validated);
-
-        return redirect()->route('project_report')->with('success', 'Project berhasil diperbarui.');
+        // Simpan file baru
+        $path = $request->file('bukti_drop')->store('bukti_drop', 'public');
+        $validated['bukti_drop'] = $path;
+    } else {
+        // Jika tidak ada file baru diupload, pertahankan file lama
+        $validated['bukti_drop'] = $project->bukti_drop;
     }
+
+    $validated['user_id'] = auth()->id();
+
+    // Perbarui proyek
+    $project->update($validated);
+
+    return redirect()->route('project_report')->with('success', 'Project berhasil diperbarui.');
+}
     
-    public function store_project_update_admin(Request $request, $id)
-    {
-        $project = Project::findOrFail($id);
+   public function store_project_update_admin(Request $request, $id)
+{
+    $project = Project::findOrFail($id);
 
+    // Definisikan aturan validasi secara terpisah
+    $rules = [
+        'regional' => 'required',
+        'witel' => 'required',
+        'sto' => 'required',
+        'site' => 'required',
+        'priority' => 'nullable',
+        'catuan_id' => 'required',
+        'ihld' => 'required',
+        'plan_survey' => 'nullable|date',
+        'realisasi_survey' => 'nullable|date|after_or_equal:plan_survey',
+        'plan_delivery' => 'nullable|date|after_or_equal:realisasi_survey',
+        'realisasi_delivery' => 'nullable|date|after_or_equal:plan_delivery',
+        'plan_instalasi' => 'nullable|date|after_or_equal:realisasi_delivery',
+        'realisasi_instalasi' => 'nullable|date|after_or_equal:plan_instalasi',
+        'plan_integrasi' => 'nullable|date|after_or_equal:realisasi_instalasi',
+        'realisasi_integrasi' => 'nullable|date|after_or_equal:plan_integrasi',
+        'remark' => 'nullable',
+        'drop_data' => 'nullable|in:Yes,No,Relokasi',
+        'relok_regional' => 'required_if:drop_data,Relokasi',
+        'relok_witel' => 'required_if:drop_data,Relokasi',
+        'relok_sto' => 'required_if:drop_data,Relokasi',
+        'relok_site' => 'required_if:drop_data,Relokasi',
 
-        $validated = $request->validate([
-            'regional' => 'required',
-            'witel' => 'required',
-            'sto' => 'required',
-            'site' => 'required',
-            'priority' => 'nullable',
-            'catuan_id' => 'required',
-            'ihld' => 'required',
-            'plan_survey' => 'nullable|date',
-            'realisasi_survey' => 'nullable|date|after_or_equal:plan_survey',
-            'plan_delivery' => 'nullable|date|after_or_equal:realisasi_survey',
-            'realisasi_delivery' => 'nullable|date|after_or_equal:plan_delivery',
-            'plan_instalasi' => 'nullable|date|after_or_equal:realisasi_delivery',
-            'realisasi_instalasi' => 'nullable|date|after_or_equal:plan_instalasi',
-            'plan_integrasi' => 'nullable|date|after_or_equal:realisasi_instalasi',
-            'realisasi_integrasi' => 'nullable|date|after_or_equal:plan_integrasi',
-            
-            'remark' => 'nullable',
-            'drop_data' => 'nullable',
+        'priority_ta' => 'nullable',
+        'dependensi' => 'nullable',
+        'assign_to' => 'nullable',
+        'ftth_csf' => 'nullable',
+        'ftth_port' => 'nullable',
+        'golive_csf' => 'nullable',
+        'golive_port' => 'nullable',
+        'status_osp' => 'nullable',
+        'scenario_uplink' => 'nullable',
+        'status_uplink' => 'nullable',
+        'remark_ta' => 'nullable',
+    ];
 
+    // Logika validasi kondisional untuk 'bukti_drop'
+    // Validasi 'required' hanya akan diaktifkan jika drop_data = 'Yes' DAN belum ada file di database.
+    if ($request->input('drop_data') === 'Yes' && is_null($project->bukti_drop)) {
+        $rules['bukti_drop'] = 'required|mimes:pdf,jpg,jpeg,png|max:5200';
+    } else {
+        $rules['bukti_drop'] = 'nullable|mimes:pdf,jpg,jpeg,png|max:5200';
+    }
 
-            //'drop_data' => 'required|in:Yes,No,Relokasi',
-            'bukti_drop' => 'required_if:drop_data,Yes|nullable|mimes:pdf,jpg,jpeg,png|max:5200',
-            'relok_regional' => 'required_if:drop_data,Relokasi',
-            'relok_witel'    => 'required_if:drop_data,Relokasi',
-            'relok_sto'      => 'required_if:drop_data,Relokasi',
-            'relok_site'     => 'required_if:drop_data,Relokasi',
+    // Jalankan validasi
+    $validated = $request->validate($rules);
 
-            'priority_ta' => 'nullable',
-            'dependensi' => 'nullable',
-            'assign_to' => 'nullable',
-            'ftth_csf' => 'nullable',
-            'ftth_port' => 'nullable',
-            'golive_csf' => 'nullable',
-            'golive_port' => 'nullable',
-            'status_osp' => 'nullable',
-            'scenario_uplink' => 'nullable',
-            'status_uplink' => 'nullable',
-            'remark_ta' => 'nullable',
-        ]);
-
-
-
-        // Simpan bukti drop (jika ada)
-        if ($request->hasFile('bukti_drop')) {
-            $validated['bukti_drop'] = $request->file('bukti_drop')->store('bukti_drop', 'public');
+    // --- Penanganan File ---
+    if ($request->hasFile('bukti_drop')) {
+        // Hapus file lama jika ada
+        if ($project->bukti_drop) {
+            Storage::disk('public')->delete($project->bukti_drop);
         }
 
-        $validated['user_id'] = $project->user_id; // relasi ke user login
-
-        // Perbaikan di sini: update bukan create
-        $project->update($validated);
-
-        return redirect()->route('project_report')->with('success', 'Data berhasil diperbarui.');
+        // Simpan file baru
+        $path = $request->file('bukti_drop')->store('bukti_drop', 'public');
+        $validated['bukti_drop'] = $path;
+    } else {
+        // Jika tidak ada file baru diupload, pertahankan file lama
+        $validated['bukti_drop'] = $project->bukti_drop;
     }
+
+    $validated['user_id'] = $project->user_id; // relasi ke user yang membuat project
+
+    // Perbarui proyek
+    $project->update($validated);
+
+    return redirect()->route('project_report')->with('success', 'Data berhasil diperbarui.');
+}
 
    public function dashboard(Request $request)
     {
@@ -586,7 +618,7 @@ class ProjectController extends Controller
                                              ->whereNull('realisasi_integrasi')   // realisasi_integrasi masih kosong
                                              ->whereDate('plan_integrasi', '<=', $today) // plan_integrasi adalah hari ini atau di masa lalu
                                              ->with('user')
-                                             ->select('regional', 'witel', 'sto', 'site', 'ihld', 'catuan_id', 'user_id')
+                                             ->select('regional', 'witel', 'sto', 'site', 'ihld', 'catuan_id', 'assign_to')
                                              ->get();
 
         // =======================================================
@@ -597,7 +629,7 @@ class ProjectController extends Controller
         $dailyIntegrasiProjects = $baseQuery->clone()
                                             ->whereDate('plan_integrasi', $today) // Filter berdasarkan tanggal hari ini
                                             ->with('user') // Eager load user untuk mendapatkan nama mitra
-                                            ->select('regional', 'witel', 'sto', 'site', 'ihld', 'catuan_id', 'user_id') // Pilih kolom yang dibutuhkan
+                                            ->select('regional', 'witel', 'sto', 'site', 'ihld', 'catuan_id', 'assign_to') // Pilih kolom yang dibutuhkan
                                             ->get();
         // =======================================================
         // BAGIAN 4: LOGIKA GRAFIK S-CURVE (PLAN & REALISASI INTEGRASI)

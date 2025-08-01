@@ -242,13 +242,13 @@
 
             </div>
 
-            <div id="bukti-drop-group" class="form-group" style="display: none;">
-                <label>Bukti Drop*</label>
-                <input type="file" name="bukti_drop" accept="application/pdf,image/*">
-                @if ($project->bukti_drop)
-                <p>File saat ini: <a href="{{ asset('storage/'.$project->bukti_drop) }}" target="_blank">Lihat File</a></p>
-                @endif
-            </div>
+         <div id="bukti-drop-group" class="form-group" style="display: none;">
+            <label>Bukti Drop*</label>
+            <input type="file" name="bukti_drop" accept="application/pdf,image/*">
+            @if ($project->bukti_drop)
+            <p>File saat ini: <a href="{{ asset('storage/'.$project->bukti_drop) }}" target="_blank">Lihat File</a></p>
+            @endif
+        </div>
             </div>
 
             </div>

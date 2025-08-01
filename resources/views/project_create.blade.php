@@ -50,6 +50,15 @@
                 <label>STO</label>
                 <input type="text" name="sto" required>
             </div>
+            <div class="form-group">
+                <label for="assign_to">Assign To</label>
+                <select name="assign_to" id="assign_to" class="form-control">
+                 <option value="">-- Pilih --</option>
+                 <option value="ZTE">ZTE</option>
+                 <option value="Huawei">Huawei</option>
+                 <option value="FiberHome">FiberHome</option>
+                </select>
+            </div>
             </div>  
 
             <div class="form-column">
@@ -69,6 +78,8 @@
                 <input type="text" name="catuan_id" required />
             </div>
             </div>
+
+           
 
             @if(auth()->user()->role === 'mitra')
             <div class="form-group">

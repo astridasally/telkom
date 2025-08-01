@@ -305,7 +305,7 @@
                         @forelse($dailyIntegrasiProjects as $index => $project)
                             <tr>
                                 <td>{{ $index + 1 }}</td>
-                                <td>{{ $project->user->name ?? '-' }}</td> {{-- Mengakses nama mitra dari relasi user --}}
+                                <td>{{ $project->assign_to}}</td> {{-- Mengakses nama mitra dari relasi user --}}
                                 <td>{{ $project->regional }}</td>
                                 <td>{{ $project->witel }}</td>
                                 <td>{{ $project->sto }}</td>
@@ -343,7 +343,7 @@
                         @forelse($failedIntegrasiProjects as $index => $project)
                             <tr>
                                 <td>{{ $index + 1 }}</td>
-                                <td>{{ $project->user->name ?? '-' }}</td>
+                                <td>{{ $project->assign_to }}</td>
                                 <td>{{ $project->regional }}</td>
                                 <td>{{ $project->witel }}</td>
                                 <td>{{ $project->sto }}</td>
