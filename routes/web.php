@@ -33,6 +33,13 @@ Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+    
+   Route::get('/projects/import', function () {
+    return view('import');
+});
+
+
+    Route::post('/projects/import', [ProjectController::class, 'import'])->name('projects.import');
 });
 
 require __DIR__ . '/auth.php';
