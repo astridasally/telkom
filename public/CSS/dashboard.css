@@ -85,7 +85,7 @@ tbody td {
 
 tbody tr:nth-child(even) td { background-color: #ffffff; }
 
-.total-row { font-weight: bold; background-color: #158cc7; }
+.total-row { border: 1px solid rgb(197, 197, 197); font-weight: bold; background-color: #dcdcdc; }
 
 tfoot tr:last-child td:first-child { border-bottom-left-radius: 6px; }
 tfoot tr:last-child td:last-child { border-bottom-right-radius: 6px; }
@@ -328,10 +328,16 @@ tfoot tr:last-child td:last-child { border-bottom-right-radius: 6px; }
 
 .integrasi-wrapper {
     display: flex;
-    gap: 10px;
+    gap: 15px;
     margin-top: 0px;
     flex-wrap: wrap; /* Memungkinkan item untuk wrap ke baris baru jika tidak cukup ruang */
     height: 350px; /* Ini mungkin perlu diubah di media query */
+
+    flex-direction: row;
+    width: 100%;
+    padding: 0;
+    max-width: 1200px;
+    margin: 0 auto;
 }
 
 .sken-area{
@@ -342,24 +348,43 @@ tfoot tr:last-child td:last-child { border-bottom-right-radius: 6px; }
     border-radius: 8px;
     box-shadow: 0 2px 4px rgba(0,0,0,0.1);
     box-sizing: border-box;
+
+    font-size: 1.1em;
+    color: #3f6096;
+    font-weight: bold;
+    border-bottom: 1px solid #e0e0e0;
+
+    border-radius: 8px;
+    width: 100%;
+    max-width: 1200px;
+    margin: 0 auto;
+    overflow-x: auto;
+}
+.custom-line {
+    border: none;
+    height: 1px;
+    background-color: #ccc; /* Ubah sesuai warna garis yang kamu mau */
+    margin: 5px 0 16px 0; /* Sesuaikan dengan jarak atas-bawah */
 }
 .daily-area{
     flex: 4;
-    min-width: 300px;
+    width: 100%;
     background-color: #fff;
     padding: 20px;
     border-radius: 8px;
     box-shadow: 0 2px 4px rgba(0,0,0,0.1);
     box-sizing: border-box;
+    overflow-x: auto;
 }
 .failed-area {
     flex: 4;
-    min-width: 300px;
+    width: 100%;
     background-color: #fff;
     padding: 20px;
     border-radius: 8px;
     box-shadow: 0 2px 4px rgba(0,0,0,0.1);
     box-sizing: border-box;
+    overflow-x: auto;
 }
 
 /* Mengatur ukuran font di dalam area ini */

@@ -231,12 +231,11 @@
             </div>
         </div>
                       
-
-        <div class="integrasi-wrapper">
             <div class="sken-area">
                 <h3>SKENARIO INTEGRASI</h3>
+                <hr class="custom-line">
                 <table class="table table-bordered table-striped" style="width:100%">
-                    <thead>
+                <thead>
                         <tr>
                             <th>Regional</th>
                             {{-- Loop melalui kolom-kolom skenario uplink yang sudah didefinisikan di controller --}}
@@ -285,6 +284,7 @@
                 </table>
             </div>
 
+        <div class="integrasi-wrapper">
             {{-- Di sini nanti bisa tambahkan div untuk Daily Integrasi --}}
             <div class="daily-area">
                 <h3>DAILY INTEGRASI</h3>
@@ -358,8 +358,8 @@
                     </tbody>
                 </table>
                 </div>
-                </div>
-    </div>
+            </div>
+        </div>
 
 
 
