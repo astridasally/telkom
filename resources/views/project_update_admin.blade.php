@@ -3,6 +3,7 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" integrity="sha512-..." crossorigin="anonymous" referrerpolicy="no-referrer" />
 
 
+<div class="form-wrapper">
     <div class="form-container">
         <h1>Update Project</h1>
     </div>
@@ -537,4 +538,5 @@
         });
     </script>
 
+</div>
 </x-app-layout>
