@@ -10,6 +10,9 @@ use App\Enums\Witel; // Pastikan ini ada
 use Carbon\Carbon; // Pastikan ini ada
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
+use Maatwebsite\Excel\Facades\Excel;
+use App\Imports\DataExcel;
+
 
 class ProjectController extends Controller
 {
@@ -735,5 +738,15 @@ class ProjectController extends Controller
             'uplink_not_ready' => 0,
         ];
     }
+    public function import(Request $request)
+{
+    $request->validate([
+        'file' => 'required|mimes:xlsx,xls,csv'
+    ]);
+
+    Excel::import(new DataExcel, $request->file('file'));
+
+    return back()->with('success', 'Data project berhasil diimport!');
+}
 
 }
