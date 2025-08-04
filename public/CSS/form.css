@@ -1,5 +1,5 @@
 /* === Header Form === */
-.form-container{
+.form-wrapper .form-container{
     max-width: 900px;
     margin: 20px auto 0 auto;
     background-color: #3b5998;
@@ -12,14 +12,14 @@
 }
 
 /* === Container Grid 2 Kolom === */
-.form-grid {
+.form-wrapper .form-grid {
     display: flex;
     flex-wrap: wrap;
     gap: 15px;
 }
 
 /* === Kolom Kiri & Kanan === */
-.form-column {
+.form-wrapper .form-column {
     flex: 1;
     min-width: 350px;
 }
@@ -31,7 +31,7 @@ body {
 }
 
 /* === Form Container === */
-form {
+.form-wrapper form {
     max-width: 900px;
     margin: auto; /* <-- ini bisa konflik */
     background-color: #fff;
@@ -43,21 +43,21 @@ form {
 }
 
 /* === Form Group === */
-.form-group {
+.form-wrapper .form-group {
     display: flex;
     flex-direction: column;
     margin-bottom: 8px;
 }
 
 /* === Label === */
-.form-group label {
+.form-wrapper .form-group label {
     font-weight: 600;
     color: #0d6efd; /* Biru Telkom */
     margin-bottom: 4px;
 }
 
 /* Remark Column*/
-.form-group textarea { /* Pastikan 'textarea' ada di sini */
+.form-wrapper .form-group textarea { /* Pastikan 'textarea' ada di sini */
     width:100%;
     padding: 10px 12px;
     border: 1px solid #ccc;
@@ -69,8 +69,8 @@ form {
 }
 
 /* === Input dan Select === */
-.form-group input,
-.form-group select {
+.form-wrapper .form-group input,
+.form-wrapper .form-group select {
     padding: 7px 12px;
     border: 1px solid #ccc;
     border-radius: 8px;
@@ -78,7 +78,7 @@ form {
 }
 
 /* === Tombol Simpan === */
-.update-btn {
+.form-wrapper .update-btn {
     background-color: #32b92e; 
     color: white;
     border: none;
@@ -89,14 +89,14 @@ form {
     transition: 0.2s ease-in-out;
 }
 
-.update-btn:hover {
+.form-wrapper .update-btn:hover {
     background-color: #58cb62;
     transform: translateY(-2px);
     box-shadow: 0 4px 12px #7dc37f;
 }
 
 /* === Error Alert === */
-.alert.alert-danger {
+.form-wrapper .alert.alert-danger {
     background-color: #f8d7da;
     border: 1px solid #f5c6cb;
     color: #721c24;
@@ -105,17 +105,17 @@ form {
     margin-bottom: 16px;
 }
 
-.button-wrapper {
+.form-wrapper .button-wrapper {
     margin-top: 30px;
     text-align: center;
 }
 
 /* === Optional: Date Picker Icon Support === */
-input[type="date"] {
+.form-wrapper input[type="date"] {
     padding-right: 40px;
 }
 
-.notification-popup {
+.form-wrapper .notification-popup {
     position: fixed; /* Tetap di posisi tertentu meskipun halaman di-scroll */
     top: 30px; /* Jarak dari atas */
     right: 30px; /* Jarak dari kanan */
@@ -132,15 +132,15 @@ input[type="date"] {
     animation: fadeInOut 7s forwards; /* Animasi muncul dan menghilang */
 }
 
-.notification-popup.success {
+.form-wrapper .notification-popup.success {
     background-color: #4CAF50; /* Hijau untuk sukses */
 }
 
-.notification-popup.error {
+.form-wrapper .notification-popup.error {
     background-color: #f44336; /* Merah untuk error */
 }
 
-.notification-popup .close-btn {
+.form-wrapper .notification-popup .close-btn {
     background: none;
     border: none;
     color: white;
@@ -150,7 +150,7 @@ input[type="date"] {
     line-height: 1; /* Agar posisi X lebih rapi */
 }
 
-.notification-popup .close-btn:hover {
+.form-wrapper .notification-popup .close-btn:hover {
     color: #ddd;
 }
 

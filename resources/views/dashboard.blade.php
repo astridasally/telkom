@@ -150,7 +150,7 @@
                             @endforeach
                         </select>
                     </div>
-                    <button type="submit" class="filter-apply-btn">Apply Filters</button>
+                    <button type="submit" class="filter-apply-btn">Apply</button>
                   
                 </div>
             </form>
@@ -159,7 +159,7 @@
 <div class="content-grid">
     <div class="stage-card">
         <div class="card-header">
-            <span>Survey</span>
+            <span>SURVEY</span>
         </div>
         <div class="card-body">
             <span class="material-symbols-outlined">rate_review</span>
@@ -172,7 +172,7 @@
 
     <div class="stage-card">
         <div class="card-header">
-            <span>Delivery</span>
+            <span>DELIVERY</span>
         </div>
         <div class="card-body">
             <span class="material-symbols-outlined">local_shipping</span>
@@ -185,7 +185,7 @@
 
     <div class="stage-card">
         <div class="card-header">
-            <span>Instalasi</span>
+            <span>INSTALASI</span>
         </div>
         <div class="card-body">
             <span class="material-symbols-outlined">build</span>
@@ -198,7 +198,7 @@
 
     <div class="stage-card">
         <div class="card-header">
-            <span>Integrasi</span>
+            <span>INTEGRASI</span>
         </div>
         <div class="card-body">
             <span class="material-symbols-outlined">hub</span>
@@ -214,7 +214,7 @@
 <div class="status-boxes-grid">
     <div class="stage-card">
         <div class="card-header">
-            <span>Drop</span>
+            <span>DROP</span>
         </div>
         <div class="card-body">
             <span class="material-symbols-outlined">call_split</span>
@@ -234,7 +234,7 @@
 
         <div class="integrasi-wrapper">
             <div class="sken-area">
-                <h3>Skenario Integrasi</h3>
+                <h3>SKENARIO INTEGRASI</h3>
                 <table class="table table-bordered table-striped" style="width:100%">
                     <thead>
                         <tr>
@@ -287,7 +287,7 @@
 
             {{-- Di sini nanti bisa tambahkan div untuk Daily Integrasi --}}
             <div class="daily-area">
-                <h3>Daily Integrasi</h3>
+                <h3>DAILY INTEGRASI</h3>
                 <div class="table-scroll-container"> {{-- DIV INI HARUS ADA --}}
                 <table class="table table-bordered table-striped" style="width:100%">
                     <thead>
@@ -324,7 +324,7 @@
 
             {{-- Di sini nanti bisa tambahkan div untuk Failed Integrasi --}}
             <div class="failed-area">
-                <h3>Failed Integrasi</h3>
+                <h3>FAILED INTEGRASI</h3>
                  <div class="table-scroll-container"> {{-- DIV INI HARUS ADA --}}
 
                 <table class="table table-bordered table-striped" style="width:100%">

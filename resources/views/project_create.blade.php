@@ -2,8 +2,7 @@
 <link rel="stylesheet" href="{{ asset('css/form.css') }}">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" integrity="sha512-..." crossorigin="anonymous" referrerpolicy="no-referrer" />
 
-
-                
+     
     @if ($errors->any())
     <div class="alert alert-danger">
         <strong>Periksa kembali input Anda:</strong>
@@ -15,6 +14,8 @@
     </div>
     @endif
 
+
+<div class="form-wrapper">
     <div class="form-container">
         <h1>Form Update Site</h1>
     </div>
@@ -211,8 +212,7 @@
         </div>
         
     </div>
-
-</div>
+    
 
 @if ($errors->any())
     <div class="alert alert-danger" style="margin-bottom: 20px;">
@@ -245,8 +245,6 @@
         {{-- ... (kode form Anda) ... --}}
     </div>
 
-   
-    </form>
 
     <script>
     document.addEventListener('DOMContentLoaded', function () {
@@ -344,5 +342,6 @@
             }
         });
     </script>
-
+    
+</div>
 </x-app-layout>

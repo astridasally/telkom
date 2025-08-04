@@ -153,7 +153,7 @@ class ProjectController extends Controller
 
         $query->orderBy('created_at', 'desc');
 
-        $projects = $query->paginate(18)->appends($request->query());
+        $projects = $query->paginate(10)->appends($request->query());
 
         // --- PASTIKAN BAGIAN INI ADA DAN BENAR ---
         // Untuk mengisi dropdown di view, kita perlu mendapatkan daftar unik Regional, Witel, STO
@@ -234,7 +234,7 @@ class ProjectController extends Controller
 
         // Ambil proyek dengan paginasi
         // Pagination limit diseragamkan menjadi 10 (seperti yang ada di logika pencarian)
-        $projects = $query->paginate(18)->appends($request->query()); // appends() untuk mempertahankan parameter search
+        $projects = $query->paginate(10)->appends($request->query()); // appends() untuk mempertahankan parameter search
 
         return view('project_report', compact('projects'));
     }

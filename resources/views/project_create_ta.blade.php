@@ -14,6 +14,8 @@
     </div>
     @endif
 
+
+<div class="form-wrapper">
     <div class="form-container">
         <h1>Form Update Site</h1>
     </div>
@@ -201,4 +203,5 @@
         {{-- ... (kode form Anda) ... --}}
     </div>
 
+</div>
 </x-app-layout>

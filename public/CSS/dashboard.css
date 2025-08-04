@@ -246,8 +246,8 @@ tfoot tr:last-child td:last-child { border-bottom-right-radius: 6px; }
 
 
 .stage-card {
-    background: #4A607C; /* Dark Slate Blue for card background */
-    border: 1px solid #5C7390; /* Lighter shade for border */
+    background: #3f6096; /* Dark Slate Blue for card background */
+    border: 1px solid #758aa2; /* Lighter shade for border */
     border-radius: 10px;
     padding: 4px 6px;
     display: flex;

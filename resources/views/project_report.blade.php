@@ -5,7 +5,7 @@
     
     <div class="report-wrapper">
     <div class="header-info">
-        <div class="title-left">Hello, {{ Auth::user()->name }}!</div>
+        <div class="title-left">Report {{ Auth::user()->name }}</div>
     </div>
     
 
@@ -73,7 +73,7 @@
 </div>
 
     {{$projects->appends(request()->query())->links()}}
-
+    <br>
     
 
     <div class="table-container">
