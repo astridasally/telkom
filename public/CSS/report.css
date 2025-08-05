@@ -126,7 +126,7 @@ tbody tr:nth-child(even) td {
 
 /******* FITUR FILTER (DROPDOWN) *******/
 /* Styling untuk Dropdown Filter (Regional, Witel, STO) */
-.filter-select {
+.filter-drop .filter-select {
     padding: 4px 30px 4px 12px  ; /* Padding vertikal disesuaikan agar sama dengan search-input */
     border: 1px solid #ccc;
     border-radius: 5px;
@@ -134,6 +134,7 @@ tbody tr:nth-child(even) td {
     background-color: white;
     cursor: pointer;
     box-sizing: border-box; /* Penting untuk konsistensi ukuran */
+    appearance: none;
 }
 
 

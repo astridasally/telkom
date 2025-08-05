@@ -7,7 +7,7 @@
             <div class="shrink-0 flex items-center">
                 <a href="{{ route('dashboard') }}">
                     {{-- Ganti bagian ini dengan tag <img> --}}
-                    <img src="{{ asset('image/minibolt-logo.png') }}" alt="Minibold Logo" class="block h-9 w-auto">
+                    <img src="{{ asset('image/minibolt-logo.png') }}" alt="Minibold Logo" class="block h-12 w-auto ">
                     {{-- class="block h-9 w-auto" adalah kelas Tailwind CSS untuk styling gambar --}}
                 </a>
             </div>

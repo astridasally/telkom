@@ -15,13 +15,14 @@
         {{-- Input Pencarian Teks Bebas --}}
         <input type="text" name="search" class="search-input" placeholder="Cari proyek..." value="{{ request('search') }}">
 
+    <div class="filter-drop">
          {{-- Dropdown Filter Assign To (Mitra) - HANYA TAMPIL JIKA ADMIN ATAU VENDOR --}}
         @if(auth()->user()->role === 'admin'|| auth()->user()->role === 'vendor')
-                    <select name="filter_assign_to" id="filter_assign_to" class="filter-select">
+            <select name="filter_assign_to" id="filter_assign_to" class="filter-select">
                 <option value="all">All Mitra</option>
-                @foreach($allMitras as $mitraName) {{-- Ubah $mitra menjadi $mitraName --}}
+                @foreach($allMitras as $mitraName) 
                     <option value="{{ $mitraName }}" {{ $selectedMitraFilter == $mitraName ? 'selected' : '' }}>
-                        {{ $mitraName }} {{-- Gunakan $mitraName langsung, karena sudah string --}}
+                        {{ $mitraName }} 
                     </option>
                 @endforeach
             </select>
@@ -56,8 +57,7 @@
                 </option>
             @endforeach
         </select>
-
-          
+    </div>          
 
         {{-- Tombol Search yang akan disamping input search --}}
         <button type="submit" class="search-button">
@@ -83,7 +83,7 @@
     >
         <th rowspan="2">No</th>
         @if(auth()->user()->role === 'admin'|| auth()->user()->role === 'vendor')
-        <th rowspan="2">Mitra</th>
+        <th rowspan="2">Add by</th>
         @endif
         <th rowspan="2">Regional</th>
         <th rowspan="2">Witel</th>

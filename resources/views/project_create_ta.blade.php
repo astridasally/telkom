@@ -3,17 +3,6 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" integrity="sha512-..." crossorigin="anonymous" referrerpolicy="no-referrer" />
 
 
-    @if ($errors->any())
-    <div class="alert alert-danger">
-        <strong>Periksa kembali input Anda:</strong>
-        <ul>
-            @foreach ($errors->all() as $error)
-            <li>{{ $error }}</li>
-            @endforeach
-        </ul>
-    </div>
-    @endif
-
 
 <div class="form-wrapper">
     <div class="form-container">
@@ -22,6 +11,21 @@
 
     <form method="POST" action="{{ route('project_store_ta') }}" enctype="multipart/form-data">
         @csrf
+
+        @if ($errors->any())
+        <div class="alert alert-danger">
+            <div>
+                <strong>Periksa kembali input Anda:</strong>
+                <ul style="margin: 8px 0 0 16px;">
+                    @foreach ($errors->all() as $error)
+                        <li>{{ $error }}</li>
+                    @endforeach
+                </ul>
+            </div>
+            <button class="close-btn" onclick="this.parentElement.style.display='none';">&times;</button>
+        </div>
+        @endif
+
 
         <div>
             <div class="form-grid">
@@ -127,10 +131,12 @@
                 <label>Status OSP</label>
                 <select name="status_osp">
                     <option value="">-- Pilih --</option>
-                    <option value="Finish Instalasi">Finish Instalasi</option>
-                    <option value="Proses Instalasi">Proses Instalasi</option>
-                    <option value="Persiapan">Persiapan</option>
                     <option value="Drop">Drop</option>
+                    <option value="Persiapan">Persiapan</option>
+                    <option value="Matdel">Matdel</option>
+                    <option value="OGP Instalasi">OGP Instalasi</option>
+                    <option value="Finish Instalasi">Finish Instalasi</option>
+                    <option value="Go Live">Go Live</option>
                 </select>
             </div>
 
@@ -145,9 +151,7 @@
                     <option value="Re_engineering">Re-engineering</option>
                     <option value="SFP Bidi">Re-SFP Bidi</option>
                     <option value="Cascading">Cascading</option>
-                    <option value="lainnya">Lainnya</option>
-
-
+                    <option value="Lainnya">Lainnya</option>
                 </select>
             </div>
 
@@ -171,17 +175,6 @@
                 <button type="submit" class="update-btn">Simpan</button>
             </div>
 
-        
-    @if ($errors->any())
-    <div class="alert alert-danger" style="margin-bottom: 20px;">
-        <strong>Periksa kembali input Anda:</strong>
-        <ul>
-            @foreach ($errors->all() as $error)
-            <li>{{ $error }}</li>
-            @endforeach
-        </ul>
-    </div>
-    @endif
 
     {{-- Notifikasi Success --}}
     @if(session('success'))

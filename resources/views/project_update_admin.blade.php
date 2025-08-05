@@ -16,6 +16,9 @@
 
 
             @if (Auth::user()->role === 'admin')
+                <div class="form-grid">
+
+            <div class="form-column">
             <div class="form-group">
                 <label>Regional</label>
                 <select name="regional" required>
@@ -45,7 +48,9 @@
                 <label>Site</label>
                 <input type="text" name="site" required value="{{ $project->site }}">
             </div>
+            </div>
 
+            <div class="form-column">
             <div class="form-group">
                 <label>IHLD</label>
                 <input type="text" name="ihld" required value="{{ $project->ihld }}" />
@@ -66,6 +71,8 @@
                             <option value="Huawei" {{ $project->assign_to == 'Huawei' ? 'selected' : '' }}>Huawei</option>
                             <option value="FiberHome" {{ $project->assign_to == 'FiberHome' ? 'selected' : '' }}>FiberHome</option>
                         </select>
+            </div>
+            </div>
             </div>
             @endif
  

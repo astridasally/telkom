@@ -96,13 +96,27 @@ body {
 }
 
 /* === Error Alert === */
-.form-wrapper .alert.alert-danger {
+.alert.alert-danger {
     background-color: #f8d7da;
-    border: 1px solid #f5c6cb;
+    border: 1px solid #c6aaad;
     color: #721c24;
     padding: 12px;
     border-radius: 6px;
     margin-bottom: 16px;
+
+    position: fixed; /* Tetap di posisi tertentu meskipun halaman di-scroll */
+    top: 30px; /* Jarak dari atas */
+    right: 30px; /* Jarak dari kanan */
+    padding: 15px 25px;
+    border-radius: 8px;
+    font-size: 14px;
+    font-weight: 30px;
+    z-index: 1000; /* Pastikan muncul di atas elemen lain */
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+    display: flex; /* Untuk menata teks dan tombol close */
+    align-items: center;
+    justify-content: space-between;
+    animation: fadeInOut 7s forwards;
 }
 
 .form-wrapper .button-wrapper {

@@ -13,13 +13,13 @@
     <div class="bg-white p-10 rounded-2xl shadow-xl max-w-md w-full text-center border border-gray-200">
 
         <!-- Judul -->
-        <h1 class="text-2xl mb-5 text-gray-700" style="font-family: 'Inter', serif;">
+        <h1 class="text-2xl mb-5 text-gray-800">
             Welcome to
         </h1>
 
         <!-- Logo -->
-        <a href="{{ route('dashboard') }}" class="inline-block mb-6">
-            <img src="{{ asset('image/minibolt-logo.png') }}" class="h-12 mx-auto" alt="Minibold Logo">
+        <a href="{{ route('dashboard') }}" class="inline-block mb-2">
+            <img src="{{ asset('image/minibolt-logo.png') }}" class="h-24 mx-auto" alt="Minibold Logo">
         </a>
 
         <!-- Subtext -->
@@ -28,10 +28,11 @@
         <!-- Tombol Login -->
        
         <a href="{{ route('login') }}">
-            <x-primary-button class="ms-3">
+            <x-primary-button class="ms-3 bg-[#d46a28] hover:bg-[#bb551a] focus:ring-[#d46a28]">
                 {{ __('Log in') }}
             </x-primary-button>
         </a>
+
 
 
     </div>

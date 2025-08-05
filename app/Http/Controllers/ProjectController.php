@@ -261,7 +261,7 @@ class ProjectController extends Controller
             'catuan_id' => 'required',
             'priority_ta' => 'nullable',
             'status_osp' => 'nullable',
-            'dependensi' => 'required',
+            'dependensi' => 'nullable',
             'assign_to' => 'nullable',
             'scenario_uplink' => 'nullable',
             'status_uplink' => 'nullable',

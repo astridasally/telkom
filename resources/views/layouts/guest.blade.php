@@ -16,10 +16,10 @@
         @vite(['resources/css/app.css', 'resources/js/app.js'])
     </head>
     <body class="font-sans text-gray-900 antialiased">
-        <div class="min-h-screen flex flex-col sm:justify-center items-center pt-6 sm:pt-0 bg-gray-100">
+        <div class="min-h-screen flex flex-col justify-start items-center pt-20 bg-gray-100">
             <div>
                 <a href="/">
-                    <img src="{{ asset('image/minibolt-logo.png') }}" class="h-12 mx-auto" alt="Minibold Logo">
+                    <img src="{{ asset('image/minibolt-logo.png') }}" class="h-20 mx-auto" alt="Minibold Logo">
                 </a>
             </div>
 
