@@ -17,11 +17,11 @@ return new class extends Migration
 
             $table->string('regional');
             $table->string('witel');
-            $table->string('sto');
-            $table->string('site');
+            $table->string('sto')->nullable();
+            $table->string('site')->nullable();
             $table->string('priority')->nullable();
-            $table->string('catuan_id');
-            $table->string('ihld');
+            $table->string('catuan_id')->nullable();
+            $table->string('ihld')->nullable();
 
             //khusus Mitra
             $table->date('plan_survey')->nullable();

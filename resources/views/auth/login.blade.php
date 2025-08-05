@@ -39,11 +39,10 @@
                 </a>
             @endif
 
-            <a href="{{ route('login') }}">
-            <x-primary-button class="ms-3 bg-[#d46a28] hover:bg-[#bb551a] focus:ring-[#d46a28]">
+            <x-primary-button class="ms-3">
                 {{ __('Log in') }}
             </x-primary-button>
-            </a>
+
         </div>
     </form>
 </x-guest-layout>
