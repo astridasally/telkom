@@ -25,7 +25,7 @@
                             <th rowspan="2" class="regional-header">Regional</th>
                             <th rowspan="2">PLAN CSF</th>
                             <th rowspan="2">FTTH READY</th>
-                            <th rowspan="2">Jumlah Port</th>
+                            <th rowspan="2">JUMLAH PORT</th>
                             <th colspan="2" class="header-group">DELIVERY</th>
                             <th colspan="2" class="header-group">INSTALASI</th>
                             <th colspan="2" class="header-group">INTEGRASI</th>
@@ -240,7 +240,7 @@
                                     @if($column === 'DIRECT')
                                         Direct
                                     @elseif($column === 'Re_engineering')
-                                        Re-Eng
+                                        Re-Engineering
                                     @elseif($column === 'lainnya')
                                         Lainnya
                                     @else

@@ -551,14 +551,14 @@ class ProjectController extends Controller
         // BAGIAN 3: LOGIKA SKENARIO INTEGRASI (PER REGIONAL) - BARU
         // =======================================================
         $skenarioUplinkColumns = [
-            'DIRECT',
+            'Direct Core',
             'SFP Bidi', // Perhatikan spasi, sesuaikan dengan nilai di database
             'Cascading',
             'L2S', // Di form Anda L2S, di gambar L2SW (pastikan konsisten dengan DB)
             'OTN',
             'ONT',
             'Re_engineering', // Di gambar RE-ENG, di form Re-engineering (pakai yang di DB)
-            'lainnya', // Di gambar LAINNYA, di form lainnya (pakai yang di DB)
+            'Lainnya', // Di gambar LAINNYA, di form lainnya (pakai yang di DB)
         ];
 
         $skenarioIntegrasiByRegional = [];
