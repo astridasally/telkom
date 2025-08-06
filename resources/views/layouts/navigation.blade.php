@@ -22,6 +22,10 @@
                     <x-nav-link :href="route('project_create')" :active="request()->routeIs('project_create')">
                         {{ __('Form') }}
                     </x-nav-link>
+
+                    <x-nav-link :href="route('projects.import')" :active="request()->routeIs('projects.import')">
+                        {{ __('Import') }}
+                    </x-nav-link>
                     @endif
 
                     @if (Auth::user()->role === 'vendor')

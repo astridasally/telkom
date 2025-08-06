@@ -39,10 +39,8 @@ class Project extends Model
         'status_uplink',
         'drop_ta',
         'remark_ta',
-        'ftth_csf' ,
-        'ftth_port' ,
-        'golive_csf' ,
-        'golive_port',
+        'jumlah_port' ,
+        'golive_status' ,
 
         'user_id', // relasi ke user
     ];

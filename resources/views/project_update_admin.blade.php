@@ -14,72 +14,9 @@
         @csrf
         @method('PATCH')
 
+        
 
-            @if (Auth::user()->role === 'admin')
-                <div class="form-grid">
-
-            <div class="form-column">
-            <div class="form-group">
-                <label>Regional</label>
-                <select name="regional" required>
-                    <option value="">-- Pilih Regional --</option>
-                    @foreach (App\Enums\Regional::cases() as $regional)
-                    <option value="{{ $regional->value }}" {{ $project->regional == $regional->value ? 'selected' : '' }}>{{ $regional->value }}</option>
-                    @endforeach
-                </select>
-            </div>
-
-            <div class="form-group">
-                <label>Witel</label>
-                <select name="witel" required>
-                    <option value="">-- Pilih Witel --</option>
-                    @foreach (App\Enums\Witel::cases() as $witel)
-                    <option value="{{ $witel->value }}" {{ $project->witel == $witel->value ? 'selected' : '' }}>{{ $witel->value }}</option>
-                    @endforeach
-                </select>
-            </div>
-
-            <div class="form-group">
-                <label>STO</label>
-                <input type="text" name="sto" required value="{{ $project->sto }}">
-            </div>
-
-            <div class="form-group">
-                <label>Site</label>
-                <input type="text" name="site" required value="{{ $project->site }}">
-            </div>
-            </div>
-
-            <div class="form-column">
-            <div class="form-group">
-                <label>IHLD</label>
-                <input type="text" name="ihld" required value="{{ $project->ihld }}" />
-            </div>
-            
-            <div class="form-group">
-                <label>Catuan ID</label>
-                <input type="text" name="catuan_id" value="{{ $project->catuan_id }}" required>
-            </div>
-
-            <div class="form-group">
-                 <label for="assign_to">Assign To</label>
-                        <select name="assign_to" id="assign_to" class="form-control">
-                            <option value="">-- Pilih --</option>
-
-                            {{-- Logika untuk mempertahankan pilihan Assign To --}}
-                            <option value="ZTE" {{ $project->assign_to == 'ZTE' ? 'selected' : '' }}>ZTE</option>
-                            <option value="Huawei" {{ $project->assign_to == 'Huawei' ? 'selected' : '' }}>Huawei</option>
-                            <option value="FiberHome" {{ $project->assign_to == 'FiberHome' ? 'selected' : '' }}>FiberHome</option>
-                        </select>
-            </div>
-            </div>
-            </div>
-            @endif
- 
-
-          
-
-@if (Auth::user()->role === 'mitra')
+@if (Auth::user()->role === 'mitra' || auth()->user()->role === 'admin')
     <div class="form-grid">
         <div class="form-column">
 
@@ -250,62 +187,20 @@
 
             </div>
 
-         <div id="bukti-drop-group" class="form-group" style="display: none;">
-            <label>Bukti Drop*</label>
-            <input type="file" name="bukti_drop" accept="application/pdf,image/*">
-            @if ($project->bukti_drop)
-            <p>File saat ini: <a href="{{ asset('storage/'.$project->bukti_drop) }}" target="_blank">Lihat File</a></p>
-            @endif
-        </div>
+            <div id="bukti-drop-group" class="form-group" style="display: none;">
+                <label>Bukti Drop</label>
+                    <input type="file" name="bukti_drop" accept="application/pdf,image/*">
+                        @if ($project->bukti_drop)
+                            <p>File saat ini: <a href="{{ asset('storage/'.$project->bukti_drop) }}" target="_blank">Lihat File</a></p>
+                        @endif
+            </div>
             </div>
 
             </div>
             @endif
 
-            @if (Auth::user()->role === 'vendor')
-            <div class="form-grid">
-            <div class="form-column">
 
-            <div class="form-group">
-                <label>Regional*</label>
-                <select name="regional" required>
-                    <option value="">-- Pilih Regional --</option>
-                    @foreach (App\Enums\Regional::cases() as $regional)
-                    <option value="{{ $regional->value }}" {{ $project->regional == $regional->value ? 'selected' : '' }}>{{ $regional->value }}</option>
-                    @endforeach
-                </select>
-            </div>
-
-            <div class="form-group">
-                <label>Witel*</label>
-                <select name="witel" required>
-                    <option value="">-- Pilih Witel --</option>
-                    @foreach (App\Enums\Witel::cases() as $witel)
-                    <option value="{{ $witel->value }}" {{ $project->witel == $witel->value ? 'selected' : '' }}>{{ $witel->value }}</option>
-                    @endforeach
-                </select>
-            </div>
-
-            <div class="form-group">
-                <label>STO*</label>
-                <input type="text" name="sto" required value="{{ $project->sto }}">
-            </div>
-
-            <div class="form-group">
-                <label>Site*</label>
-                <input type="text" name="site" required value="{{ $project->site }}">
-            </div>
-
-            <div class="form-group">
-                <label>IHLD*</label>
-                <input type="text" name="ihld" required value="{{ $project->ihld }}" />
-            </div>
-            
-            <div class="form-group">
-                <label>Catuan ID*</label>
-                <input type="text" name="catuan_id" value="{{ $project->catuan_id }}" required>
-            </div>
-
+            @if (Auth::user()->role === 'admin')
             <div class="form-group">
                 <label>Priority TA</label>
                 <select name="priority_ta">
@@ -315,14 +210,11 @@
                     <option value="P3" {{ $project->priority_ta == 'P#' ? 'selected' : '' }}>P3</option>
                 </select>
             </div>
-            </div>
-
-            <div class="form-column">
 
             <div class="form-column">
             <div style="display: flex; gap: 15px; width: 100%;">
                 <div class="form-group" style="flex: 1;">
-                    <label for="dependensi">Dependensi*</label>
+                    <label for="dependensi">Dependensi</label>
                     <select name="dependensi" id="dependensi" class="form-control">
                         <option value="">-- Pilih --</option>
                         {{-- Logika untuk mempertahankan pilihan Dependensi --}}
@@ -347,22 +239,153 @@
 
             <div class="form-group">
             <div style="display: flex; gap: 15px; width: 100%;">
-                <div class="form-group" style="flex: 1;"><label>FTTH CSF</label>
-                        <input type="number" name="ftth_csf" class="form-control" value="{{ $project->ftth_csf }}">
+                <div class="form-group" style="flex: 1;"><label>Jumlah Port</label>
+                        <input type="number" name="jumlah_port" class="form-control" value="{{ $project->ftth_csf }}">
                     </div>
-                    <div class="form-group" style="flex: 1;"><label>FTTH Port</label>
-                        <input type="number" name="ftth_port" class="form-control" value="{{ $project->ftth_port }}">
+                    <div class="form-group" style="flex: 1;"><label>Status Go Live</label>
+                        <select name="golive_status">
+                            <option value="">-- Pilih --</option>
+                            <option value="Ready" {{ $project->golive_status == 'Ready' ? 'selected' : '' }}>Ready</option>
+                            <option value="Not Yet" {{ $project->golive_status == 'Not Yet' ? 'selected' : '' }}>Not Yet</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label>Status OSP</label>
+                <select name="status_osp">
+                    <option value="">-- Pilih --</option>
+                    <option value="Finish Instalasi" {{ $project->status_osp == 'Finish Instalasi' ? 'selected' : '' }}>Finish Instalasi</option>
+                    <option value="Proses Instalasi" {{ $project->status_osp == 'Proses Instalasi' ? 'selected' : '' }}>Proses Instalasi</option>
+                    <option value="Persiapan" {{ $project->status_osp == 'Persiapan' ? 'selected' : '' }}>Persiapan</option>
+                    <option value="Drop" {{ $project->status_osp == 'Drop' ? 'selected' : '' }}>Drop</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label>Skenario Uplink </label>
+                <select name="scenario_uplink">
+                    <option value="">-- Pilih --</option>
+                    <option value="L2S" {{ $project->scenario_uplink == 'L2S' ? 'selected' : '' }}>L2S</option>
+                    <option value="OTN" {{ $project->scenario_uplink == 'OTN' ? 'selected' : '' }}>OTN</option>
+                    <option value="ONT" {{ $project->scenario_uplink == 'ONT' ? 'selected' : '' }}>ONT</option>
+                    <option value="Direct Core" {{ $project->scenario_uplink == 'Direct Core' ? 'selected' : '' }}>Direct Core</option>
+                    <option value="Re-engineering" {{ $project->scenario_uplink == 'Re-engineering' ? 'selected' : '' }}>Re-engineering</option>
+                    <option value="SFP Bidi" {{ $project->scenario_uplink == 'SFP Bidi' ? 'selected' : '' }}>SFP Bidi</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label>Status Uplink </label>
+                <select name="status_uplink">
+                    <option value="">-- Pilih --</option>
+                    <option value="Not Ready" {{ $project->status_uplink == 'Not Ready' ? 'selected' : '' }}>Not Ready</option>
+                    <option value="Ready" {{ $project->status_uplink == 'Ready' ? 'selected' : '' }}>Ready</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label>Remark TA</label>
+                <textarea name="remark_ta" rows="3">{{ $project->remark_ta }}</textarea>
+            </div>
+            @endif
+
+            
+            @if (Auth::user()->role === 'vendor')
+            <div class="form-grid">
+            <div class="form-column">
+
+            <div class="form-group">
+                <label>Regional</label>
+                <select name="regional" required>
+                    <option value="">-- Pilih Regional --</option>
+                    @foreach (App\Enums\Regional::cases() as $regional)
+                    <option value="{{ $regional->value }}" {{ $project->regional == $regional->value ? 'selected' : '' }}>{{ $regional->value }}</option>
+                    @endforeach
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label>Witel</label>
+                <select name="witel" required>
+                    <option value="">-- Pilih Witel --</option>
+                    @foreach (App\Enums\Witel::cases() as $witel)
+                    <option value="{{ $witel->value }}" {{ $project->witel == $witel->value ? 'selected' : '' }}>{{ $witel->value }}</option>
+                    @endforeach
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label>STO</label>
+                <input type="text" name="sto" required value="{{ $project->sto }}">
+            </div>
+
+            <div class="form-group">
+                <label>Site</label>
+                <input type="text" name="site" required value="{{ $project->site }}">
+            </div>
+
+            <div class="form-group">
+                <label>IHLD</label>
+                <input type="text" name="ihld" required value="{{ $project->ihld }}" />
+            </div>
+            
+            <div class="form-group">
+                <label>Catuan ID</label>
+                <input type="text" name="catuan_id" value="{{ $project->catuan_id }}" required>
+            </div>
+
+            <div class="form-group">
+                <label>Priority TA</label>
+                <select name="priority_ta">
+                    <option value="">-- Pilih --</option>
+                    <option value="P1" {{ $project->priority_ta == 'P1' ? 'selected' : '' }}>P1</option>
+                    <option value="P2" {{ $project->priority_ta == 'P2' ? 'selected' : '' }}>P2</option>
+                    <option value="P3" {{ $project->priority_ta == 'P#' ? 'selected' : '' }}>P3</option>
+                </select>
+            </div>
+            </div>
+
+            <div class="form-column">
+
+            <div class="form-column">
+            <div style="display: flex; gap: 15px; width: 100%;">
+                <div class="form-group" style="flex: 1;">
+                    <label for="dependensi">Dependensi</label>
+                    <select name="dependensi" id="dependensi" class="form-control">
+                        <option value="">-- Pilih --</option>
+                        {{-- Logika untuk mempertahankan pilihan Dependensi --}}
+                        <option value="Main" {{ $project->dependensi == 'Main' ? 'selected' : '' }}>Main</option>
+                        <option value="Dependence" {{ $project->dependensi == 'Dependence' ? 'selected' : '' }}>Dependence</option>
+                    </select>
+                </div>
+
+                    <div class="form-group" style="flex: 1;">
+                        <label for="assign_to">Assign To</label>
+                        <select name="assign_to" id="assign_to" class="form-control">
+                            <option value="">-- Pilih --</option>
+
+                            {{-- Logika untuk mempertahankan pilihan Assign To --}}
+                            <option value="ZTE" {{ $project->assign_to == 'ZTE' ? 'selected' : '' }}>ZTE</option>
+                            <option value="Huawei" {{ $project->assign_to == 'Huawei' ? 'selected' : '' }}>Huawei</option>
+                            <option value="FiberHome" {{ $project->assign_to == 'FiberHome' ? 'selected' : '' }}>FiberHome</option>
+                        </select>
                     </div>
                 </div>
             </div>
 
             <div class="form-group">
             <div style="display: flex; gap: 15px; width: 100%;">
-                <div class="form-group" style="flex: 1;"><label>Go Live CSF</label>
-                        <input type="number" name="golive_csf" class="form-control" value="{{ $project->golive_csf }}">
+                <div class="form-group" style="flex: 1;"><label>Jumlah Port</label>
+                        <input type="number" name="jumlah_port" class="form-control" value="{{ $project->ftth_csf }}">
                     </div>
-                    <div class="form-group" style="flex: 1;"><label>Go Live Port</label>
-                        <input type="number" name="golive_port" class="form-control" value="{{ $project->golive_port }}">
+                    <div class="form-group" style="flex: 1;"><label>Status Go Live</label>
+                        <select name="golive_status">
+                            <option value="">-- Pilih --</option>
+                            <option value="Ready" {{ $project->golive_status == 'Ready' ? 'selected' : '' }}>Ready</option>
+                            <option value="Not Yet" {{ $project->golive_status == 'Not Yet' ? 'selected' : '' }}>Not Yet</option>
+                        </select>
                     </div>
                 </div>
             </div>

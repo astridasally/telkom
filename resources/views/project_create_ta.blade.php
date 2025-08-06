@@ -103,22 +103,15 @@
 
                 <div class="form-group">
                     <div style="display: flex; gap: 15px; width: 100%;">
-                    <div class="form-group" style="flex: 1;"><label>FTTH CSF</label>
-                            <input type="number" name="ftth_csf" placeholder="FTTH CSF" class="form-control">
+                    <div class="form-group" style="flex: 1;"><label>Jumlah Port</label>
+                            <input type="number" name="jumlah_port" class="form-control">
                         </div>
-                     <div class="form-group" style="flex: 1;"><label>FTTH Port</label>
-                        <input type="number" name="ftth_port" placeholder="FTTH Port" class="form-control">
-                    </div>
-                </div>
-            </div>
-
-            <div class="form-group">
-                <div style="display: flex; gap: 15px; width: 100%;">
-                     <div class="form-group" style="flex: 1;"><label>Go Live CSF</label>
-                        <input type="number" name="golive_csf" placeholder="Go Live CSF" class="form-control">
-                    </div>
-                     <div class="form-group" style="flex: 1;"><label>Go Live Port</label>
-                        <input type="number" name="golive_port" placeholder="Go Live Port" class="form-control">
+                     <div class="form-group" style="flex: 1;"><label>Status Go Live</label>
+                        <select name="golive_status">
+                            <option value="">-- Pilih --</option>
+                            <option value="Ready">Ready</option>
+                            <option value="Not Yet">Not Yet</option>
+                        </select>
                     </div>
                 </div>
             </div>
@@ -133,7 +126,6 @@
                     <option value="OGP Instalasi">OGP Instalasi</option>
                     <option value="Finish Instalasi">Finish Instalasi</option>
                     <option value="Go_live">Go Live</option>
-                    
                 </select>
             </div>
 

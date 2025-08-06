@@ -23,8 +23,8 @@
     <form method="POST" action="{{ route('project_store') }}" enctype="multipart/form-data">
         @csrf
         
-        <div>
-            <div class="form-grid">
+        
+        <div class="form-grid">
             <div class="form-column">
 
             <div class="form-group">
@@ -51,6 +51,7 @@
                 <label>STO</label>
                 <input type="text" name="sto" required>
             </div>
+
             <div class="form-group">
                 <label for="assign_to">Assign To</label>
                 <select name="assign_to" id="assign_to" class="form-control">
@@ -59,10 +60,7 @@
                  <option value="Huawei">Huawei</option>
                  <option value="FiberHome">FiberHome</option>
                 </select>
-            </div>
             </div>  
-
-            <div class="form-column">
 
             <div class="form-group">
                 <label>Site</label>
@@ -80,9 +78,7 @@
             </div>
             </div>
 
-           
-
-            @if(auth()->user()->role === 'mitra')
+            <div class="form-column"> 
             <div class="form-group">
                 <label>Priority</label>
                 <select name="priority">
@@ -92,10 +88,7 @@
                     <option value="P3">P3</option>
                 </select>
             </div>
-            </div>
-
-            <div class="form-column">
-
+       
             <div class="form-group">
                 <label style="color: #0d6efd; font-weight: 650;"></label>
                 <div style="display: flex; gap: 40px;">
@@ -193,25 +186,14 @@
                 <input type="file" name="bukti_drop" accept="application/pdf,image/*">
                 <span class="error text-danger" id="error_bukti_drop"></span>
             </div>
-            
-            <div class="form-group">
-                <label for="remark_ta">Remark TA</label>
-                <textarea name="remark_ta" id="remark_ta" rows="3" 
-                    class="form-control" 
-                    placeholder="Masukkan remark di sini...">{{ old('remark_ta') }}</textarea> {{-- old() di antara tag textarea --}}
-            @error('remark_ta')
-                <div class="text-danger">{{ $message }}</div>
-            @enderror
             </div>
-            @endif
-
         </div>
+
 
         <div style="margin-top: 20px; text-align: right">
             <button type="submit" class="update-btn">Simpan</button>
         </div>
         
-    </div>
     
 
 @if ($errors->any())
