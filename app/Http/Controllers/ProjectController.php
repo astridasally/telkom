@@ -722,8 +722,8 @@ class ProjectController extends Controller
             'instalasi_done'   => 0,
             'integrasi_plan'   => 0,
             'integrasi_done'   => 0,
-            'golive_status'       => 0,
-            '_port'      => 0,
+            'golive_status'    => 0,
+            'jumlah_port'      => 0,
             'uplink_ready'     => 0,
             'uplink_not_ready' => 0,
         ];
