@@ -33,6 +33,7 @@ class ProjectController extends Controller
             'priority' => 'nullable',
             'catuan_id' => 'nullable',
             'ihld' => 'nullable',
+            'assign_to' => 'nullable',
             'plan_survey' => 'nullable|date',
             'realisasi_survey' => 'nullable|date|after_or_equal:plan_survey',
             'plan_delivery' => 'nullable|date|after_or_equal:realisasi_survey',
@@ -132,10 +133,8 @@ class ProjectController extends Controller
                     $q->orWhereRaw('LOWER(priority_ta) LIKE ?', ['%' . $searchTerm . '%'])
                       ->orWhereRaw('LOWER(dependensi) LIKE ?', ['%' . $searchTerm . '%'])
                       ->orWhereRaw('LOWER(assign_to) LIKE ?', ['%' . $searchTerm . '%'])
-                      ->orWhereRaw('LOWER(ftth_csf) LIKE ?', ['%' . $searchTerm . '%'])
-                      ->orWhereRaw('LOWER(ftth_port) LIKE ?', ['%' . $searchTerm . '%'])
-                      ->orWhereRaw('LOWER(golive_csf) LIKE ?', ['%' . $searchTerm . '%'])
-                      ->orWhereRaw('LOWER(golive_port) LIKE ?', ['%' . $searchTerm . '%'])
+                      ->orWhereRaw('LOWER(golive_status) LIKE ?', ['%' . $searchTerm . '%'])
+                      ->orWhereRaw('LOWER(jumlah_port) LIKE ?', ['%' . $searchTerm . '%'])
                       ->orWhereRaw('LOWER(status_osp) LIKE ?', ['%' . $searchTerm . '%'])
                       ->orWhereRaw('LOWER(scenario_uplink) LIKE ?', ['%' . $searchTerm . '%'])
                       ->orWhereRaw('LOWER(status_uplink) LIKE ?', ['%' . $searchTerm . '%'])
@@ -208,10 +207,8 @@ class ProjectController extends Controller
                     $q->orWhereRaw('LOWER(priority_ta) LIKE ?', ['%' . $searchTerm . '%'])
                       ->orWhereRaw('LOWER(dependensi) LIKE ?', ['%' . $searchTerm . '%'])
                       ->orWhereRaw('LOWER(assign_to) LIKE ?', ['%' . $searchTerm . '%'])
-                      ->orWhereRaw('LOWER(ftth_csf) LIKE ?', ['%' . $searchTerm . '%'])
-                      ->orWhereRaw('LOWER(ftth_port) LIKE ?', ['%' . $searchTerm . '%'])
-                      ->orWhereRaw('LOWER(golive_csf) LIKE ?', ['%' . $searchTerm . '%'])
-                      ->orWhereRaw('LOWER(golive_port) LIKE ?', ['%' . $searchTerm . '%'])
+                      ->orWhereRaw('LOWER(golive_status) LIKE ?', ['%' . $searchTerm . '%'])
+                      ->orWhereRaw('LOWER(jumlah_port) LIKE ?', ['%' . $searchTerm . '%'])
                       ->orWhereRaw('LOWER(status_osp) LIKE ?', ['%' . $searchTerm . '%'])
                       ->orWhereRaw('LOWER(scenario_uplink) LIKE ?', ['%' . $searchTerm . '%'])
                       ->orWhereRaw('LOWER(status_uplink) LIKE ?', ['%' . $searchTerm . '%'])
@@ -266,10 +263,8 @@ class ProjectController extends Controller
             'scenario_uplink' => 'nullable',
             'status_uplink' => 'nullable',
             'remark_ta' => 'nullable|string',
-            'ftth_csf' => 'nullable',
-            'ftth_port' => 'nullable',
-            'golive_csf' => 'nullable',
-            'golive_port' => 'nullable',
+            'golive_status' => 'nullable',
+            'jumlah_port' => 'nullable',
 
         ]);
             
@@ -320,10 +315,8 @@ class ProjectController extends Controller
         'priority_ta' => 'nullable',
         'dependensi' => 'nullable',
         'assign_to' => 'nullable',
-        'ftth_csf' => 'nullable',
-        'ftth_port' => 'nullable',
-        'golive_csf' => 'nullable',
-        'golive_port' => 'nullable',
+        'golive_status' => 'nullable',
+        'jumlah_port' => 'nullable',
         'status_osp' => 'nullable',
         'scenario_uplink' => 'nullable',
         'status_uplink' => 'nullable',
@@ -395,10 +388,8 @@ class ProjectController extends Controller
         'priority_ta' => 'nullable',
         'dependensi' => 'nullable',
         'assign_to' => 'nullable',
-        'ftth_csf' => 'nullable',
-        'ftth_port' => 'nullable',
-        'golive_csf' => 'nullable',
-        'golive_port' => 'nullable',
+        'golive_status' => 'nullable',
+        'jumlah_port' => 'nullable',
         'status_osp' => 'nullable',
         'scenario_uplink' => 'nullable',
         'status_uplink' => 'nullable',
@@ -451,17 +442,15 @@ class ProjectController extends Controller
 
 
         // 2. Dapatkan nilai filter dari Request
-        $selectedMitra    = $request->input('mitra');
+        $selectedMitra    = $request->input('filter_assign_to');
         $selectedRegional = $request->input('regional');
         $selectedWitel    = $request->input('witel');
 
         // 3. Terapkan filter berdasarkan input dari Request ke baseQuery
 
         // FILTER MITRA (Menggunakan relasi user)
-        if ($selectedMitra && $selectedMitra !== 'All Mitra') {
-            $baseQuery->whereHas('user', function ($query) use ($selectedMitra) {
-                $query->where('name', $selectedMitra); // Filter di kolom 'name' tabel users
-            });
+       if ($selectedMitra && $selectedMitra !== 'all') {
+            $baseQuery->where('assign_to', $selectedMitra);
         }
 
         // FILTER REGIONAL
@@ -473,6 +462,8 @@ class ProjectController extends Controller
         if ($selectedWitel && $selectedWitel !== 'All Witel') {
             $baseQuery->where('witel', $selectedWitel);
         }
+
+        $allMitras = Project::distinct()->pluck('assign_to')->sort()->toArray();
 
         // 4. Ambil data proyek UTAMA setelah semua filter dasar diterapkan
         $projects = $baseQuery->get(); // Ini adalah data yang akan ditampilkan di tabel utama dashboard
@@ -523,11 +514,10 @@ class ProjectController extends Controller
             $regionalFunnelingCounts = $this->initializeFunnelingMetrics();
 
             // PLAN CSF (hitung project yang punya catuan_id)
-            $regionalFunnelingCounts['plan_csf'] = $funnelingQuery->clone()->whereNotNull('catuan_id')->count();
+            $regionalFunnelingCounts['plan_csf'] = $funnelingQuery->clone()->where('drop_data', 'No')->count();
 
             // FTTH READY
             $regionalFunnelingCounts['ftth_ready_csf'] = $funnelingQuery->clone()->whereNotNull('ftth_csf')->count();
-            $regionalFunnelingCounts['ftth_ready_port'] = $funnelingQuery->clone()->whereNotNull('ftth_port')->count();
 
             // DELIVERY
             $regionalFunnelingCounts['delivery_plan'] = $funnelingQuery->clone()->whereNotNull('plan_delivery')->count();
@@ -542,8 +532,8 @@ class ProjectController extends Controller
             $regionalFunnelingCounts['integrasi_done'] = $funnelingQuery->clone()->whereNotNull('realisasi_integrasi')->count();
 
             // GO LIVE
-            $regionalFunnelingCounts['golive_csf'] = $funnelingQuery->clone()->whereNotNull('golive_csf')->count();
-            $regionalFunnelingCounts['golive_port'] = $funnelingQuery->clone()->whereNotNull('golive_port')->count();
+            $regionalFunnelingCounts['golive_status'] = $funnelingQuery->clone()->whereNotNull('golive_status')->count();
+            $regionalFunnelingCounts['jumlah_port'] = $funnelingQuery->clone()->whereNotNull('jumlah_port')->count();
 
             // UPLINK MINI OLT READINESS (Asumsi 'READY' dan 'NOT READY' adalah string yang ada di status_uplink)
             $regionalFunnelingCounts['uplink_ready'] = $funnelingQuery->clone()->where('status_uplink', 'READY')->count();
@@ -696,6 +686,7 @@ class ProjectController extends Controller
             'selectedMitra',
             'selectedRegional',
             'selectedWitel',
+            'allMitras',
             // Variabel untuk Funneling OLT yang akan digunakan di dashboard.blade.php
             'funnelingData',
             'totalFunnelingCounts',
@@ -725,15 +716,14 @@ class ProjectController extends Controller
         return [
             'plan_csf'         => 0,
             'ftth_ready_csf'   => 0,
-            'ftth_ready_port'  => 0,
             'delivery_plan'    => 0,
             'delivery_done'    => 0,
             'instalasi_plan'   => 0,
             'instalasi_done'   => 0,
             'integrasi_plan'   => 0,
             'integrasi_done'   => 0,
-            'golive_csf'       => 0,
-            'golive_port'      => 0,
+            'golive_status'       => 0,
+            'jumlah_port'      => 0,
             'uplink_ready'     => 0,
             'uplink_not_ready' => 0,
         ];

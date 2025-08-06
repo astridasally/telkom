@@ -15,49 +15,51 @@
         {{-- Input Pencarian Teks Bebas --}}
         <input type="text" name="search" class="search-input" placeholder="Cari proyek..." value="{{ request('search') }}">
 
-    <div class="filter-drop">
-         {{-- Dropdown Filter Assign To (Mitra) - HANYA TAMPIL JIKA ADMIN ATAU VENDOR --}}
-        @if(auth()->user()->role === 'admin'|| auth()->user()->role === 'vendor')
-            <select name="filter_assign_to" id="filter_assign_to" class="filter-select">
-                <option value="all">All Mitra</option>
-                @foreach($allMitras as $mitraName) 
-                    <option value="{{ $mitraName }}" {{ $selectedMitraFilter == $mitraName ? 'selected' : '' }}>
-                        {{ $mitraName }} 
+                <div class="filter-drop">
+            {{-- Dropdown Filter Assign To (Mitra) - HANYA TAMPIL JIKA ADMIN ATAU VENDOR --}}
+            @if(auth()->user()->role === 'admin' || auth()->user()->role === 'vendor')
+                <select name="filter_assign_to" id="filter_assign_to" class="filter-select">
+                    <option value="all" {{ request('filter_assign_to', 'all') == 'all' ? 'selected' : '' }}>All Mitra</option>
+                    @foreach($allMitras as $mitraName)
+                        <option value="{{ $mitraName }}" {{ request('filter_assign_to', 'all') == $mitraName ? 'selected' : '' }}>
+                            {{ $mitraName }}
+                        </option>
+                    @endforeach
+                </select>
+            @endif
+
+            {{-- Dropdown Filter Regional --}}
+            <select name="filter_regional" class="filter-select">
+                <option value="all" {{ request('filter_regional', 'all') == 'all' ? 'selected' : '' }}>All Regional</option>
+                @foreach($allRegionals as $regional)
+                    <option value="{{ $regional }}" {{ request('filter_regional', 'all') == $regional ? 'selected' : '' }}>
+                        {{ $regional }}
                     </option>
                 @endforeach
             </select>
-        @endif
 
-        {{-- Dropdown Filter Regional --}}
-        <select name="filter_regional" class="filter-select">
-            <option value="all">All Regional</option>
-            @foreach($allRegionals as $regional)
-                <option value="{{ $regional }}" {{ $selectedRegionalFilter == $regional ? 'selected' : '' }}>
-                    {{ $regional }}
-                </option>
-            @endforeach
-        </select>
+            {{-- Dropdown Filter Witel --}}
+            <select name="filter_witel" class="filter-select">
+                <option value="all" {{ request('filter_witel', 'all') == 'all' ? 'selected' : '' }}>All Witel</option>
+                @foreach($allWitels as $witel)
+                    <option value="{{ $witel }}" {{ request('filter_witel', 'all') == $witel ? 'selected' : '' }}>
+                        {{ $witel }}
+                    </option>
+                @endforeach
+            </select>
 
-        {{-- Dropdown Filter Witel --}}
-        <select name="filter_witel" class="filter-select">
-            <option value="all">All Witel</option>
-            @foreach($allWitels as $witel)
-                <option value="{{ $witel }}" {{ $selectedWitelFilter == $witel ? 'selected' : '' }}>
-                    {{ $witel }}
-                </option>
-            @endforeach
-        </select>
+            {{-- Dropdown Filter STO --}}
+            <select name="filter_sto" class="filter-select">
+                <option value="all" {{ request('filter_sto', 'all') == 'all' ? 'selected' : '' }}>All STO</option>
+                @foreach($allStos as $sto)
+                    <option value="{{ $sto }}" {{ request('filter_sto', 'all') == $sto ? 'selected' : '' }}>
+                        {{ $sto }}
+                    </option>
+                @endforeach
+            </select>
+        </div>
 
-        {{-- Dropdown Filter STO --}}
-        <select name="filter_sto" class="filter-select">
-            <option value="all">All STO</option>
-            @foreach($allStos as $sto)
-                <option value="{{ $sto }}" {{ $selectedStoFilter == $sto ? 'selected' : '' }}>
-                    {{ $sto }}
-                </option>
-            @endforeach
-        </select>
-    </div>          
+
 
         {{-- Tombol Search yang akan disamping input search --}}
         <button type="submit" class="search-button">
@@ -116,11 +118,10 @@
             <th rowspan="2">Priority TA</th>
             <th rowspan="2">Dependensi</th>
             <th rowspan="2">Assign to</th>
-            <th colspan="2" class="header-group">FTTH</th>
-            <th colspan="2" class="header-group">Go Live</th>
+            <th rowspan="2">Jumlah Port</th>
+            <th rowspan="2">Go Live Status</th>
             <th rowspan="2">Status OSP</th>
             <th colspan="2" class="header-group">Uplink</th>
-            
             <th rowspan="2">Remark TA</th>
         @endif
         
@@ -149,10 +150,6 @@
 
      @if(auth()->user()->role === 'vendor' || auth()->user()->role === 'admin')
     
-        <th>CSF</th>
-        <th>Port</th>
-        <th>CSF</th>
-        <th>Port</th>
         <th>Skenario</th>
         <th>Status</th>
     @endif
@@ -214,10 +211,8 @@
             <td>{{ $project->priority_ta }}</td>
             <td>{{ $project->dependensi }}</td>
             <td>{{ $project->assign_to }}</td>
-            <td>{{ $project->ftth_csf }}</td>
-            <td>{{ $project->ftth_port }}</td>
-            <td>{{ $project->golive_csf }}</td>
-            <td>{{ $project->golive_port }}</td>
+            <td>{{ $project->jumlah_port }}</td>
+            <td>{{ $project->golive_status }}</td>
             <td>{{ $project->status_osp }}</td>
             <td>{{ $project->scenario_uplink }}</td>
             <td>{{ $project->status_uplink }}</td>

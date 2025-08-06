@@ -24,24 +24,21 @@
                         <tr>
                             <th rowspan="2" class="regional-header">Regional</th>
                             <th rowspan="2">PLAN CSF</th>
-                            <th colspan="2" class="header-group">FTTH READY</th>
+                            <th rowspan="2">FTTH READY</th>
+                            <th rowspan="2">Jumlah Port</th>
                             <th colspan="2" class="header-group">DELIVERY</th>
                             <th colspan="2" class="header-group">INSTALASI</th>
                             <th colspan="2" class="header-group">INTEGRASI</th>
-                            <th colspan="2" class="header-group">GO LIVE</th>
+                            <th rowspan="2">GO LIVE</th>
                             <th colspan="2" class="header-group">UPLINK MINI OLT READINESS</th>
                         </tr>
                         <tr>
-                            <th>CSF</th>
-                            <th>Port</th>
                             <th>Plan</th>
                             <th>Done</th>
                             <th>Plan</th>
                             <th>Done</th>
                             <th>Plan</th>
                             <th>Done</th>
-                            <th>CSF</th>
-                            <th>Port</th>
                             <th>Ready</th>
                             <th>Not Ready</th>
                         </tr>
@@ -52,15 +49,14 @@
                         <td class="regional-header">{{ $regionalEnum->value }}</td>
                         <td>{{ $funnelingData[$regionalEnum->value]['plan_csf'] ?? 0 }}</td>
                         <td>{{ $funnelingData[$regionalEnum->value]['ftth_ready_csf'] ?? 0 }}</td>
-                        <td>{{ $funnelingData[$regionalEnum->value]['ftth_ready_port'] ?? 0 }}</td>
+                        <td>{{ $funnelingData[$regionalEnum->value]['jumlah_port'] ?? 0 }}</td>
                         <td>{{ $funnelingData[$regionalEnum->value]['delivery_plan'] ?? 0 }}</td>
                         <td>{{ $funnelingData[$regionalEnum->value]['delivery_done'] ?? 0 }}</td>
                         <td>{{ $funnelingData[$regionalEnum->value]['instalasi_plan'] ?? 0 }}</td>
                         <td>{{ $funnelingData[$regionalEnum->value]['instalasi_done'] ?? 0 }}</td>
                         <td>{{ $funnelingData[$regionalEnum->value]['integrasi_plan'] ?? 0 }}</td>
                         <td>{{ $funnelingData[$regionalEnum->value]['integrasi_done'] ?? 0 }}</td>
-                        <td>{{ $funnelingData[$regionalEnum->value]['golive_csf'] ?? 0 }}</td>
-                        <td>{{ $funnelingData[$regionalEnum->value]['golive_port'] ?? 0 }}</td>
+                        <td>{{ $funnelingData[$regionalEnum->value]['golive_status'] ?? 0 }}</td>
                         <td>{{ $funnelingData[$regionalEnum->value]['uplink_ready'] ?? 0 }}</td>
                         <td>{{ $funnelingData[$regionalEnum->value]['uplink_not_ready'] ?? 0 }}</td>
                     </tr>
@@ -69,15 +65,14 @@
                     <td class="regional-header">TOTAL</td>
                     <td>{{ $totalFunnelingCounts['plan_csf'] }}</td>
                     <td>{{ $totalFunnelingCounts['ftth_ready_csf'] }}</td>
-                    <td>{{ $totalFunnelingCounts['ftth_ready_port'] }}</td>
+                    <td>{{ $totalFunnelingCounts['jumlah_port'] }}</td>
                     <td>{{ $totalFunnelingCounts['delivery_plan'] }}</td>
                     <td>{{ $totalFunnelingCounts['delivery_done'] }}</td>
                     <td>{{ $totalFunnelingCounts['instalasi_plan'] }}</td>
                     <td>{{ $totalFunnelingCounts['instalasi_done'] }}</td>
                     <td>{{ $totalFunnelingCounts['integrasi_plan'] }}</td>
                     <td>{{ $totalFunnelingCounts['integrasi_done'] }}</td>
-                    <td>{{ $totalFunnelingCounts['golive_csf'] }}</td>
-                    <td>{{ $totalFunnelingCounts['golive_port'] }}</td>
+                    <td>{{ $totalFunnelingCounts['golive_status'] }}</td>
                     <td>{{ $totalFunnelingCounts['uplink_ready'] }}</td>
                     <td>{{ $totalFunnelingCounts['uplink_not_ready'] }}</td>
                 </tr>
@@ -103,25 +98,27 @@
                 <form action="{{ route('dashboard') }}" method="GET">
                 <div class="dashboard-filters-row">
                     <div class="filter-item">
-                        <label for="mitra_filter" class="sr-only">Pilih Mitra</label>
-                        <select id="mitra_filter" name="mitra">
-                            <option value="All Mitra" {{ request('mitra') == 'All Mitra' ? 'selected' : '' }}>All Mitra</option>
-                            <option value="ZTE" {{ request('mitra') == 'ZTE' ? 'selected' : '' }}>ZTE</option>
-                            <option value="FiberHome" {{ request('mitra') == 'FiberHome' ? 'selected' : '' }}>FiberHome</option>
-                            <option value="Huawei" {{ request('mitra') == 'Huawei' ? 'selected' : '' }}>Huawei</option>
-                            {{-- Contoh: Jika Anda punya daftar mitra dari database, Anda bisa iterasi di sini --}}
-                            {{-- @foreach ($mitrasFromDb as $mitraOption)
-                                <option value="{{ $mitraOption->name }}" {{ request('mitra') == $mitraOption->name ? 'selected' : '' }}>{{ $mitraOption->name }}</option>
-                            @endforeach --}}
-                        </select>
-                    </div>
+                    <label for="filter_assign_to" class="sr-only">Pilih Mitra</label>
+                    <select id="filter_assign_to" name="filter_assign_to">
+                       
+                        
+                       {{-- Opsi untuk melihat semua mitra --}}
+                        <option value="all" {{ request('filter_assign_to', 'all') == 'all' ? 'selected' : '' }}>All Mitra</option>
+
+                        {{-- Iterasi dari daftar mitra unik --}}
+                        @foreach ($allMitras as $mitraName)
+                            <option value="{{ $mitraName }}" {{ request('filter_assign_to', 'all') == $mitraName ? 'selected' : '' }}>
+                                {{ $mitraName }}
+                            </option>
+                        @endforeach
+                    </select>
+                </div>
+
                     <div class="filter-item">
                         <label for="regional_filter" class="sr-only">Pilih Regional</label>
                         <select id="regional_filter" name="regional">
-                            {{-- Opsi default jika tidak ada regional yang dipilih --}}
-                            <option value="" {{ !request('regional') ? 'selected' : '' }}>Regional</option>
                             {{-- Opsi untuk melihat semua regional --}}
-                            <option value="All Regional" {{ request('regional') == 'All Regional' ? 'selected' : '' }}>All Regional</option>
+                            <option value="All Regional" {{ request('regional', 'All Regional') == 'All Regional' ? 'selected' : '' }}>All Regional</option>
 
                             {{-- Iterasi melalui nilai-nilai dari Enum Regional --}}
                             @foreach (\App\Enums\Regional::cases() as $regionalEnum)
@@ -133,23 +130,22 @@
                         </select>
                     </div>
                    
-                    <div class="filter-item">
-                        <label for="witel_filter" class="sr-only">Pilih Witel</label>
-                        <select id="witel_filter" name="witel">
-                            {{-- Opsi default jika tidak ada witel yang dipilih --}}
-                            <option value="" {{ !request('witel') ? 'selected' : '' }}>Witel</option>
-                            {{-- Opsi untuk melihat semua witel --}}
-                            <option value="All Witel" {{ request('witel') == 'All Witel' ? 'selected' : '' }}>All Witel</option>
+                   <div class="filter-item">
+                    <label for="witel_filter" class="sr-only">Pilih Witel</label>
+                    <select id="witel_filter" name="witel">
+                        {{-- Opsi untuk melihat semua witel --}}
+                        <option value="All Witel" {{ request('witel', 'All Witel') == 'All Witel' ? 'selected' : '' }}>All Witel</option>
 
-                            {{-- Iterasi melalui nilai-nilai dari Enum Witel --}}
-                            @foreach (\App\Enums\Witel::cases() as $witelEnum)
-                                <option value="{{ $witelEnum->value }}"
-                                    {{ request('witel') == $witelEnum->value ? 'selected' : '' }}>
-                                    {{ $witelEnum->value }}
-                                </option>
-                            @endforeach
-                        </select>
-                    </div>
+                        {{-- Iterasi melalui nilai-nilai dari Enum Witel --}}
+                        @foreach (\App\Enums\Witel::cases() as $witelEnum)
+                            <option value="{{ $witelEnum->value }}"
+                                {{ request('witel', 'All Witel') == $witelEnum->value ? 'selected' : '' }}>
+                                {{ $witelEnum->value }}
+                            </option>
+                        @endforeach
+                    </select>
+                </div>
+
                     <button type="submit" class="filter-apply-btn">Apply</button>
                   
                 </div>
