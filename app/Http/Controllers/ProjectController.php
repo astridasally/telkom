@@ -517,7 +517,7 @@ class ProjectController extends Controller
             $regionalFunnelingCounts['plan_csf'] = $funnelingQuery->clone()->where('drop_data', 'No')->count();
 
             // FTTH READY
-            $regionalFunnelingCounts['ftth_ready_csf'] = $funnelingQuery->clone()->whereNotNull('ftth_csf')->count();
+            //$regionalFunnelingCounts['ftth_ready_csf'] = $funnelingQuery->clone()->whereNotNull('ftth_csf')->count();
 
             // DELIVERY
             $regionalFunnelingCounts['delivery_plan'] = $funnelingQuery->clone()->whereNotNull('plan_delivery')->count();
@@ -723,7 +723,7 @@ class ProjectController extends Controller
             'integrasi_plan'   => 0,
             'integrasi_done'   => 0,
             'golive_status'       => 0,
-            'jumlah_port'      => 0,
+            '_port'      => 0,
             'uplink_ready'     => 0,
             'uplink_not_ready' => 0,
         ];
