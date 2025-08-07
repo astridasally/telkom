@@ -26,7 +26,7 @@
                             <th rowspan="2">PLAN CSF</th>
                             <th rowspan="2">FTTH READY</th>
                             <th rowspan="2">JUMLAH PORT</th>
-                            <th colspan="2" class="header-group">DELIVERY</th>
+                            <th colspan="2" class="header-group">MOS</th>
                             <th colspan="2" class="header-group">INSTALASI</th>
                             <th colspan="2" class="header-group">INTEGRASI</th>
                             <th rowspan="2">GO LIVE</th>
@@ -155,7 +155,7 @@
 <div class="content-grid">
     <div class="stage-card">
         <div class="card-header">
-            <span>SURVEY</span>
+            <span>LAINNYA</span>
         </div>
         <div class="card-body">
             <span class="material-symbols-outlined">rate_review</span>
@@ -168,7 +168,7 @@
 
     <div class="stage-card">
         <div class="card-header">
-            <span>DELIVERY</span>
+            <span>MOS</span>
         </div>
         <div class="card-body">
             <span class="material-symbols-outlined">local_shipping</span>

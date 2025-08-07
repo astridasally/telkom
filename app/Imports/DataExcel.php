@@ -48,6 +48,10 @@ class DataExcel implements ToModel, WithHeadingRow, WithMapping
             'scenario_uplink'      => $row['scenario_uplink'] ?? null,
             'status_uplink'        => $row['status_uplink'] ?? null,
             'remark_ta'            => $row['remark_ta'] ?? null,
+            'jumlah_port'          => $row['jumlah_port'] ?? null,
+            'golive_status'        => $row['golive_status'] ?? null,
+
+
         ];
     }
 

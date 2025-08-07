@@ -15,11 +15,11 @@
         @method('PATCH')
 
         
-
-@if (Auth::user()->role === 'mitra' || auth()->user()->role === 'admin')
+    @if (Auth::user()->role === 'admin' || auth()->user()->role === 'mitra')
     <div class="form-grid">
         <div class="form-column">
 
+            @if (Auth::user()->role === 'mitra')
             <div class="form-group">
                 <label>Regional</label>
                 {{-- Menggunakan input type="text" dengan atribut readonly --}}
@@ -72,6 +72,49 @@
                 <label>Catuan ID</label>
                 <input type="text" name="catuan_id" value="{{ $project->catuan_id }}" required readonly class="form-control-readonly">
             </div>
+            @endif
+
+            @if (Auth::user()->role === 'admin')
+            <div class="form-group">
+                <label>Regional</label>
+                <select name="regional" required>
+                    <option value="">-- Pilih Regional --</option>
+                    @foreach (App\Enums\Regional::cases() as $regional)
+                    <option value="{{ $regional->value }}" {{ $project->regional == $regional->value ? 'selected' : '' }}>{{ $regional->value }}</option>
+                    @endforeach
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label>Witel</label>
+                <select name="witel" required>
+                    <option value="">-- Pilih Witel --</option>
+                    @foreach (App\Enums\Witel::cases() as $witel)
+                    <option value="{{ $witel->value }}" {{ $project->witel == $witel->value ? 'selected' : '' }}>{{ $witel->value }}</option>
+                    @endforeach
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label>STO</label>
+                <input type="text" name="sto" required value="{{ $project->sto }}">
+            </div>
+
+            <div class="form-group">
+                <label>Site</label>
+                <input type="text" name="site" required value="{{ $project->site }}">
+            </div>
+
+            <div class="form-group">
+                <label>IHLD</label>
+                <input type="text" name="ihld" required value="{{ $project->ihld }}" />
+            </div>
+            
+            <div class="form-group">
+                <label>Catuan ID</label>
+                <input type="text" name="catuan_id" value="{{ $project->catuan_id }}" required>
+                </div>
+            @endif
 
             <div class="form-group">
                 <label>Priority</label>
