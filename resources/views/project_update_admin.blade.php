@@ -284,7 +284,7 @@
             <div class="form-group">
             <div style="display: flex; gap: 15px; width: 100%;">
                 <div class="form-group" style="flex: 1;"><label>Jumlah Port</label>
-                        <input type="number" name="jumlah_port" class="form-control" value="{{ $project->ftth_csf }}">
+                        <input type="number" name="jumlah_port" class="form-control" value="{{ $project->jumlah_port }}">
                     </div>
                     <div class="form-group" style="flex: 1;"><label>Status Go Live</label>
                         <select name="golive_status">
@@ -389,7 +389,7 @@
                     <option value="P3" {{ $project->priority_ta == 'P#' ? 'selected' : '' }}>P3</option>
                 </select>
             </div>
-            
+
             <div class="form-group">
                 <label>Category</label>
                 <select name="category">
@@ -431,7 +431,7 @@
             <div class="form-group">
             <div style="display: flex; gap: 15px; width: 100%;">
                 <div class="form-group" style="flex: 1;"><label>Jumlah Port</label>
-                        <input type="number" name="jumlah_port" class="form-control" value="{{ $project->ftth_csf }}">
+                        <input type="number" name="jumlah_port" class="form-control" value="{{ $project->jumlah_port }}">
                     </div>
                     <div class="form-group" style="flex: 1;"><label>Status Go Live</label>
                         <select name="golive_status">

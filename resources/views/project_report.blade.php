@@ -96,7 +96,7 @@
         
 
         @if(auth()->user()->role === 'mitra' || auth()->user()->role === 'admin')
-            <th rowspan="2">Priority</th>
+            <th rowspan="2">Category</th>
             <th colspan="2" class="header-group">SURVEY</th>
             <th colspan="2" class="header-group">DELIVERY</th>
             <th colspan="2" class="header-group">INSTALASI</th>
@@ -174,7 +174,7 @@
       
 
         @if(auth()->user()->role === 'mitra' || auth()->user()->role === 'admin')
-            <td>{{ $project->priority }}</td>
+            <td>{{ $project->category }}</td>
             <td>{{ $project->plan_survey }}</td>
             <td>{{ $project->realisasi_survey }}</td>
             <td>{{ $project->plan_delivery }}</td>

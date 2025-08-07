@@ -88,7 +88,7 @@
                     <option value="NON CSF">NON CSF</option>
                 </select>
             </div>
-            
+
                 <div style="display: flex; gap: 15px; width: 100%;">
                     <div class="form-group" style="flex: 1;">
                         <label for="dependensi">Dependensi</label>
@@ -151,8 +151,6 @@
                     <option value="SFP Bidi">SFP Bidi</option>
                     <option value="Cascading">Cascading</option>
                     <option value="Lainnya">Lainnya</option>
-
-
                 </select>
             </div>
 
