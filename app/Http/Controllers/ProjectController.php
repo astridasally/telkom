@@ -30,7 +30,7 @@ class ProjectController extends Controller
             'witel' => 'required',
             'sto' => 'required',
             'site' => 'required',
-            'priority' => 'nullable',
+            'category' => 'required',
             'catuan_id' => 'nullable',
             'ihld' => 'nullable',
             'assign_to' => 'nullable',
@@ -51,7 +51,7 @@ class ProjectController extends Controller
             'relok_site'     => 'required_if:drop_data,Relokasi',
 
             'remark' => 'nullable',
-            'drop_data' => 'nullable',
+            'drop_data' => 'required',
 
         ]);
 
@@ -83,9 +83,6 @@ class ProjectController extends Controller
             // Mitra hanya melihat proyek di mana 'assign_to' adalah nama mitra itu sendiri
             // PENTING: Pastikan Auth::user()->name untuk role 'mitra' sama dengan nilai di kolom 'assign_to'
             $query->where('assign_to', $user->name);
-        } elseif ($user->role === 'vendor') {
-            // Vendor hanya melihat proyek yang mereka masukkan (berdasarkan user_id mereka)
-            $query->where('user_id', $user->id);
         }
 
         // --- TAMBAHAN UNTUK FILTER DROPDOWN ---
@@ -125,7 +122,7 @@ class ProjectController extends Controller
                   ->orWhereRaw('LOWER(catuan_id) LIKE ?', ['%' . $searchTerm . '%']);
 
                 if ($user->role === 'mitra' || $user->role === 'admin') {
-                    $q->orWhereRaw('LOWER(priority) LIKE ?', ['%' . $searchTerm . '%'])
+                    $q->orWhereRaw('LOWER(category) LIKE ?', ['%' . $searchTerm . '%'])
                       ->orWhereRaw('LOWER(remark) LIKE ?', ['%' . $searchTerm . '%']);
                 }
 
@@ -198,7 +195,7 @@ class ProjectController extends Controller
 
                 // Kolom spesifik untuk peran 'mitra' atau 'admin'
                 if ($user->role === 'mitra' || $user->role === 'admin') {
-                    $q->orWhereRaw('LOWER(priority) LIKE ?', ['%' . $searchTerm . '%'])
+                    $q->orWhereRaw('LOWER(category) LIKE ?', ['%' . $searchTerm . '%'])
                       ->orWhereRaw('LOWER(remark) LIKE ?', ['%' . $searchTerm . '%']);
                 }
 
@@ -292,7 +289,7 @@ class ProjectController extends Controller
         'witel' => 'required',
         'sto' => 'required',
         'site' => 'required',
-        'priority' => 'nullable',
+        'category' => 'required',
         'catuan_id' => 'required',
         'ihld' => 'required',
         'plan_survey' => 'nullable|date',
@@ -304,7 +301,7 @@ class ProjectController extends Controller
         'plan_integrasi' => 'nullable|date|after_or_equal:realisasi_instalasi',
         'realisasi_integrasi' => 'nullable|date|after_or_equal:plan_integrasi',
         'remark' => 'nullable',
-        'drop_data' => 'nullable|in:Yes,No,Relokasi',
+        'drop_data' => 'required|in:Yes,No,Relokasi',
 
         'relok_regional' => 'required_if:drop_data,Relokasi',
         'relok_witel' => 'required_if:drop_data,Relokasi',
@@ -367,7 +364,7 @@ class ProjectController extends Controller
         'witel' => 'required',
         'sto' => 'required',
         'site' => 'required',
-        'priority' => 'nullable',
+        'category' => 'required',
         'catuan_id' => 'required',
         'ihld' => 'required',
         'plan_survey' => 'nullable|date',
@@ -379,7 +376,7 @@ class ProjectController extends Controller
         'plan_integrasi' => 'nullable|date|after_or_equal:realisasi_instalasi',
         'realisasi_integrasi' => 'nullable|date|after_or_equal:plan_integrasi',
         'remark' => 'nullable',
-        'drop_data' => 'nullable|in:Yes,No,Relokasi',
+        'drop_data' => 'required|in:Yes,No,Relokasi',
         'relok_regional' => 'required_if:drop_data,Relokasi',
         'relok_witel' => 'required_if:drop_data,Relokasi',
         'relok_sto' => 'required_if:drop_data,Relokasi',
@@ -514,30 +511,43 @@ class ProjectController extends Controller
             $regionalFunnelingCounts = $this->initializeFunnelingMetrics();
 
             // PLAN CSF (hitung project yang punya catuan_id)
-            $regionalFunnelingCounts['plan_csf'] = $funnelingQuery->clone()->where('drop_data', 'No')->count();
+            $regionalFunnelingCounts['plan_csf'] = $funnelingQuery->clone()
+            ->where('drop_data', 'No')->where('category', 'CSF')->count();
+
 
             // FTTH READY
             //$regionalFunnelingCounts['ftth_ready_csf'] = $funnelingQuery->clone()->whereNotNull('ftth_csf')->count();
 
             // DELIVERY
-            $regionalFunnelingCounts['delivery_plan'] = $funnelingQuery->clone()->whereNotNull('plan_delivery')->count();
-            $regionalFunnelingCounts['delivery_done'] = $funnelingQuery->clone()->whereNotNull('realisasi_delivery')->count();
+            $regionalFunnelingCounts['delivery_plan'] = $funnelingQuery->clone()->whereNotNull('plan_delivery')
+            ->where('drop_data', 'No')->where('category', 'CSF')->count();
+            
+            $regionalFunnelingCounts['delivery_done'] = $funnelingQuery->clone()->whereNotNull('realisasi_delivery')
+            ->where('drop_data', 'No')->where('category', 'CSF')->count();
 
             // INSTALASI
-            $regionalFunnelingCounts['instalasi_plan'] = $funnelingQuery->clone()->whereNotNull('plan_instalasi')->count();
-            $regionalFunnelingCounts['instalasi_done'] = $funnelingQuery->clone()->whereNotNull('realisasi_instalasi')->count();
+            $regionalFunnelingCounts['instalasi_plan'] = $funnelingQuery->clone()->whereNotNull('plan_instalasi')
+            ->where('drop_data', 'No')->where('category', 'CSF')->count();
+            $regionalFunnelingCounts['instalasi_done'] = $funnelingQuery->clone()->whereNotNull('realisasi_instalasi')
+            ->where('drop_data', 'No')->where('category', 'CSF')->count();
 
             // INTEGRASI
-            $regionalFunnelingCounts['integrasi_plan'] = $funnelingQuery->clone()->whereNotNull('plan_integrasi')->count();
-            $regionalFunnelingCounts['integrasi_done'] = $funnelingQuery->clone()->whereNotNull('realisasi_integrasi')->count();
+            $regionalFunnelingCounts['integrasi_plan'] = $funnelingQuery->clone()->whereNotNull('plan_integrasi')
+            ->where('drop_data', 'No')->where('category', 'CSF')->count();
+            $regionalFunnelingCounts['integrasi_done'] = $funnelingQuery->clone()->whereNotNull('realisasi_integrasi')
+            ->where('drop_data', 'No')->where('category', 'CSF')->count();
 
             // GO LIVE
-            $regionalFunnelingCounts['golive_status'] = $funnelingQuery->clone()->whereNotNull('golive_status')->count();
-            $regionalFunnelingCounts['jumlah_port'] = $funnelingQuery->clone()->whereNotNull('jumlah_port')->count();
+            $regionalFunnelingCounts['golive_status'] = $funnelingQuery->clone()->whereNotNull('golive_status')
+            ->where('drop_data', 'No')->where('category', 'CSF')->count();
+            $regionalFunnelingCounts['jumlah_port'] = $funnelingQuery->clone()->whereNotNull('jumlah_port')
+            ->where('drop_data', 'No')->where('category', 'CSF')->count();
 
             // UPLINK MINI OLT READINESS (Asumsi 'READY' dan 'NOT READY' adalah string yang ada di status_uplink)
-            $regionalFunnelingCounts['uplink_ready'] = $funnelingQuery->clone()->where('status_uplink', 'READY')->count();
-            $regionalFunnelingCounts['uplink_not_ready'] = $funnelingQuery->clone()->where('status_uplink', 'NOT READY')->count();
+            $regionalFunnelingCounts['uplink_ready'] = $funnelingQuery->clone()->where('status_uplink', 'READY')
+            ->where('drop_data', 'No')->where('category', 'CSF')->count();
+            $regionalFunnelingCounts['uplink_not_ready'] = $funnelingQuery->clone()->where('status_uplink', 'NOT READY')
+            ->where('drop_data', 'No')->where('category', 'CSF')->count();
 
             // Simpan data untuk regional ini
             $funnelingData[$regionName] = $regionalFunnelingCounts;
@@ -548,66 +558,68 @@ class ProjectController extends Controller
             }
         }
         // =======================================================
-        // BAGIAN 3: LOGIKA SKENARIO INTEGRASI (PER REGIONAL) - BARU
-        // =======================================================
-        $skenarioUplinkColumns = [
-            'Direct Core',
-            'SFP Bidi', // Perhatikan spasi, sesuaikan dengan nilai di database
-            'Cascading',
-            'L2S', // Di form Anda L2S, di gambar L2SW (pastikan konsisten dengan DB)
-            'OTN',
-            'ONT',
-            'Re_engineering', // Di gambar RE-ENG, di form Re-engineering (pakai yang di DB)
-            'Lainnya', // Di gambar LAINNYA, di form lainnya (pakai yang di DB)
-        ];
+// BAGIAN 3: LOGIKA SKENARIO INTEGRASI (PER REGIONAL) - FIXED
+// =======================================================
 
-        $skenarioIntegrasiByRegional = [];
-        $totalSkenarioIntegrasiPerColumn = array_fill_keys($skenarioUplinkColumns, 0); // Total per kolom
-        $totalSkenarioIntegrasiOverall = 0; // Total keseluruhan
+$skenarioUplinkColumns = [
+    'Direct Core',
+    'SFP Bidi',
+    'Cascading',
+    'L2S',
+    'OTN',
+    'ONT',
+    'Re_engineering',
+    'Lainnya',
+];
 
-        // Ambil semua regional unik yang ada di data proyek,
-        // atau gunakan enum Regional jika Anda ingin semua regional ditampilkan
-        // bahkan jika tidak ada data proyek di dalamnya.
-        // Jika ingin hanya regional yang punya data:
-        // $allExistingRegionals = Project::distinct('regional')->pluck('regional')->sort()->toArray();
-        // $regionsForSkenario = array_map(fn($r) => ['value' => $r], $allExistingRegionals);
+$skenarioIntegrasiByRegional = [];
+$totalSkenarioIntegrasiPerColumn = array_fill_keys($skenarioUplinkColumns, 0);
+$totalSkenarioIntegrasiOverall = 0;
 
-        // Menggunakan Enum Regional agar semua regional pasti muncul
-        $regionsForSkenario = Regional::cases(); // Sama seperti Funneling OLT
+// ✅ INI PENTING! Ambil semua enum regional
+$regionsForSkenario = Regional::cases();
 
-        foreach ($regionsForSkenario as $regionalEnum) {
-            $regionName = $regionalEnum->value;
-            $skenarioIntegrasiByRegional[$regionName] = []; // Inisialisasi untuk regional ini
-            $totalSkenarioIntegrasiPerRegional = 0; // Total baris (per regional)
+foreach ($regionsForSkenario as $regionalEnum) {
+    $regionName = $regionalEnum->value;
+    $skenarioIntegrasiByRegional[$regionName] = [];
+    $totalSkenarioIntegrasiPerRegional = 0;
 
-            // Base query untuk regional spesifik, dengan filter dashboard utama
-            $regionalSkenarioQuery = $baseQuery->clone()->where('regional', $regionName);
+    // ✅ Filter berdasarkan region, drop_data, dan category
+    $regionalSkenarioQuery = $baseQuery->clone()
+        ->where('regional', $regionName)
+        ->where('drop_data', 'No')
+        ->where('category', 'CSF');
 
-            $selectStatements = [];
-            foreach ($skenarioUplinkColumns as $columnName) {
-                // Gunakan nama kolom di database ('scenario_uplink') untuk WHERE
-                $selectStatements[] = "COUNT(CASE WHEN scenario_uplink = '{$columnName}' THEN 1 ELSE NULL END) as " . str_replace([' ', '-', '_'], '', $columnName) . "_count";
-            }
+    $selectStatements = [];
+    foreach ($skenarioUplinkColumns as $columnName) {
+        $alias = str_replace([' ', '-', '_'], '', $columnName) . '_count';
+        $selectStatements[] = "COUNT(CASE WHEN scenario_uplink = '{$columnName}' THEN 1 ELSE NULL END) AS {$alias}";
+    }
 
-            $rawSkenarioData = $regionalSkenarioQuery->selectRaw(implode(', ', $selectStatements))->first();
+    $rawSkenarioData = $regionalSkenarioQuery
+        ->selectRaw(implode(', ', $selectStatements))
+        ->first();
 
-            foreach ($skenarioUplinkColumns as $columnName) {
-                $alias = str_replace([' ', '-', '_'], '', $columnName) . '_count';
-                $count = $rawSkenarioData->$alias ?? 0; // Ambil nilai atau 0 jika null
+    foreach ($skenarioUplinkColumns as $columnName) {
+        $alias = str_replace([' ', '-', '_'], '', $columnName) . '_count';
+        $count = $rawSkenarioData->$alias ?? 0;
 
-                $skenarioIntegrasiByRegional[$regionName][$columnName] = $count;
-                $totalSkenarioIntegrasiPerRegional += $count;
-                $totalSkenarioIntegrasiPerColumn[$columnName] += $count; // Akumulasi total per kolom
-            }
-            $skenarioIntegrasiByRegional[$regionName]['Total'] = $totalSkenarioIntegrasiPerRegional; // Tambah total baris
-            $totalSkenarioIntegrasiOverall += $totalSkenarioIntegrasiPerRegional; // Akumulasi total keseluruhan
-        }
+        $skenarioIntegrasiByRegional[$regionName][$columnName] = $count;
+        $totalSkenarioIntegrasiPerRegional += $count;
+        $totalSkenarioIntegrasiPerColumn[$columnName] += $count;
+    }
+
+    $skenarioIntegrasiByRegional[$regionName]['Total'] = $totalSkenarioIntegrasiPerRegional;
+    $totalSkenarioIntegrasiOverall += $totalSkenarioIntegrasiPerRegional;
+}
+
 
         // =======================================================
         // BAGIAN 5: LOGIKA FAILED INTEGRASI - BARU
         // =======================================================
         $failedIntegrasiProjects = $baseQuery->clone()
                                              ->whereNotNull('plan_integrasi') // plan_integrasi sudah diisi
+                                             ->where('drop_data', 'No')->where('category', 'CSF')
                                              ->whereNull('realisasi_integrasi')   // realisasi_integrasi masih kosong
                                              ->whereDate('plan_integrasi', '<=', $today) // plan_integrasi adalah hari ini atau di masa lalu
                                              ->with('user')
@@ -621,6 +633,7 @@ class ProjectController extends Controller
 
         $dailyIntegrasiProjects = $baseQuery->clone()
                                             ->whereDate('plan_integrasi', $today) // Filter berdasarkan tanggal hari ini
+                                            ->where('drop_data', 'No')->where('category', 'CSF')
                                             ->with('user') // Eager load user untuk mendapatkan nama mitra
                                             ->select('regional', 'witel', 'sto', 'site', 'ihld', 'catuan_id', 'assign_to') // Pilih kolom yang dibutuhkan
                                             ->get();
@@ -654,14 +667,14 @@ class ProjectController extends Controller
             $planIntegrasiCumulative = $queryForGraph->clone()
                                                     ->whereNotNull('plan_integrasi')
                                                     ->where('plan_integrasi', '<=', $currentDate->endOfMonth()->toDateString())
-                                                    ->count();
+                                                    ->where('drop_data', 'No')->where('category', 'CSF')->count();
             $sCurvePlanData[] = $planIntegrasiCumulative;
 
             // Hitung kumulatif REALISASI INTEGRASI hingga akhir bulan ini
             $realIntegrasiCumulative = $queryForGraph->clone()
                                                     ->whereNotNull('realisasi_integrasi')
                                                     ->where('realisasi_integrasi', '<=', $currentDate->endOfMonth()->toDateString())
-                                                    ->count();
+                                                    ->where('drop_data', 'No')->where('category', 'CSF')->count();
             $sCurveRealData[] = $realIntegrasiCumulative;
 
             $currentDate->addMonth(); // Maju ke bulan berikutnya
