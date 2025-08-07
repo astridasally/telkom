@@ -71,6 +71,7 @@
                 <label>Priority TA</label>
                 <select name="priority_ta">
                     <option value="">-- Pilih --</option>
+                    <option value="Go Live">Go Live</option>
                     <option value="P1">P1</option>
                     <option value="P2">P2</option>
                     <option value="P3">P3</option>
@@ -79,6 +80,15 @@
         </div>
 
             <div class="form-column">
+            <div class="form-group">
+                <label>Category</label>
+                <select name="category">
+                    <option value="">-- Pilih --</option>
+                    <option value="CSF">CSF</option>
+                    <option value="NON CSF">NON CSF</option>
+                </select>
+            </div>
+            
                 <div style="display: flex; gap: 15px; width: 100%;">
                     <div class="form-group" style="flex: 1;">
                         <label for="dependensi">Dependensi</label>

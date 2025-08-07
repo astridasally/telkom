@@ -13,7 +13,7 @@ class Project extends Model
         'witel',
         'sto',
         'site',
-        'priority',
+        'category',
         'catuan_id',
         'ihld',
         'plan_survey',

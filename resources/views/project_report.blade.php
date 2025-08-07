@@ -13,7 +13,7 @@
         <form action="{{ route('project_report') }}" method="GET" class="filter-form">
         
         {{-- Input Pencarian Teks Bebas --}}
-        <input type="text" name="search" class="search-input" placeholder="Cari proyek..." value="{{ request('search') }}">
+        <input type="text" name="search" class="search-input" placeholder="Cari data..." value="{{ request('search') }}">
 
                 <div class="filter-drop">
             {{-- Dropdown Filter Assign To (Mitra) - HANYA TAMPIL JIKA ADMIN ATAU VENDOR --}}
@@ -81,8 +81,8 @@
     <div class="table-container">
     <table class="sticky-header-table border border-gray-400">
     <thead class="border border-gray-400">
-    <tr class="main-header-row"
-    >
+    <tr class="main-header-row">
+        
         <th rowspan="2">No</th>
         @if(auth()->user()->role === 'admin'|| auth()->user()->role === 'vendor')
         <th rowspan="2">Add by</th>

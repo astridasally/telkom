@@ -7,7 +7,9 @@
     <title>Welcome - Minibold</title>
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 </head>
-<body class="min-h-screen flex items-center justify-center relative bg-[#f5f6f8]">
+<body class="min-h-screen flex items-center justify-center relative bg-cover bg-center" style="background-image: url('{{ asset('image/telkomhub.jpg') }}');">
+
+    <!-- Overlay -->
 
     <!-- Container -->
     <div class="bg-white p-10 rounded-2xl shadow-xl max-w-md w-full text-center border border-gray-200">

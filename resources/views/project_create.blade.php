@@ -80,22 +80,21 @@
 
             <div class="form-column"> 
             <div class="form-group">
-                <label>Priority</label>
-                <select name="priority">
+                <label>Category</label>
+                <select name="category">
                     <option value="">-- Pilih --</option>
-                    <option value="P1">P1</option>
-                    <option value="P2">P2</option>
-                    <option value="P3">P3</option>
+                    <option value="CSF">CSF</option>
+                    <option value="NON CSF">NON CSF</option>
                 </select>
             </div>
        
             <div class="form-group">
                 <label style="color: #0d6efd; font-weight: 650;"></label>
                 <div style="display: flex; gap: 40px;">
-                    <div style="flex: 1;"><label>Plan Survey</label>
+                    <div style="flex: 1;"><label>Plan Lainnya</label>
                         <input type="date" name="plan_survey" placeholder="Plan" class="form-control">
                     </div>
-                    <div style="flex: 1;"><label>Realisasi Survey</label>
+                    <div style="flex: 1;"><label>Realisasi Lainnya</label>
                         <input type="date" name="realisasi_survey" placeholder="Realisasi" class="form-control">
                     </div>
                 </div>
@@ -104,10 +103,10 @@
             <div class="form-group">
                 <label style="color: #0d6efd; font-weight: 650;"></label>
                 <div style="display: flex; gap: 40px;">
-                    <div style="flex: 1;"><label>Plan Delivery</label>
+                    <div style="flex: 1;"><label>Plan MOS</label>
                         <input type="date" name="plan_delivery" placeholder="Plan" class="form-control">
                     </div>
-                    <div style="flex: 1;"><label>Realisasi Delivery</label>
+                    <div style="flex: 1;"><label>Realisasi MOS</label>
                         <input type="date" name="realisasi_delivery" placeholder="Realisasi" class="form-control">
                     </div>
                 </div>  

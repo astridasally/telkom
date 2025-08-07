@@ -114,17 +114,17 @@
                 <label>Catuan ID</label>
                 <input type="text" name="catuan_id" value="{{ $project->catuan_id }}" required>
                 </div>
-            @endif
 
             <div class="form-group">
-                <label>Priority</label>
-                <select name="priority">
+                <label>Category</label>
+                <select name="category">
                     <option value="">-- Pilih --</option>
-                    <option value="P1" {{ $project->priority == 'P1' ? 'selected' : '' }}>P1</option>
-                    <option value="P2" {{ $project->priority == 'P2' ? 'selected' : '' }}>P2</option>
-                    <option value="P3" {{ $project->priority == 'P3' ? 'selected' : '' }}>P3</option>
+                    <option value="CSF" {{ $project->category == 'CSF' ? 'selected' : '' }}>CSF</option>
+                    <option value="NON CSF" {{ $project->category == 'NON CSF' ? 'selected' : '' }}>NON CSF</option>
                 </select>
             </div>
+            @endif
+
             </div>
 
             <div class="form-column">
@@ -132,10 +132,10 @@
             <div class="form-group">
                 <label style="color: #0d6efd; font-weight: 650;"></label>
                 <div style="display: flex; gap: 40px;">
-                    <div style="flex: 1;"><label>Plan Survey</label>
+                    <div style="flex: 1;"><label>Plan Lainnya</label>
                         <input type="date" name="plan_survey" placeholder="Plan" class="form-control" value="{{ $project->plan_survey }}">
                     </div>
-                    <div style="flex: 1;"><label>Realisasi Survey</label>
+                    <div style="flex: 1;"><label>Realisasi Lainnya</label>
                         <input type="date" name="realisasi_survey" placeholder="Realisasi" class="form-control" value="{{ $project->realisasi_survey }}">
                     </div>
                 </div>
@@ -144,10 +144,10 @@
             <div class="form-group">
                 <label style="color: #0d6efd; font-weight: 650;"></label>
                 <div style="display: flex; gap: 40px;">
-                    <div style="flex: 1;"><label>Plan Delivery</label>
+                    <div style="flex: 1;"><label>Plan MOS</label>
                         <input type="date" name="plan_delivery" placeholder="Plan" class="form-control" value="{{ $project->plan_delivery }}">
                     </div>
-                    <div style="flex: 1;"><label>Realisasi Delivery</label>
+                    <div style="flex: 1;"><label>Realisasi MOS</label>
                         <input type="date" name="realisasi_delivery" placeholder="Realisasi" class="form-control" value="{{ $project->realisasi_delivery }}">
                     </div>
                 </div>    
@@ -248,9 +248,10 @@
                 <label>Priority TA</label>
                 <select name="priority_ta">
                     <option value="">-- Pilih --</option>
+                    <option value="Go Live" {{ $project->priority_ta == 'Go Live' ? 'selected' : '' }}>Go Live</option>
                     <option value="P1" {{ $project->priority_ta == 'P1' ? 'selected' : '' }}>P1</option>
                     <option value="P2" {{ $project->priority_ta == 'P2' ? 'selected' : '' }}>P2</option>
-                    <option value="P3" {{ $project->priority_ta == 'P#' ? 'selected' : '' }}>P3</option>
+                    <option value="P3" {{ $project->priority_ta == 'P3' ? 'selected' : '' }}>P3</option>
                 </select>
             </div>
 
@@ -386,6 +387,15 @@
                     <option value="P1" {{ $project->priority_ta == 'P1' ? 'selected' : '' }}>P1</option>
                     <option value="P2" {{ $project->priority_ta == 'P2' ? 'selected' : '' }}>P2</option>
                     <option value="P3" {{ $project->priority_ta == 'P#' ? 'selected' : '' }}>P3</option>
+                </select>
+            </div>
+            
+            <div class="form-group">
+                <label>Category</label>
+                <select name="category">
+                    <option value="">-- Pilih --</option>
+                    <option value="CSF" {{ $project->category == 'CSF' ? 'selected' : '' }}>CSF</option>
+                    <option value="NON CSF" {{ $project->category == 'NON CSF' ? 'selected' : '' }}>NON CSF</option>
                 </select>
             </div>
             </div>

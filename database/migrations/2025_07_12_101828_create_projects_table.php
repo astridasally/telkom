@@ -19,7 +19,7 @@ return new class extends Migration
             $table->string('witel');
             $table->string('sto')->nullable();
             $table->string('site')->nullable();
-            $table->string('priority')->nullable();
+            $table->string('category')->nullable();
             $table->string('catuan_id')->nullable();
             $table->string('ihld')->nullable();
 
