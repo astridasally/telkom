@@ -23,7 +23,6 @@ class DataExcel implements ToModel, WithHeadingRow, WithMapping
             'witel'                => $row['witel'],
             'sto'                  => $row['sto'],
             'site'                 => $row['site'],
-            'priority'             => $row['priority'] ?? null,
             'catuan_id'            => $row['catuan_id'] ?? null,
             'ihld'                 => $row['ihld'],
             'plan_survey'          => $this->toDate($row['plan_survey']),
@@ -50,6 +49,7 @@ class DataExcel implements ToModel, WithHeadingRow, WithMapping
             'remark_ta'            => $row['remark_ta'] ?? null,
             'jumlah_port'          => $row['jumlah_port'] ?? null,
             'golive_status'        => $row['golive_status'] ?? null,
+            'category'             => $row['category'] ?? null,
 
 
         ];

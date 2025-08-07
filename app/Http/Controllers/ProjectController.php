@@ -469,20 +469,20 @@ class ProjectController extends Controller
         $projectCount = $baseQuery->clone()->count();
 
         // SURVEY
-        $planSurveyCount = $baseQuery->clone()->whereNotNull('plan_survey')->count();
-        $realSurveyCount = $baseQuery->clone()->whereNotNull('realisasi_survey')->count();
+        $planSurveyCount = $baseQuery->clone()->whereNotNull('plan_survey')->where('drop_data', 'No')->where('category', 'CSF')->count();
+        $realSurveyCount = $baseQuery->clone()->whereNotNull('realisasi_survey')->where('drop_data', 'No')->where('category', 'CSF')->count();
 
         // DELIVERY (untuk dashboard utama)
-        $planDeliveryCount = $baseQuery->clone()->whereNotNull('plan_delivery')->count();
-        $realDeliveryCount = $baseQuery->clone()->whereNotNull('realisasi_delivery')->count();
+        $planDeliveryCount = $baseQuery->clone()->whereNotNull('plan_delivery')->where('drop_data', 'No')->where('category', 'CSF')->count();
+        $realDeliveryCount = $baseQuery->clone()->whereNotNull('realisasi_delivery')->where('drop_data', 'No')->where('category', 'CSF')->count();
 
         // INSTALASI (untuk dashboard utama)
-        $planInstalasiCount = $baseQuery->clone()->whereNotNull('plan_instalasi')->count();
-        $realInstalasiCount = $baseQuery->clone()->whereNotNull('realisasi_instalasi')->count();
+        $planInstalasiCount = $baseQuery->clone()->whereNotNull('plan_instalasi')->where('drop_data', 'No')->where('category', 'CSF')->count();
+        $realInstalasiCount = $baseQuery->clone()->whereNotNull('realisasi_instalasi')->where('drop_data', 'No')->where('category', 'CSF')->count();
 
         // INTEGRASI (untuk dashboard utama)
-        $planIntegrasiCount = $baseQuery->clone()->whereNotNull('plan_integrasi')->count();
-        $realIntegrasiCount = $baseQuery->clone()->whereNotNull('realisasi_integrasi')->count();
+        $planIntegrasiCount = $baseQuery->clone()->whereNotNull('plan_integrasi')->where('drop_data', 'No')->where('category', 'CSF')->count();
+        $realIntegrasiCount = $baseQuery->clone()->whereNotNull('realisasi_integrasi')->where('drop_data', 'No')->where('category', 'CSF')->count();
 
         // DROP
         $dropYesCount      = $baseQuery->clone()->where('drop_data', 'Yes')->count();
@@ -511,8 +511,7 @@ class ProjectController extends Controller
             $regionalFunnelingCounts = $this->initializeFunnelingMetrics();
 
             // PLAN CSF (hitung project yang punya catuan_id)
-            $regionalFunnelingCounts['plan_csf'] = $funnelingQuery->clone()
-            ->where('drop_data', 'No')->where('category', 'CSF')->count();
+            $regionalFunnelingCounts['plan_csf'] = $funnelingQuery->clone()->where('drop_data', 'No')->where('category','CSF')->count();
 
 
             // FTTH READY
@@ -541,7 +540,7 @@ class ProjectController extends Controller
             $regionalFunnelingCounts['golive_status'] = $funnelingQuery->clone()->whereNotNull('golive_status')
             ->where('drop_data', 'No')->where('category', 'CSF')->count();
             $regionalFunnelingCounts['jumlah_port'] = $funnelingQuery->clone()->whereNotNull('jumlah_port')
-            ->where('drop_data', 'No')->where('category', 'CSF')->count();
+            ->where('drop_data', 'No')->where('category', 'CSF')->sum();
 
             // UPLINK MINI OLT READINESS (Asumsi 'READY' dan 'NOT READY' adalah string yang ada di status_uplink)
             $regionalFunnelingCounts['uplink_ready'] = $funnelingQuery->clone()->where('status_uplink', 'READY')
