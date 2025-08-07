@@ -306,8 +306,8 @@ tfoot tr:last-child td:last-child { border-bottom-right-radius: 6px; }
     margin: 0px 0;
     margin-left: 10px;
     font-size: 13px;
-    color: #C6D4EA; /* Light blue-grey for body text */
-    font-weight: bolder;
+    color: #ffffff; /* Light blue-grey for body text */
+    font-weight: 2px;
 }
 /* --- DROP SPECIAL WIDTH --- */
 .status-boxes-grid {

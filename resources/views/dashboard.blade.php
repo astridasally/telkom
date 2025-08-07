@@ -153,7 +153,7 @@
 
                {{-- Kotak-kotak Angka --}}
 <div class="content-grid">
-    <div class="stage-card">
+    <div class="stage-card" onclick="showPopup('instalasi')">
         <div class="card-header">
             <span>LAINNYA</span>
         </div>
@@ -166,7 +166,7 @@
         </div>
     </div>
 
-    <div class="stage-card">
+    <div class="stage-card" onclick="showPopup('mos')">
         <div class="card-header">
             <span>MOS</span>
         </div>
@@ -179,7 +179,7 @@
         </div>
     </div>
 
-    <div class="stage-card">
+    <div class="stage-card" onclick="showPopup('instalasi')">
         <div class="card-header">
             <span>INSTALASI</span>
         </div>
@@ -192,7 +192,7 @@
         </div>
     </div>
 
-    <div class="stage-card">
+    <div class="stage-card" onclick="showPopup('integrasi')">
         <div class="card-header">
             <span>INTEGRASI</span>
         </div>
