@@ -540,7 +540,7 @@ class ProjectController extends Controller
             $regionalFunnelingCounts['golive_status'] = $funnelingQuery->clone()->whereNotNull('golive_status')
             ->where('drop_data', 'No')->where('category', 'CSF')->count();
             $regionalFunnelingCounts['jumlah_port'] = $funnelingQuery->clone()->whereNotNull('jumlah_port')
-            ->where('drop_data', 'No')->where('category', 'CSF')->sum();
+            ->where('drop_data', 'No')->where('category', 'CSF')->sum('jumlah_port');
 
             // UPLINK MINI OLT READINESS (Asumsi 'READY' dan 'NOT READY' adalah string yang ada di status_uplink)
             $regionalFunnelingCounts['uplink_ready'] = $funnelingQuery->clone()->where('status_uplink', 'READY')
@@ -740,6 +740,47 @@ foreach ($regionsForSkenario as $regionalEnum) {
             'uplink_not_ready' => 0,
         ];
     }
+
+
+public function getPopupDetail(Request $request)
+{
+    $stage = $request->query('stage');
+    $query = Project::query()
+        ->where('drop_data', 'No')
+        ->where('category', 'CSF');
+
+    switch ($stage) {
+        case 'lainnya':
+            $query->whereNotNull('plan_survey')->orWhereNotNull('realisasi_survey');
+            break;
+        case 'mos':
+            $query->whereNotNull('plan_delivery')->orWhereNotNull('realisasi_delivery');
+            break;
+        case 'instalasi':
+            $query->whereNotNull('plan_instalasi')->orWhereNotNull('realisasi_instalasi');
+            break;
+        case 'integrasi':
+            $query->whereNotNull('plan_integrasi')->orWhereNotNull('realisasi_integrasi');
+            break;
+        case 'drop':
+            $query = Project::query(); // Drop bisa punya 'Yes', 'No', 'Relokasi'
+            break;
+        default:
+            return response()->json([]);
+    }
+
+    $fields = match($stage) {
+        'lainnya' => ['regional', 'witel', 'sto', 'ihld', 'catuan_id', 'plan_survey', 'realisasi_survey'],
+        'mos' => ['regional', 'witel', 'sto', 'ihld', 'catuan_id', 'plan_delivery', 'realisasi_delivery'],
+        'instalasi' => ['regional', 'witel', 'sto', 'ihld', 'catuan_id', 'plan_instalasi', 'realisasi_instalasi'],
+        'integrasi' => ['regional', 'witel', 'sto', 'ihld', 'catuan_id', 'plan_integrasi', 'realisasi_integrasi'],
+        'drop' => ['regional', 'witel', 'sto', 'ihld', 'catuan_id', 'drop_data'],
+    };
+
+    return response()->json($query->get($fields));
+}
+
+
     public function import(Request $request)
 {
     $request->validate([

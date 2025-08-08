@@ -152,171 +152,172 @@
             </form>
 
                {{-- Kotak-kotak Angka --}}
-<div class="content-grid">
-    <div class="stage-card" onclick="showPopup('instalasi')">
-        <div class="card-header">
-            <span>LAINNYA</span>
-        </div>
-        <div class="card-body">
-            <span class="material-symbols-outlined">rate_review</span>
-            <div class="card-text-group">
-                <p>Plan: <strong>{{ $planSurveyCount ?? 0 }}</strong></p>
-                <p>Realisasi: <strong>{{ $realSurveyCount ?? 0 }}</strong></p>
-            </div>
-        </div>
-    </div>
+                <div class="content-grid">
+                    <div class="stage-card" onclick="showPopup('lainnya')">
+                        <button onclick="showPopup('instalasi')">Tes Popup</button>
+                        <div class="card-header">
+                            <span>LAINNYA</span>
+                        </div>
+                        <div class="card-body">
+                            <span class="material-symbols-outlined">rate_review</span>
+                            <div class="card-text-group">
+                                <p>Plan: <strong>{{ $planSurveyCount ?? 0 }}</strong></p>
+                                <p>Realisasi: <strong>{{ $realSurveyCount ?? 0 }}</strong></p>
+                            </div>
+                        </div>
+                    </div>
 
-    <div class="stage-card" onclick="showPopup('mos')">
-        <div class="card-header">
-            <span>MOS</span>
-        </div>
-        <div class="card-body">
-            <span class="material-symbols-outlined">local_shipping</span>
-            <div class="card-text-group">
-                <p>Plan: <strong>{{ $planDeliveryCount ?? 0 }}</strong></p>
-                <p>Realisasi: <strong>{{ $realDeliveryCount ?? 0 }}</strong></p>
-            </div>
-        </div>
-    </div>
+                    <div class="stage-card" onclick="showPopup('mos')">
+                        <div class="card-header">
+                            <span>MOS</span>
+                        </div>
+                        <div class="card-body">
+                            <span class="material-symbols-outlined">local_shipping</span>
+                            <div class="card-text-group">
+                                <p>Plan: <strong>{{ $planDeliveryCount ?? 0 }}</strong></p>
+                                <p>Realisasi: <strong>{{ $realDeliveryCount ?? 0 }}</strong></p>
+                            </div>
+                        </div>
+                    </div>
 
-    <div class="stage-card" onclick="showPopup('instalasi')">
-        <div class="card-header">
-            <span>INSTALASI</span>
-        </div>
-        <div class="card-body">
-            <span class="material-symbols-outlined">build</span>
-            <div class="card-text-group">
-                <p>Plan: <strong>{{ $planInstalasiCount ?? 0 }}</strong></p>
-                <p>Realisasi: <strong>{{ $realInstalasiCount ?? 0 }}</strong></p>
-            </div>
-        </div>
-    </div>
+                    <div class="stage-card" onclick="showPopup('instalasi')">
+                        <div class="card-header">
+                            <span>INSTALASI</span>
+                        </div>
+                        <div class="card-body">
+                            <span class="material-symbols-outlined">build</span>
+                            <div class="card-text-group">
+                                <p>Plan: <strong>{{ $planInstalasiCount ?? 0 }}</strong></p>
+                                <p>Realisasi: <strong>{{ $realInstalasiCount ?? 0 }}</strong></p>
+                            </div>
+                        </div>
+                    </div>
 
-    <div class="stage-card" onclick="showPopup('integrasi')">
-        <div class="card-header">
-            <span>INTEGRASI</span>
-        </div>
-        <div class="card-body">
-            <span class="material-symbols-outlined">hub</span>
-            <div class="card-text-group">
-                <p>Plan: <strong>{{ $planIntegrasiCount ?? 0 }}</strong></p>
-                <p>Realisasi: <strong>{{ $realIntegrasiCount ?? 0 }}</strong></p>
-            </div>
-        </div>
-    </div>
-</div>
+                    <div class="stage-card" onclick="showPopup('integrasi')">
+                        <div class="card-header">
+                            <span>INTEGRASI</span>
+                        </div>
+                        <div class="card-body">
+                            <span class="material-symbols-outlined">hub</span>
+                            <div class="card-text-group">
+                                <p>Plan: <strong>{{ $planIntegrasiCount ?? 0 }}</strong></p>
+                                <p>Realisasi: <strong>{{ $realIntegrasiCount ?? 0 }}</strong></p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
 
-{{-- Kotak Drop --}}
-<div class="status-boxes-grid">
-    <div class="stage-card">
-        <div class="card-header">
-            <span>DROP</span>
-        </div>
-        <div class="card-body">
-            <span class="material-symbols-outlined">call_split</span>
-            <div class="card-text-group">
-                <p>Yes: <strong>{{ $dropYesCount ?? 0 }}</strong></p>
-                <p>No: <strong>{{ $dropNoCount ?? 0 }}</strong></p>
-                <p>Relokasi: <strong>{{ $dropRelokasiCount ?? 0 }}</strong></p>
-            </div>
-        </div>
-    </div>
-</div>
+                {{-- Kotak Drop --}}
+                <div class="status-boxes-grid">
+                    <div class="stage-card" onclick="showPopup('drop')">     {{-- DROP --}}
+                        <div class="card-header">
+                            <span>DROP</span>
+                        </div>
+                        <div class="card-body">
+                            <span class="material-symbols-outlined">call_split</span>
+                            <div class="card-text-group">
+                                <p>Yes: <strong>{{ $dropYesCount ?? 0 }}</strong></p>
+                                <p>No: <strong>{{ $dropNoCount ?? 0 }}</strong></p>
+                                <p>Relokasi: <strong>{{ $dropRelokasiCount ?? 0 }}</strong></p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
 
 
+                </div>
             </div>
-        </div>
-                      
-            <div class="sken-area">
-                <h3>SKENARIO INTEGRASI</h3>
-                <hr class="custom-line">
-                <table class="table table-bordered table-striped" style="width:100%">
-                <thead>
-                        <tr>
-                            <th>Regional</th>
-                            {{-- Loop melalui kolom-kolom skenario uplink yang sudah didefinisikan di controller --}}
-                            @foreach($skenarioUplinkColumns as $column)
-                                <th>
-                                    @if($column === 'DIRECT')
-                                        Direct
-                                    @elseif($column === 'Re_engineering')
-                                        Re-Engineering
-                                    @elseif($column === 'lainnya')
-                                        Lainnya
-                                    @else
-                                        {{ str_replace('_', '-', $column) }} {{-- Untuk format tampilan default, misal SFP Bidi --}}
-                                    @endif
-                                </th>
-                            @endforeach
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {{-- Loop melalui setiap regional --}}
-                        @foreach($regions as $regionalEnum)
-                            @php
-                                $regionName = $regionalEnum->value;
-                                // Pastikan ada data untuk regional ini, jika tidak, tampilkan 0
-                                $rowData = $skenarioIntegrasiByRegional[$regionName] ?? [];
-                            @endphp
-                            <tr>
-                                <td>{{ $regionName }}</td>
-                                {{-- Loop melalui setiap kolom skenario untuk regional saat ini --}}
-                                @foreach($skenarioUplinkColumns as $column)
-                                    <td>{{ $rowData[$column] ?? 0 }}</td>
-                                @endforeach
-                    
-                            </tr>
-                        @endforeach
-                    </tbody>
-                    <tfoot>
-                        <tr class="total-row">
-                            <td>Total</td>
-                            {{-- Loop melalui setiap kolom skenario untuk menampilkan total per kolom --}}
-                            @foreach($skenarioUplinkColumns as $column)
-                                <td>{{ $totalSkenarioIntegrasiPerColumn[$column] ?? 0 }}</td>
-                            @endforeach
-                        </tr>
-                    </tfoot>
-                </table>
-            </div>
-
-        <div class="integrasi-wrapper">
-            {{-- Di sini nanti bisa tambahkan div untuk Daily Integrasi --}}
-            <div class="daily-area">
-                <h3>DAILY INTEGRASI</h3>
-                <div class="table-scroll-container"> {{-- DIV INI HARUS ADA --}}
-                <table class="table table-bordered table-striped" style="width:100%">
+                        
+                <div class="sken-area">
+                    <h3>SKENARIO INTEGRASI</h3>
+                    <hr class="custom-line">
+                    <table class="table table-bordered table-striped" style="width:100%">
                     <thead>
-                        <tr class="main-header-row">
-                            <th>No</th>
-                            <th>Mitra</th>
-                            <th>Regional</th>
-                            <th>Witel</th>
-                            <th>STO</th>
-                            <th>IHLD</th>
-                            <th>Catuan ID</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        @forelse($dailyIntegrasiProjects as $index => $project)
                             <tr>
-                                <td>{{ $index + 1 }}</td>
-                                <td>{{ $project->assign_to}}</td> {{-- Mengakses nama mitra dari relasi user --}}
-                                <td>{{ $project->regional }}</td>
-                                <td>{{ $project->witel }}</td>
-                                <td>{{ $project->sto }}</td>
-                                <td>{{ $project->ihld }}</td>
-                                <td>{{ $project->catuan_id }}</td>
+                                <th>Regional</th>
+                                {{-- Loop melalui kolom-kolom skenario uplink yang sudah didefinisikan di controller --}}
+                                @foreach($skenarioUplinkColumns as $column)
+                                    <th>
+                                        @if($column === 'DIRECT')
+                                            Direct
+                                        @elseif($column === 'Re_engineering')
+                                            Re-Engineering
+                                        @elseif($column === 'lainnya')
+                                            Lainnya
+                                        @else
+                                            {{ str_replace('_', '-', $column) }} {{-- Untuk format tampilan default, misal SFP Bidi --}}
+                                        @endif
+                                    </th>
+                                @endforeach
                             </tr>
-                        @empty
-                            <tr>
-                                <td colspan="8" class="text-center">Tidak ada proyek dengan plan integrasi hari ini.</td>
+                        </thead>
+                        <tbody>
+                            {{-- Loop melalui setiap regional --}}
+                            @foreach($regions as $regionalEnum)
+                                @php
+                                    $regionName = $regionalEnum->value;
+                                    // Pastikan ada data untuk regional ini, jika tidak, tampilkan 0
+                                    $rowData = $skenarioIntegrasiByRegional[$regionName] ?? [];
+                                @endphp
+                                <tr>
+                                    <td>{{ $regionName }}</td>
+                                    {{-- Loop melalui setiap kolom skenario untuk regional saat ini --}}
+                                    @foreach($skenarioUplinkColumns as $column)
+                                        <td>{{ $rowData[$column] ?? 0 }}</td>
+                                    @endforeach
+                        
+                                </tr>
+                            @endforeach
+                        </tbody>
+                        <tfoot>
+                            <tr class="total-row">
+                                <td>Total</td>
+                                {{-- Loop melalui setiap kolom skenario untuk menampilkan total per kolom --}}
+                                @foreach($skenarioUplinkColumns as $column)
+                                    <td>{{ $totalSkenarioIntegrasiPerColumn[$column] ?? 0 }}</td>
+                                @endforeach
                             </tr>
-                        @endforelse
-                    </tbody>
-                </table>
+                        </tfoot>
+                    </table>
                 </div>
-                </div>
+
+            <div class="integrasi-wrapper">
+                {{-- Di sini nanti bisa tambahkan div untuk Daily Integrasi --}}
+                <div class="daily-area">
+                    <h3>DAILY INTEGRASI</h3>
+                    <div class="table-scroll-container"> {{-- DIV INI HARUS ADA --}}
+                    <table class="table table-bordered table-striped" style="width:100%">
+                        <thead>
+                            <tr class="main-header-row">
+                                <th>No</th>
+                                <th>Mitra</th>
+                                <th>Regional</th>
+                                <th>Witel</th>
+                                <th>STO</th>
+                                <th>IHLD</th>
+                                <th>Catuan ID</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @forelse($dailyIntegrasiProjects as $index => $project)
+                                <tr>
+                                    <td>{{ $index + 1 }}</td>
+                                    <td>{{ $project->assign_to}}</td> {{-- Mengakses nama mitra dari relasi user --}}
+                                    <td>{{ $project->regional }}</td>
+                                    <td>{{ $project->witel }}</td>
+                                    <td>{{ $project->sto }}</td>
+                                    <td>{{ $project->ihld }}</td>
+                                    <td>{{ $project->catuan_id }}</td>
+                                </tr>
+                            @empty
+                                <tr>
+                                    <td colspan="8" class="text-center">Tidak ada proyek dengan plan integrasi hari ini.</td>
+                                </tr>
+                            @endforelse
+                        </tbody>
+                    </table>
+                    </div>
+                    </div>
 
             {{-- Di sini nanti bisa tambahkan div untuk Failed Integrasi --}}
             <div class="failed-area">
@@ -357,6 +358,21 @@
             </div>
         </div>
 
+        {{-- ========== MODAL POPUP DETAIL (Dinamis untuk semua stage) ========== --}}
+        <div id="popupDetail" class="popup-modal" style="display: none;">
+            <div class="popup-content">
+                <span class="close-btn" onclick="closePopup()">&times;</span>
+                <h3 id="popup-title">Detail</h3>
+                <div class="table-scroll-container">
+                    <table class="table table-bordered table-striped" style="width: 100%;">
+                        <thead>
+                            <tr id="popup-table-head"></tr>
+                        </thead>
+                        <tbody id="popup-table-body"></tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
 
 
 
@@ -455,6 +471,86 @@ new Chart(ctx, {
         console.error("Canvas element with ID 'sCurveChart' not found.");
     }
 </script>
+
+
+<script>
+const popupConfig = {
+    lainnya: {
+        title: "Detail Survey",
+        columns: ['No', 'Regional', 'Witel', 'STO', 'IHLD', 'Catuan ID', 'Plan Survey', 'Realisasi Survey'],
+        fields: ['regional', 'witel', 'sto', 'ihld', 'catuan_id', 'plan_survey', 'realisasi_survey']
+    },
+    mos: {
+        title: "Detail Delivery (MOS)",
+        columns: ['No', 'Regional', 'Witel', 'STO', 'IHLD', 'Catuan ID', 'Plan Delivery', 'Realisasi Delivery'],
+        fields: ['regional', 'witel', 'sto', 'ihld', 'catuan_id', 'plan_delivery', 'realisasi_delivery']
+    },
+    instalasi: {
+        title: "Detail Instalasi",
+        columns: ['No', 'Regional', 'Witel', 'STO', 'IHLD', 'Catuan ID', 'Plan Instalasi', 'Realisasi Instalasi'],
+        fields: ['regional', 'witel', 'sto', 'ihld', 'catuan_id', 'plan_instalasi', 'realisasi_instalasi']
+    },
+    integrasi: {
+        title: "Detail Integrasi",
+        columns: ['No', 'Regional', 'Witel', 'STO', 'IHLD', 'Catuan ID', 'Plan Integrasi', 'Realisasi Integrasi'],
+        fields: ['regional', 'witel', 'sto', 'ihld', 'catuan_id', 'plan_integrasi', 'realisasi_integrasi']
+    },
+    drop: {
+        title: "Detail Drop",
+        columns: ['No', 'Regional', 'Witel', 'STO', 'IHLD', 'Catuan ID', 'Drop Status'],
+        fields: ['regional', 'witel', 'sto', 'ihld', 'catuan_id', 'drop_data']
+    }
+};
+
+function showPopup(stage) {
+    const config = popupConfig[stage];
+    if (!config) return;
+
+    // Set judul
+    document.getElementById("popup-title").innerText = config.title;
+
+    // Set header tabel
+    const headRow = document.getElementById("popup-table-head");
+    headRow.innerHTML = config.columns.map(col => `<th>${col}</th>`).join('');
+
+    // Fetch data
+    fetch(`/popup-detail?stage=${stage}`)
+        .then(res => res.json())
+        .then(data => {
+            const tbody = document.getElementById("popup-table-body");
+            tbody.innerHTML = '';
+
+            if (!data.length) {
+                tbody.innerHTML = `<tr><td colspan="${config.columns.length}" class="text-center">Tidak ada data tersedia.</td></tr>`;
+                return;
+            }
+
+            data.forEach((row, index) => {
+                const rowHTML = config.fields.map(field => `<td>${row[field] ?? '-'}</td>`).join('');
+                tbody.innerHTML += `<tr><td>${index + 1}</td>${rowHTML}</tr>`;
+            });
+
+            // Tampilkan modal
+            document.getElementById("popupDetail").style.display = "flex";
+        })
+        .catch(error => console.error("Gagal load data:", error));
+}
+
+function closePopup() {
+    document.getElementById("popupDetail").style.display = "none";
+}
+
+// agar bisa diakses dari onclick
+document.addEventListener('DOMContentLoaded', function () {
+    window.showPopup = showPopup;
+    window.closePopup = closePopup;
+    console.log("popupDetail found:", document.getElementById("popupDetail"));
+
+});
+
+
+</script>
+
 
 
 

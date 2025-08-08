@@ -35,6 +35,9 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
     Route::get('/projects/import', function () {
     return view('import');
+    Route::get('/popup-detail', [ProjectController::class, 'getPopupDetail'])->name('popup.detail');
+    
+
 }); 
 
 Route::post('/projects/import', [ProjectController::class, 'import'])->name('projects.import');
