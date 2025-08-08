@@ -154,7 +154,6 @@
                {{-- Kotak-kotak Angka --}}
                 <div class="content-grid">
                     <div class="stage-card" onclick="showPopup('lainnya')">
-                        <button onclick="showPopup('instalasi')">Tes Popup</button>
                         <div class="card-header">
                             <span>LAINNYA</span>
                         </div>
@@ -472,7 +471,7 @@ new Chart(ctx, {
     }
 </script>
 
-
+@push('scripts')
 <script>
 const popupConfig = {
     lainnya: {
@@ -550,8 +549,5 @@ document.addEventListener('DOMContentLoaded', function () {
 
 
 </script>
-
-
-
-
+@endpush
 </x-app-layout>

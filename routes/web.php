@@ -39,6 +39,8 @@ Route::middleware('auth')->group(function () {
     
 
 }); 
+    Route::get('/popup-detail', [ProjectController::class, 'getPopupDetail'])->name('popup.detail');
+
 
 Route::post('/projects/import', [ProjectController::class, 'import'])->name('projects.import');
 });

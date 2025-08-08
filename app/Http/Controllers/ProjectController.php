@@ -745,6 +745,8 @@ foreach ($regionsForSkenario as $regionalEnum) {
 public function getPopupDetail(Request $request)
 {
     $stage = $request->query('stage');
+    \Log::info('Popup Stage:', ['stage' => $stage]);
+
     $query = Project::query()
         ->where('drop_data', 'No')
         ->where('category', 'CSF');
