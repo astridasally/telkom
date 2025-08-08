@@ -29,22 +29,19 @@
 
             <div class="form-group">
                 <label>Regional</label>
-                <select name="regional" required>
-                    <option value="">-- Pilih Regional --</option>
-                    @foreach (App\Enums\Regional::cases() as $regional)
-                    <option value="{{ $regional->value }}">{{ $regional->value }}</option>
-                    @endforeach
-                </select>
+                    <select name="regional" id="regional" required>
+                        <option value="">-- Pilih Regional --</option>
+                        @foreach (App\Enums\Regional::cases() as $regional)
+                        <option value="{{ $regional->value }}">{{ $regional->value }}</option>
+                        @endforeach
+                    </select>
             </div>
 
             <div class="form-group">
                 <label>Witel</label>
-                <select name="witel" required>
-                    <option value="">-- Pilih Witel --</option>
-                    @foreach (App\Enums\Witel::cases() as $witel)
-                    <option value="{{ $witel->value }}">{{ $witel->value }}</option>
-                    @endforeach
-                </select>
+                    <select name="witel" id="witel" required>
+                        <option value="">-- Pilih Witel --</option>
+                    </select>
             </div>
 
             <div class="form-group">
@@ -323,6 +320,28 @@
             }
         });
     </script>
+
+    <script>
+    document.querySelector('[name="regional"]').addEventListener('change', function() {
+        let regional = this.value;
+        let witelSelect = document.querySelector('[name="witel"]');
+        witelSelect.innerHTML = '<option value="">-- Pilih Witel --</option>';
+
+    if (regional) {
+        fetch(`/witels/${encodeURIComponent(regional)}`)
+            .then(response => response.json())
+            .then(data => {
+                data.forEach(witel => {
+                    let option = document.createElement('option');
+                    option.value = witel;
+                    option.text = witel;
+                    witelSelect.appendChild(option);
+                });
+            });
+    }
+});
+</script>
+
     
 </div>
 </x-app-layout>

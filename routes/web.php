@@ -8,14 +8,18 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-
 Route::get('/dashboard', [ProjectController::class, 'dashboard'])
     ->middleware(['auth', 'verified'])
     ->name('dashboard');
-    
-Route::get('/funneling-olt', [ProjectController::class, 'funnelingOltReport'])->name('funneling_olt_report');
 
-Route::middleware('auth')->group(function () {
+Route::get('/funneling-olt', [ProjectController::class, 'funnelingOltReport'])
+    ->name('funneling_olt_report');
+
+// ini di luar middleware supaya bisa diakses AJAX
+Route::get('/witels/{regional}', [ProjectController::class, 'getWitels'])
+    ->where('regional', '.*');
+
+Route::middleware('auth')->group(function () {    
     Route::get('/form',  [ProjectController::class, 'projectForm'])->name('project_create');
     Route::post('/form', [ProjectController::class, 'store_projectForm'])->name('project_store');
 
@@ -23,26 +27,21 @@ Route::middleware('auth')->group(function () {
     Route::post('/formta', [ProjectController::class, 'store_projectFormTA'])->name('project_store_ta');
     Route::get('/report',  [ProjectController::class, 'report'])->name('project_report');
 
-    
     Route::get('/form-update/{id}', [ProjectController::class, 'show_project'])->name('project_update');
     Route::patch('/form-update/{id}', [ProjectController::class, 'store_project_update'])->name('project_store');
-
     Route::patch('/form-update/{id}', [ProjectController::class, 'store_project_update_admin'])->name('project_store_admin');
-
 
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+
     Route::get('/projects/import', function () {
-    return view('import');
+        return view('import');
+    });
+
+    Route::post('/projects/import', [ProjectController::class, 'import'])->name('projects.import');
+
     Route::get('/popup-detail', [ProjectController::class, 'getPopupDetail'])->name('popup.detail');
-    
-
-}); 
-    Route::get('/popup-detail', [ProjectController::class, 'getPopupDetail'])->name('popup.detail');
-
-
-Route::post('/projects/import', [ProjectController::class, 'import'])->name('projects.import');
 });
 
 require __DIR__ . '/auth.php';

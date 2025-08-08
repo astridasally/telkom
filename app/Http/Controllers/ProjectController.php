@@ -236,6 +236,15 @@ class ProjectController extends Controller
         return view('project_report', compact('projects'));
     }
 
+//ini WITEL REGIONAL
+    public function getWitels($regional)
+{
+    $regional = urldecode($regional);
+    $mapping = \App\Enums\Regional::witels();
+    return response()->json($mapping[$regional] ?? []);
+}
+
+
 
 //punya TA (form dan report)
     public function projectFormTA()

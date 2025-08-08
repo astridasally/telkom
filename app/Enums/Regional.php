@@ -2,16 +2,24 @@
 
 namespace App\Enums;
 
+
 enum Regional: string
 {
-    case REGIONAL_1 = 'Regional 1';
-    case REGIONAL_2 = 'Regional 2';
-    case REGIONAL_3 = 'Regional 3';
-    case REGIONAL_4 = 'Regional 4';
-    case REGIONAL_5 = 'Regional 5';
+    case REGIONAL1 = 'Regional1';
+    case REGIONAL2 = 'Regional2';
+    case REGIONAL3 = 'Regional3';
+    case REGIONAL4 = 'Regional4';
+    case REGIONAL5 = 'Regional5';
 
-    public static function values(): array
+    public static function witels(): array
     {
-        return array_column(self::cases(), 'value');
+        return [
+            self::REGIONAL1->value => ['ACEH', 'SUMUT', 'RIAU', 'KEPRI'],
+            self::REGIONAL2->value => ['JAKARTA BARAT', 'JAKARTA TIMUR', 'BODETABEK', 'BANTEN'],
+            self::REGIONAL3->value => ['BANDUNG', 'CIREBON', 'BOGOR', 'CIAMIS'],
+            self::REGIONAL4->value => ['JAWA TENGAH', 'DIY', 'KUDUS', 'MAGELANG', 'SOLO'],
+            self::REGIONAL5->value => ['BALI', 'NTB', 'NTT', 'MALUKU', 'PAPUA']
+        ];
     }
+
 }

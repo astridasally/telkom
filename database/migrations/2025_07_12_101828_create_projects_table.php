@@ -38,7 +38,7 @@ return new class extends Migration
             $table->string('relok_witel')->nullable();
             $table->string('relok_sto')->nullable();
             $table->string('relok_site')->nullable();
-            $table->text('remark')->nullable();
+            $table->longText('remark')->nullable();
             
             // Khusus TA
             $table->string('priority_ta')->nullable();
@@ -47,7 +47,7 @@ return new class extends Migration
             $table->string('status_osp')->nullable();
             $table->string('scenario_uplink')->nullable();
             $table->string('status_uplink')->nullable();
-            $table->string('remark_ta')->nullable();
+            $table->longText('remark_ta')->nullable();
             $table->string('jumlah_port')->nullable();
             $table->string('golive_status')->nullable();
 
