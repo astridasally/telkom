@@ -168,7 +168,7 @@
 
                     <div class="stage-card" onclick="showPopup('mos')">
                         <div class="card-header">
-                            <span>MOS</span>
+                            <span>deliv</span>
                         </div>
                         <div class="card-body">
                             <span class="material-symbols-outlined">local_shipping</span>
