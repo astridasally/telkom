@@ -5,20 +5,20 @@ namespace App\Enums;
 
 enum Regional: string
 {
-    case REGIONAL1 = 'Regional1';
-    case REGIONAL2 = 'Regional2';
-    case REGIONAL3 = 'Regional3';
-    case REGIONAL4 = 'Regional4';
-    case REGIONAL5 = 'Regional5';
+    case REGIONAL_1 = 'Regional 1';
+    case REGIONAL_2 = 'Regional 2';
+    case REGIONAL_3 = 'Regional 3';
+    case REGIONAL_4 = 'Regional 4';
+    case REGIONAL_5 = 'Regional 5';
 
     public static function witels(): array
     {
         return [
-            self::REGIONAL1->value => ['ACEH', 'SUMUT', 'RIAU', 'KEPRI'],
-            self::REGIONAL2->value => ['JAKARTA BARAT', 'JAKARTA TIMUR', 'BODETABEK', 'BANTEN'],
-            self::REGIONAL3->value => ['BANDUNG', 'CIREBON', 'BOGOR', 'CIAMIS'],
-            self::REGIONAL4->value => ['JAWA TENGAH', 'DIY', 'KUDUS', 'MAGELANG', 'SOLO'],
-            self::REGIONAL5->value => ['BALI', 'NTB', 'NTT', 'MALUKU', 'PAPUA']
+            self::REGIONAL_1->value => ['ACEH', 'LAMPUNG BENGKULU', 'RIAU', 'SUMBAGSEL', 'SUMBAR JAMBI','SUMUT'],
+            self::REGIONAL_2->value => ['BANDUNG','BANTEN','BEKASI KARAWANG','JAKARTA CENTRUM','JAKARTA INNER','JAKARTA OUTER', 'PRIANGAN BARAT', 'PRIANGAN TIMUR'],
+            self::REGIONAL_3->value => ['BALI','JATIM BARAT','JATIM TIMUR','NUSA TENGGARA','SEMARANG JATENG UTARA','SOLO JATENG TIMUR','SURAMADU','YOGYA JATENG SELATAN'],
+            self::REGIONAL_4->value => ['BALIKPAPAN','KALBAR','KALSELTENG','KALTIMTARA'],
+            self::REGIONAL_5->value => ['PAPUA','PAPUA BARAT','SULBAGSEL','SULBAGTENG','SUMALUT']
         ];
     }
 
