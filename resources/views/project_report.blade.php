@@ -97,8 +97,8 @@
 
         @if(auth()->user()->role === 'mitra' || auth()->user()->role === 'admin')
             <th rowspan="2">Category</th>
-            <th colspan="2" class="header-group">SURVEY</th>
-            <th colspan="2" class="header-group">DELIVERY</th>
+            <th colspan="2" class="header-group">LAINNYA</th>
+            <th colspan="2" class="header-group">MOS</th>
             <th colspan="2" class="header-group">INSTALASI</th>
             <th colspan="2" class="header-group">INTEGRASI</th>
             <th rowspan="2">Drop</th>
@@ -157,10 +157,10 @@
 </thead>
 
 <tbody>
-    @php $no = 1; @endphp
+    @php $no = 0; @endphp
     @foreach($projects as $project)
     <tr>
-        <td>{{ $no++ }}</td>
+        <td>{{ $projects->firstItem() + $no++ }}</td>
         @if(auth()->user()->role === 'vendor' || auth()->user()->role === 'admin')
         <td>{{ $project->user->name }}</td>
         @endif

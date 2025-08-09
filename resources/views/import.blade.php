@@ -45,7 +45,7 @@
                 @csrf
                 <div>
                     <label class="block text-base font-medium text-gray-700">Download Template Import Excel</label>
-                    📥  <a href="{{ asset('storage/Template_Import_Excel.xlsx') }}" class="text-blue-600 italic underline" download>
+                    📥  <a href="{{ asset('files/Template_Excel.xlsx') }}" class="text-blue-600 italic underline" download>
                             Download Template
                         </a>
 
