@@ -524,7 +524,7 @@ class ProjectController extends Controller
 
 
             // FTTH READY
-            //$regionalFunnelingCounts['ftth_ready_csf'] = $funnelingQuery->clone()->whereNotNull('ftth_csf')->count();
+            $regionalFunnelingCounts['ftth_ready_csf'] = $funnelingQuery->clone()->where('priority_ta', 'P1')->where('category', 'CSF')->count();
 
             // DELIVERY
             $regionalFunnelingCounts['delivery_plan'] = $funnelingQuery->clone()->whereNotNull('plan_delivery')
@@ -552,9 +552,9 @@ class ProjectController extends Controller
             ->where('drop_data', 'No')->where('category', 'CSF')->sum('jumlah_port');
 
             // UPLINK MINI OLT READINESS (Asumsi 'READY' dan 'NOT READY' adalah string yang ada di status_uplink)
-            $regionalFunnelingCounts['uplink_ready'] = $funnelingQuery->clone()->where('status_uplink', 'READY')
+            $regionalFunnelingCounts['uplink_ready'] = $funnelingQuery->clone()->where('status_uplink', 'Ready')
             ->where('drop_data', 'No')->where('category', 'CSF')->count();
-            $regionalFunnelingCounts['uplink_not_ready'] = $funnelingQuery->clone()->where('status_uplink', 'NOT READY')
+            $regionalFunnelingCounts['uplink_not_ready'] = $funnelingQuery->clone()->where('status_uplink', 'Not Ready')
             ->where('drop_data', 'No')->where('category', 'CSF')->count();
 
             // Simpan data untuk regional ini
@@ -788,7 +788,7 @@ public function getPopupDetail(Request $request)
         'drop' => ['regional', 'witel', 'sto', 'ihld', 'catuan_id', 'drop_data'],
     };
 
-    return response()->json($query->get($fields));
+    return response()->json($query->select($fields)->paginate(200));
 }
 
 

@@ -433,7 +433,7 @@ tfoot tr:last-child td:last-child { border-bottom-right-radius: 6px; }
 }
 
 .table-scroll-container {
-    max-height: 250px;
+    max-height: 400px;
     overflow-y: auto;
     overflow-x: auto;
     width: 100%;

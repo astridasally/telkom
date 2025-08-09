@@ -500,40 +500,61 @@ const popupConfig = {
         fields: ['regional', 'witel', 'sto', 'ihld', 'catuan_id', 'drop_data']
     }
 };
-
-function showPopup(stage) {
+function showPopup(stage, page = 1) {
     const config = popupConfig[stage];
     if (!config) return;
 
-    // Set judul
+    // Tampilkan modal dulu
+    document.getElementById("popupDetail").style.display = "flex";
     document.getElementById("popup-title").innerText = config.title;
 
-    // Set header tabel
     const headRow = document.getElementById("popup-table-head");
     headRow.innerHTML = config.columns.map(col => `<th>${col}</th>`).join('');
 
-    // Fetch data
-    fetch(`/popup-detail?stage=${stage}`)
+    const tbody = document.getElementById("popup-table-body");
+    tbody.innerHTML = `<tr><td colspan="${config.columns.length}" class="text-center">Loading...</td></tr>`;
+
+    // ✅ Panggil API dengan pagination
+    fetch(`/popup-detail?stage=${stage}&page=${page}`)
         .then(res => res.json())
-        .then(data => {
-            const tbody = document.getElementById("popup-table-body");
+        .then(result => {
+            const data = result.data || [];
             tbody.innerHTML = '';
 
             if (!data.length) {
-                tbody.innerHTML = `<tr><td colspan="${config.columns.length}" class="text-center">Tidak ada data tersedia.</td></tr>`;
+                tbody.innerHTML = `<tr><td colspan="${config.columns.length}" class="text-center">Tidak ada data.</td></tr>`;
                 return;
             }
 
-            data.forEach((row, index) => {
+            const rows = data.map((row, index) => {
                 const rowHTML = config.fields.map(field => `<td>${row[field] ?? '-'}</td>`).join('');
-                tbody.innerHTML += `<tr><td>${index + 1}</td>${rowHTML}</tr>`;
-            });
+                return `<tr><td>${(result.from || 1) + index}</td>${rowHTML}</tr>`;
+            }).join('');
 
-            // Tampilkan modal
-            document.getElementById("popupDetail").style.display = "flex";
+            tbody.innerHTML = rows;
+
+            // ✅ Tambahkan tombol pagination
+            let pagination = `<tr><td colspan="${config.columns.length}" class="text-center">`;
+
+            if (result.prev_page_url) {
+                pagination += `<button onclick="showPopup('${stage}', ${result.current_page - 1})">Previous</button>`;
+            }
+
+            pagination += ` Page ${result.current_page} of ${result.last_page} `;
+
+            if (result.next_page_url) {
+                pagination += `<button onclick="showPopup('${stage}', ${result.current_page + 1})">Next</button>`;
+            }
+
+            pagination += `</td></tr>`;
+            tbody.innerHTML += pagination;
         })
-        .catch(error => console.error("Gagal load data:", error));
+        .catch(error => {
+            console.error("Error:", error);
+            tbody.innerHTML = `<tr><td colspan="${config.columns.length}" class="text-danger text-center">Gagal memuat data.</td></tr>`;
+        });
 }
+
 
 function closePopup() {
     document.getElementById("popupDetail").style.display = "none";
