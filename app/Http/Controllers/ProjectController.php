@@ -750,35 +750,57 @@ foreach ($regionsForSkenario as $regionalEnum) {
             'uplink_not_ready' => 0,
         ];
     }
-
-
 public function getPopupDetail(Request $request)
 {
     $stage = $request->query('stage');
-    \Log::info('Popup Stage:', ['stage' => $stage]);
 
     $query = Project::query()
         ->where('drop_data', 'No')
         ->where('category', 'CSF');
 
+    // 🔹 Filter Mitra
+    if ($request->has('filter_assign_to') && $request->filter_assign_to !== 'all') {
+        $query->where('assign_to', $request->filter_assign_to);
+    }
+
+    // 🔹 Filter Regional
+    if ($request->has('regional') && $request->regional !== 'All Regional') {
+        $query->where('regional', $request->regional);
+    }
+
+    // 🔹 Filter Witel
+    if ($request->has('witel') && $request->witel !== 'All Witel') {
+        $query->where('witel', $request->witel);
+    }
+
     switch ($stage) {
         case 'lainnya':
-            $query->whereNotNull('plan_survey')->orWhereNotNull('realisasi_survey');
+            $query->where(function ($q) {
+                $q->whereNotNull('plan_survey')
+                  ->orWhereNotNull('realisasi_survey');
+            });
             break;
         case 'mos':
-            $query->whereNotNull('plan_delivery')->orWhereNotNull('realisasi_delivery');
+            $query->where(function ($q) {
+                $q->whereNotNull('plan_delivery')
+                  ->orWhereNotNull('realisasi_delivery');
+            });
             break;
         case 'instalasi':
-            $query->whereNotNull('plan_instalasi')->orWhereNotNull('realisasi_instalasi');
+            $query->where(function ($q) {
+                $q->whereNotNull('plan_instalasi')
+                  ->orWhereNotNull('realisasi_instalasi');
+            });
             break;
         case 'integrasi':
-            $query->whereNotNull('plan_integrasi')->orWhereNotNull('realisasi_integrasi');
+            $query->where(function ($q) {
+                $q->whereNotNull('plan_integrasi')
+                  ->orWhereNotNull('realisasi_integrasi');
+            });
             break;
         case 'drop':
-            $query = Project::query(); // Drop bisa punya 'Yes', 'No', 'Relokasi'
+            $query = Project::query(); 
             break;
-        default:
-            return response()->json([]);
     }
 
     $fields = match($stage) {
@@ -791,6 +813,7 @@ public function getPopupDetail(Request $request)
 
     return response()->json($query->select($fields)->paginate(200));
 }
+
 
 
     public function import(Request $request)

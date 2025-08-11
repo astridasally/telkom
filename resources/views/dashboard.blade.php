@@ -500,11 +500,11 @@ const popupConfig = {
         fields: ['regional', 'witel', 'sto', 'ihld', 'catuan_id', 'drop_data']
     }
 };
+
 function showPopup(stage, page = 1) {
     const config = popupConfig[stage];
     if (!config) return;
 
-    // Tampilkan modal dulu
     document.getElementById("popupDetail").style.display = "flex";
     document.getElementById("popup-title").innerText = config.title;
 
@@ -514,8 +514,15 @@ function showPopup(stage, page = 1) {
     const tbody = document.getElementById("popup-table-body");
     tbody.innerHTML = `<tr><td colspan="${config.columns.length}" class="text-center">Loading...</td></tr>`;
 
-    // ✅ Panggil API dengan pagination
-    fetch(`/popup-detail?stage=${stage}&page=${page}`)
+    // 🔹 Ambil filter dari dashboard
+    const mitra = document.getElementById("filter_assign_to")?.value || 'all';
+    const regional = document.getElementById("regional_filter")?.value || 'All Regional';
+    const witel = document.getElementById("witel_filter")?.value || 'All Witel';
+
+    // 🔹 Kirim filter ke API
+    const url = `/popup-detail?stage=${stage}&page=${page}&filter_assign_to=${encodeURIComponent(mitra)}&regional=${encodeURIComponent(regional)}&witel=${encodeURIComponent(witel)}`;
+
+    fetch(url)
         .then(res => res.json())
         .then(result => {
             const data = result.data || [];
@@ -533,19 +540,14 @@ function showPopup(stage, page = 1) {
 
             tbody.innerHTML = rows;
 
-            // ✅ Tambahkan tombol pagination
             let pagination = `<tr><td colspan="${config.columns.length}" class="text-center">`;
-
             if (result.prev_page_url) {
                 pagination += `<button onclick="showPopup('${stage}', ${result.current_page - 1})">Previous</button>`;
             }
-
             pagination += ` Page ${result.current_page} of ${result.last_page} `;
-
             if (result.next_page_url) {
                 pagination += `<button onclick="showPopup('${stage}', ${result.current_page + 1})">Next</button>`;
             }
-
             pagination += `</td></tr>`;
             tbody.innerHTML += pagination;
         })
@@ -554,6 +556,7 @@ function showPopup(stage, page = 1) {
             tbody.innerHTML = `<tr><td colspan="${config.columns.length}" class="text-danger text-center">Gagal memuat data.</td></tr>`;
         });
 }
+
 
 
 function closePopup() {
