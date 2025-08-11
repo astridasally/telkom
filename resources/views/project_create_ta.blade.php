@@ -41,9 +41,6 @@
                 <label>Witel</label>
                 <select name="witel" required>
                     <option value="">-- Pilih Witel --</option>
-                    @foreach (App\Enums\Witel::cases() as $witel)
-                    <option value="{{ $witel->value }}">{{ $witel->value }}</option>
-                    @endforeach
                 </select>
             </div>
 
@@ -82,7 +79,7 @@
             <div class="form-column">
             <div class="form-group">
                 <label>Category</label>
-                <select name="category">
+                <select name="category" required>
                     <option value="">-- Pilih --</option>
                     <option value="CSF">CSF</option>
                     <option value="NON CSF">NON CSF</option>
@@ -205,6 +202,28 @@
     <div class="form-container">
         {{-- ... (kode form Anda) ... --}}
     </div>
+
+
+    <script>
+    document.querySelector('[name="regional"]').addEventListener('change', function() {
+        let regional = this.value;
+        let witelSelect = document.querySelector('[name="witel"]');
+        witelSelect.innerHTML = '<option value="">-- Pilih Witel --</option>';
+
+    if (regional) {
+        fetch(`/witels/${encodeURIComponent(regional)}`)
+            .then(response => response.json())
+            .then(data => {
+                data.forEach(witel => {
+                    let option = document.createElement('option');
+                    option.value = witel;
+                    option.text = witel;
+                    witelSelect.appendChild(option);
+                });
+            });
+        }
+    });
+    </script>
 
 </div>
 </x-app-layout>

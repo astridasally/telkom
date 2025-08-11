@@ -78,7 +78,7 @@
             <div class="form-column"> 
             <div class="form-group">
                 <label>Category</label>
-                <select name="category">
+                <select name="category" required>
                     <option value="">-- Pilih --</option>
                     <option value="CSF">CSF</option>
                     <option value="NON CSF">NON CSF</option>
@@ -135,7 +135,7 @@
 
             <div class="form-group">
                 <label>Drop</label>
-                <select name="drop_data">
+                <select name="drop_data" required>
                     <option value="">-- Pilih --</option>
                     <option value="Yes">Yes</option>
                     <option value="No">No</option>
@@ -147,7 +147,7 @@
 
                 <div class="form-group">
                     <label>Regional (Relokasi)</label>
-                    <select name="relok_regional">
+                    <select name="relok_regional" id="relok_regional" required>
                         <option value="">-- Pilih Regional --</option>
                         @foreach (App\Enums\Regional::cases() as $regional)
                         <option value="{{ $regional->value }}">{{ $regional->value }}</option>
@@ -157,29 +157,46 @@
 
                 <div class="form-group">
                     <label>Witel (Relokasi)</label>
-                    <select name="relok_witel">
+                    <select name="relok_witel" id="relok_witel" required>
                         <option value="">-- Pilih Witel --</option>
-                        @foreach (App\Enums\Witel::cases() as $witel)
-                        <option value="{{ $witel->value }}">{{ $witel->value }}</option>
-                        @endforeach
                     </select>
                 </div>
 
                 <div class="form-group">
                     <label>STO (Relokasi)</label>
-                    <input type="text" name="relok_sto">
+                    <input type="text" name="relok_sto" required>
                 </div>
 
                 <div class="form-group">
                     <label>Site (Relokasi)</label>
-                    <input type="text" name="relok_site">
+                    <input type="text" name="relok_site" required>
                 </div>
+                
+    <script>
+    document.querySelector('[name="relok_regional"]').addEventListener('change', function() {
+        let regional = this.value;
+        let witelSelect = document.querySelector('[name="relok_witel"]');
+        witelSelect.innerHTML = '<option value="">-- Pilih Witel --</option>';
 
+    if (regional) {
+        fetch(`/witels/${encodeURIComponent(regional)}`)
+            .then(response => response.json())
+            .then(data => {
+                data.forEach(witel => {
+                    let option = document.createElement('option');
+                    option.value = witel;
+                    option.text = witel;
+                    witelSelect.appendChild(option);
+                });
+            });
+        }
+    });
+    </script>
             </div>
 
             <div id="bukti-drop-group" class="form-group" style="display: none;">
                 <label>Bukti Drop</label>
-                <input type="file" name="bukti_drop" accept="application/pdf,image/*">
+                <input type="file" name="bukti_drop" accept="application/pdf,image/*" required>
                 <span class="error text-danger" id="error_bukti_drop"></span>
             </div>
             </div>
@@ -338,9 +355,9 @@
                     witelSelect.appendChild(option);
                 });
             });
-    }
-});
-</script>
+        }
+    });
+    </script>
 
     
 </div>

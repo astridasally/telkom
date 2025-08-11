@@ -72,6 +72,15 @@
                 <label>Catuan ID</label>
                 <input type="text" name="catuan_id" value="{{ $project->catuan_id }}" required readonly class="form-control-readonly">
             </div>
+
+            <div class="form-group">
+                <label>Category</label>
+                <select name="category" required>
+                    <option value="">-- Pilih --</option>
+                    <option value="CSF" {{ $project->category == 'CSF' ? 'selected' : '' }}>CSF</option>
+                    <option value="NON CSF" {{ $project->category == 'NON CSF' ? 'selected' : '' }}>NON CSF</option>
+                </select>
+            </div>
             @endif
 
             @if (Auth::user()->role === 'admin')
@@ -117,7 +126,7 @@
 
             <div class="form-group">
                 <label>Category</label>
-                <select name="category">
+                <select name="category" required>
                     <option value="">-- Pilih --</option>
                     <option value="CSF" {{ $project->category == 'CSF' ? 'selected' : '' }}>CSF</option>
                     <option value="NON CSF" {{ $project->category == 'NON CSF' ? 'selected' : '' }}>NON CSF</option>
@@ -184,7 +193,7 @@
 
             <div class="form-group">
                 <label>Drop</label>
-                <select name="drop_data">
+                <select name="drop_data" required>
                     <option value="">-- Pilih --</option>
                     <option value="Yes" {{ $project->drop_data == 'Yes' ? 'selected' : '' }}>Yes</option>
                     <option value="No" {{ $project->drop_data == 'No' ? 'selected' : '' }}>No</option>
@@ -208,9 +217,7 @@
                         <div style="flex: 1;"><label>Witel (Relokasi)</label>
                             <select name="relok_witel">
                                 <option value="">-- Pilih Witel --</option>
-                                @foreach (App\Enums\Witel::cases() as $witel)
                                 <option value="{{ $witel->value }}" {{ $project->relok_witel == $witel->value ? 'selected' : '' }}>{{ $witel->value }}</option>
-                                @endforeach
                             </select>
                         </div>
                     </div>
@@ -227,6 +234,27 @@
                         </div>
                     </div>
                 </div>
+
+            <script>
+    document.querySelector('[name="relok_regional"]').addEventListener('change', function() {
+        let regional = this.value;
+        let witelSelect = document.querySelector('[name="relok_witel"]');
+        witelSelect.innerHTML = '<option value="">-- Pilih Witel --</option>';
+
+    if (regional) {
+        fetch(`/witels/${encodeURIComponent(regional)}`)
+            .then(response => response.json())
+            .then(data => {
+                data.forEach(witel => {
+                    let option = document.createElement('option');
+                    option.value = witel;
+                    option.text = witel;
+                    witelSelect.appendChild(option);
+                });
+            });
+        }
+    });
+    </script>
 
             </div>
 
@@ -392,7 +420,7 @@
 
             <div class="form-group">
                 <label>Category</label>
-                <select name="category">
+                <select name="category" required>
                     <option value="">-- Pilih --</option>
                     <option value="CSF" {{ $project->category == 'CSF' ? 'selected' : '' }}>CSF</option>
                     <option value="NON CSF" {{ $project->category == 'NON CSF' ? 'selected' : '' }}>NON CSF</option>
@@ -619,6 +647,27 @@
                 return field.replace(/_/g, ' ').replace(/\b\w/g, c => c.toUpperCase());
             }
         });
+    </script>
+
+    <script>
+    document.querySelector('[name="regional"]').addEventListener('change', function() {
+        let regional = this.value;
+        let witelSelect = document.querySelector('[name="witel"]');
+        witelSelect.innerHTML = '<option value="">-- Pilih Witel --</option>';
+
+    if (regional) {
+        fetch(`/witels/${encodeURIComponent(regional)}`)
+            .then(response => response.json())
+            .then(data => {
+                data.forEach(witel => {
+                    let option = document.createElement('option');
+                    option.value = witel;
+                    option.text = witel;
+                    witelSelect.appendChild(option);
+                });
+            });
+        }
+    });
     </script>
 
 </div>
