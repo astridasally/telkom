@@ -81,6 +81,15 @@
                     <option value="NON CSF" {{ $project->category == 'NON CSF' ? 'selected' : '' }}>NON CSF</option>
                 </select>
             </div>
+
+            <div class="form-group">
+                <label>Project Type</label>
+                <select name="project_type" required>
+                    <option value="">-- Pilih --</option>
+                    <option value="Project CSF TA" {{ $project->project_type == 'Project CSF TA' ? 'selected' : '' }}>Project CSF TA</option>
+                    <option value="Project Mitratel" {{ $project->project_type == 'Project Mitratel' ? 'selected' : '' }}>Project Mitratel</option>
+                </select>
+            </div>
             @endif
 
             @if (Auth::user()->role === 'admin')
@@ -130,6 +139,15 @@
                     <option value="">-- Pilih --</option>
                     <option value="CSF" {{ $project->category == 'CSF' ? 'selected' : '' }}>CSF</option>
                     <option value="NON CSF" {{ $project->category == 'NON CSF' ? 'selected' : '' }}>NON CSF</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label>Project Type</label>
+                <select name="project_type" required>
+                    <option value="">-- Pilih --</option>
+                    <option value="Project CSF TA" {{ $project->project_type == 'Project CSF TA' ? 'selected' : '' }}>Project CSF TA</option>
+                    <option value="Project Mitratel" {{ $project->project_type == 'Project Mitratel' ? 'selected' : '' }}>Project Mitratel</option>
                 </select>
             </div>
             @endif
@@ -424,6 +442,15 @@
                     <option value="">-- Pilih --</option>
                     <option value="CSF" {{ $project->category == 'CSF' ? 'selected' : '' }}>CSF</option>
                     <option value="NON CSF" {{ $project->category == 'NON CSF' ? 'selected' : '' }}>NON CSF</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label>Project Type</label>
+                <select name="project_type" required>
+                    <option value="">-- Pilih --</option>
+                    <option value="Project CSF TA" {{ $project->project_type == 'Project CSF TA' ? 'selected' : '' }}>Project CSF TA</option>
+                    <option value="Project Mitratel" {{ $project->project_type == 'Project Mitratel' ? 'selected' : '' }}>Project Mitratel</option>
                 </select>
             </div>
             </div>

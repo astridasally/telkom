@@ -86,6 +86,15 @@
                 </select>
             </div>
 
+            <div class="form-group">
+                <label>Project Type</label>
+                <select name="project_type" required>
+                    <option value="">-- Pilih --</option>
+                    <option value="Project CSF TA">Project CSF TA</option>
+                    <option value="Project Mitratel">Project Mitratel</option>
+                </select>
+            </div>
+
                 <div style="display: flex; gap: 15px; width: 100%;">
                     <div class="form-group" style="flex: 1;">
                         <label for="dependensi">Dependensi</label>
