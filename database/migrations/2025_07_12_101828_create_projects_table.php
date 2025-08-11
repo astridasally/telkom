@@ -50,6 +50,8 @@ return new class extends Migration
             $table->longText('remark_ta')->nullable();
             $table->string('jumlah_port')->nullable();
             $table->string('golive_status')->nullable();
+            $table->string('project_type')->nullable();
+
 
 
             $table->timestamps();

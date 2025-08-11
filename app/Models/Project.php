@@ -41,6 +41,7 @@ class Project extends Model
         'remark_ta',
         'jumlah_port' ,
         'golive_status' ,
+        'project_type',
 
         'user_id', // relasi ke user
     ];

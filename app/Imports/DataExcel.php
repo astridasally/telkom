@@ -50,6 +50,9 @@ class DataExcel implements ToModel, WithHeadingRow, WithMapping
             'jumlah_port'          => $row['jumlah_port'] ?? null,
             'golive_status'        => $row['golive_status'] ?? null,
             'category'             => $row['category'] ?? null,
+            'project_type'         => $row['project_type'] ?? null,
+
+          
 
 
         ];
