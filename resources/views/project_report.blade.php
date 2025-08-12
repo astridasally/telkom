@@ -16,6 +16,16 @@
         <input type="text" name="search" class="search-input" placeholder="Cari data..." value="{{ request('search') }}">
 
                 <div class="filter-drop">
+
+                    {{-- Dropdown Filter Project Type --}}
+                <select name="project_type" class="filter-select" onchange="this.form.submit()">
+                    @foreach($allProjectTypes as $type)
+                        <option value="{{ $type }}" {{ $selectedType == $type ? 'selected' : '' }}>
+                            {{ $type }}
+                        </option>
+                    @endforeach
+                </select>
+                
             {{-- Dropdown Filter Assign To (Mitra) - HANYA TAMPIL JIKA ADMIN ATAU VENDOR --}}
             @if(auth()->user()->role === 'admin' || auth()->user()->role === 'vendor')
                 <select name="filter_assign_to" id="filter_assign_to" class="filter-select">
@@ -27,7 +37,7 @@
                     @endforeach
                 </select>
             @endif
-
+            
             {{-- Dropdown Filter Regional --}}
             <select name="filter_regional" class="filter-select">
                 <option value="all" {{ request('filter_regional', 'all') == 'all' ? 'selected' : '' }}>All Regional</option>
@@ -87,6 +97,7 @@
         @if(auth()->user()->role === 'admin'|| auth()->user()->role === 'vendor')
         <th rowspan="2">Add by</th>
         @endif
+        <th rowspan="2">Project Type</th>
         <th rowspan="2">Regional</th>
         <th rowspan="2">Witel</th>
         <th rowspan="2">STO</th>
@@ -165,6 +176,7 @@
         <td>{{ $project->user->name }}</td>
         @endif
         
+        <td>{{ $project->project_type }}</td>
         <td>{{ $project->regional }}</td>
         <td>{{ $project->witel }}</td>
         <td>{{ $project->sto }}</td>

@@ -13,71 +13,90 @@
         {{-- Ini adalah bagian tabel utama Funneling OLT --}}
         {{-- Karena Anda tidak meminta perubahan pada bagian ini, saya akan biarkan struktur dasarnya. --}}
         {{-- Data di tabel ini perlu diisi secara dinamis jika Anda ingin menampilkan ringkasan per Regional. --}}
-        <div class="main-table-container">
-            <div class="header-info">
-                <div class="title-left">FUNNELING OLT</div>
-                    <div class="date-right">Cut Off Data: {{ date('d F Y') }}</div>
-                    </div>
+   <div class="main-table-container">
+    <div class="header-info">
+        <div class="left-group">
+            <div class="title-left">FUNNELING OLT</div>
+            <div class="filter-buttons">
+                <a href="{{ route('dashboard', ['project_type' => 'Project TA']) }}"
+                   class="filter-btn {{ $selectedType == 'Project TA' ? 'active' : '' }}">
+                    Project TA
+                </a>
+                <a href="{{ route('dashboard', ['project_type' => 'Project Mitratel']) }}"
+                   class="filter-btn {{ $selectedType == 'Project Mitratel' ? 'active' : '' }}">
+                    Project Mitratel
+                </a>
+            </div>
+        </div>
+        <div class="date-right">Cut Off Data: {{ date('d F Y') }}</div>
+    </div>
+
+
+
+
             <div class="table-wrapper">
                 <table>
-                    <thead>
-                        <tr>
-                            <th rowspan="2" class="regional-header">Regional</th>
-                            <th rowspan="2">PLAN CSF</th>
-                            <th rowspan="2">FTTH READY</th>
-                            <th rowspan="2">JUMLAH PORT</th>
-                            <th colspan="2" class="header-group">MOS</th>
-                            <th colspan="2" class="header-group">INSTALASI</th>
-                            <th colspan="2" class="header-group">INTEGRASI</th>
-                            <th rowspan="2">GO LIVE</th>
-                            <th colspan="2" class="header-group">UPLINK MINI OLT READINESS</th>
-                        </tr>
-                        <tr>
-                            <th>Plan</th>
-                            <th>Done</th>
-                            <th>Plan</th>
-                            <th>Done</th>
-                            <th>Plan</th>
-                            <th>Done</th>
-                            <th>Ready</th>
-                            <th>Not Ready</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                @foreach (\App\Enums\Regional::cases() as $regionalEnum)
-                    <tr>
-                        <td class="regional-header">{{ $regionalEnum->value }}</td>
-                        <td>{{ $funnelingData[$regionalEnum->value]['plan_csf'] ?? 0 }}</td>
-                        <td>{{ $funnelingData[$regionalEnum->value]['ftth_ready_csf'] ?? 0 }}</td>
-                        <td>{{ $funnelingData[$regionalEnum->value]['jumlah_port'] ?? 0 }}</td>
-                        <td>{{ $funnelingData[$regionalEnum->value]['delivery_plan'] ?? 0 }}</td>
-                        <td>{{ $funnelingData[$regionalEnum->value]['delivery_done'] ?? 0 }}</td>
-                        <td>{{ $funnelingData[$regionalEnum->value]['instalasi_plan'] ?? 0 }}</td>
-                        <td>{{ $funnelingData[$regionalEnum->value]['instalasi_done'] ?? 0 }}</td>
-                        <td>{{ $funnelingData[$regionalEnum->value]['integrasi_plan'] ?? 0 }}</td>
-                        <td>{{ $funnelingData[$regionalEnum->value]['integrasi_done'] ?? 0 }}</td>
-                        <td>{{ $funnelingData[$regionalEnum->value]['golive_status'] ?? 0 }}</td>
-                        <td>{{ $funnelingData[$regionalEnum->value]['uplink_ready'] ?? 0 }}</td>
-                        <td>{{ $funnelingData[$regionalEnum->value]['uplink_not_ready'] ?? 0 }}</td>
-                    </tr>
-                @endforeach
-                <tr class="total-row">
-                    <td class="regional-header">TOTAL</td>
-                    <td>{{ $totalFunnelingCounts['plan_csf'] }}</td>
-                    <td>{{ $totalFunnelingCounts['ftth_ready_csf'] }}</td>
-                    <td>{{ $totalFunnelingCounts['jumlah_port'] }}</td>
-                    <td>{{ $totalFunnelingCounts['delivery_plan'] }}</td>
-                    <td>{{ $totalFunnelingCounts['delivery_done'] }}</td>
-                    <td>{{ $totalFunnelingCounts['instalasi_plan'] }}</td>
-                    <td>{{ $totalFunnelingCounts['instalasi_done'] }}</td>
-                    <td>{{ $totalFunnelingCounts['integrasi_plan'] }}</td>
-                    <td>{{ $totalFunnelingCounts['integrasi_done'] }}</td>
-                    <td>{{ $totalFunnelingCounts['golive_status'] }}</td>
-                    <td>{{ $totalFunnelingCounts['uplink_ready'] }}</td>
-                    <td>{{ $totalFunnelingCounts['uplink_not_ready'] }}</td>
-                </tr>
-            </tbody>
-                </table>
+    <thead>
+        
+        <tr>
+            <th rowspan="2" class="regional-header">Regional</th>
+            <th rowspan="2">PLAN CSF</th>
+            <th rowspan="2">FTTH READY</th>
+            <th rowspan="2">JUMLAH P
+            <th colspan="2">MOS</th>
+            <th colspan="2">INSTALASI</th>
+            <th colspan="2">INTEGRASI</th>
+            <th rowspan="2">GO LIVE</th>
+            <th colspan="2">UPLINK MINI OLT READINESS</th>
+        </tr>
+        <tr>
+            <th>Plan</th>
+            <th>Done</th>
+            <th>Plan</th>
+            <th>Done</th>
+            <th>Plan</th>
+            <th>Done</th>
+            <th>Ready</th>
+            <th>Not Ready</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach ($regions as $region)
+        <tr>
+            <td class="regional-header">{{ $region->value }}</td>
+            <td>{{ $tableData[$region->value]['plan_csf'] }}</td>
+            <td>{{ $tableData[$region->value]['ftth_ready_csf'] }}</td>
+            <td>{{ $tableData[$region->value]['jumlah_port'] }}</td>
+            <td>{{ $tableData[$region->value]['delivery_plan'] }}</td>
+            <td>{{ $tableData[$region->value]['delivery_done'] }}</td>
+            <td>{{ $tableData[$region->value]['instalasi_plan'] }}</td>
+            <td>{{ $tableData[$region->value]['instalasi_done'] }}</td>
+            <td>{{ $tableData[$region->value]['integrasi_plan'] }}</td>
+            <td>{{ $tableData[$region->value]['integrasi_done'] }}</td>
+            <td>{{ $tableData[$region->value]['golive_status'] }}</td>
+            <td>{{ $tableData[$region->value]['uplink_ready'] }}</td>
+            <td>{{ $tableData[$region->value]['uplink_not_ready'] }}</td>
+        </tr>
+        @endforeach
+
+        <tr class="total-all-row">
+            <td class="regional-header">TOTAL</td>
+            <td>{{ $totalCounts['plan_csf'] }}</td>
+            <td>{{ $totalCounts['ftth_ready_csf'] }}</td>
+            <td>{{ $totalCounts['jumlah_port'] }}</td>
+            <td>{{ $totalCounts['delivery_plan'] }}</td>
+            <td>{{ $totalCounts['delivery_done'] }}</td>
+            <td>{{ $totalCounts['instalasi_plan'] }}</td>
+            <td>{{ $totalCounts['instalasi_done'] }}</td>
+            <td>{{ $totalCounts['integrasi_plan'] }}</td>
+            <td>{{ $totalCounts['integrasi_done'] }}</td>
+            <td>{{ $totalCounts['golive_status'] }}</td>
+            <td>{{ $totalCounts['uplink_ready'] }}</td>
+            <td>{{ $totalCounts['uplink_not_ready'] }}</td>
+        </tr>
+    </tbody>
+</table>
+
             </div>
         </div>
 
@@ -97,6 +116,22 @@
                 {{-- Filter (tetap seperti sebelumnya) --}}
                 <form action="{{ route('dashboard') }}" method="GET">
                 <div class="dashboard-filters-row">
+
+                <div class="filter-item">
+                        <label for="regional_filter" class="sr-only">Pilih Regional</label>
+                        <select id="regional_filter" name="regional">
+                            {{-- Opsi untuk melihat semua regional --}}
+                            <option value="All Regional" {{ request('regional', 'All Regional') == 'All Regional' ? 'selected' : '' }}>All Regional</option>
+
+                            {{-- Iterasi melalui nilai-nilai dari Enum Regional --}}
+                            @foreach (\App\Enums\Regional::cases() as $regionalEnum)
+                                <option value="{{ $regionalEnum->value }}"
+                                    {{ request('regional') == $regionalEnum->value ? 'selected' : '' }}>
+                                    {{ $regionalEnum->value }}
+                                </option>
+                            @endforeach
+                        </select>
+                    </div>
                     <div class="filter-item">
                     <label for="filter_assign_to" class="sr-only">Pilih Mitra</label>
                     <select id="filter_assign_to" name="filter_assign_to">

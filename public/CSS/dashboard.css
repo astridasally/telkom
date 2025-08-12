@@ -42,7 +42,11 @@ body {
     padding-bottom: 10px;
     border-bottom: 1px solid #e0e0e0;
 }
-
+.left-group {
+    display: flex;
+    align-items: center;
+    gap: 15px; /* jarak antara judul dan tombol */
+}
 .title-left {
     font-size: 20px;
     font-weight: bold;
@@ -53,9 +57,39 @@ body {
     font-size: 14px;
     color: #666;
 }
+.filter-buttons {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 0px;
+}
 
-.table-wrapper {
-    /* ... (tidak berubah) ... */
+.filter-btn {
+    padding: 4px 8px;
+    border-radius: 6px;
+    font-size: 12px;
+    text-decoration: none;
+    background-color: #f0f0f0;
+    color: #19407f;
+    font-weight: medium;
+    transition: background-color 0.2s, color 0.2s ease-in-out ;
+    
+}
+
+.filter-btn:hover {
+    background-color: #f0f0f0;
+    transform: translateY(-1px);
+    box-shadow: 0 4px 8px rgb(148, 147, 147);
+}
+
+.filter-btn.active {
+    background-color: #5985cc;
+    color: white;
+}
+
+
+.total-all-row td{
+    background-color: #b4b4b4 !important; /* hijau muda */
+    font-weight: bold;
 }
 
 table {
@@ -218,7 +252,7 @@ tfoot tr:last-child td:last-child { border-bottom-right-radius: 6px; }
     cursor: pointer;
     font-size: 10px;
     font-weight: 600;
-    transition: background-color 0.3s ease;
+    transition: background-color 0.2s  ease-in-out;
     height: 32px;
     display: flex;
     align-items: center;
@@ -226,7 +260,9 @@ tfoot tr:last-child td:last-child { border-bottom-right-radius: 6px; }
 }
 
 .filter-apply-btn:hover {
-    background-color: #7a9fd8;
+    background-color: #5ec062;
+    transform: translateY(-1px);
+    box-shadow: 0 4px 8px rgb(148, 147, 147);
 }
 
 .filter-sidebar {

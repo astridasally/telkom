@@ -91,6 +91,8 @@ class ProjectController extends Controller
         $selectedWitelFilter = $request->input('filter_witel');
         $selectedStoFilter = $request->input('filter_sto');
         $selectedMitraFilter = $request->input('filter_assign_to');
+        $selectedType     = $request->input('project_type', 'Project TA'); // default Project TA
+
 
         if ($selectedRegionalFilter && $selectedRegionalFilter !== 'all') {
             $query->where('regional', $selectedRegionalFilter);
@@ -106,6 +108,10 @@ class ProjectController extends Controller
 
         if ($selectedMitraFilter && $selectedMitraFilter !== 'all') {
             $query->where('assign_to', $selectedMitraFilter);
+        }
+        // FILTER TYPE
+        if ($selectedType && $selectedType !== 'All Project') {
+            $query->where('project_type', $selectedType);
         }
         // --- AKHIR TAMBAHAN UNTUK FILTER DROPDOWN ---
 
@@ -162,6 +168,8 @@ class ProjectController extends Controller
         $allWitels = Project::distinct('witel')->pluck('witel')->sort()->toArray();
         $allStos = Project::distinct('sto')->pluck('sto')->sort()->toArray();
         $allMitras = Project::distinct('assign_to')->pluck('assign_to')->sort()->toArray();
+        $allProjectTypes = Project::distinct()->pluck('project_type')->sort()->toArray();
+
 
         // --- AKHIR PASTIKAN BAGIAN INI ---
 
@@ -171,10 +179,13 @@ class ProjectController extends Controller
             'allWitels',    // Pastikan ini ada
             'allStos',      // Pastikan ini ada
             'allMitras',
+            'allProjectTypes',
             'selectedRegionalFilter',
             'selectedWitelFilter',
             'selectedStoFilter',
-            'selectedMitraFilter'
+            'selectedMitraFilter',
+            'selectedType'
+            
 
         ));
 
@@ -447,20 +458,20 @@ class ProjectController extends Controller
         // BAGIAN 1: LOGIKA DASHBOARD UTAMA (FILTER & COUNT)
         // =======================================================
 
-        // 1. Inisialisasi baseQuery untuk dashboard utama
+       // 1. Inisialisasi baseQuery untuk dashboard utama
         $baseQuery = Project::query();
         $today = Carbon::today(); 
-
 
         // 2. Dapatkan nilai filter dari Request
         $selectedMitra    = $request->input('filter_assign_to');
         $selectedRegional = $request->input('regional');
         $selectedWitel    = $request->input('witel');
+        $selectedType     = $request->input('project_type', 'Project TA'); // default Project TA
 
-        // 3. Terapkan filter berdasarkan input dari Request ke baseQuery
+        // 3. Terapkan filter berdasarkan input dari Request
 
         // FILTER MITRA (Menggunakan relasi user)
-       if ($selectedMitra && $selectedMitra !== 'all') {
+        if ($selectedMitra && $selectedMitra !== 'all') {
             $baseQuery->where('assign_to', $selectedMitra);
         }
 
@@ -474,7 +485,14 @@ class ProjectController extends Controller
             $baseQuery->where('witel', $selectedWitel);
         }
 
-        $allMitras = Project::distinct()->pluck('assign_to')->sort()->toArray();
+        // FILTER TYPE
+        if ($selectedType && $selectedType !== 'All Project') {
+            $baseQuery->where('project_type', $selectedType);
+        }
+
+        // Ambil semua opsi filter
+        $allMitras       = Project::distinct()->pluck('assign_to')->sort()->toArray();
+        $allProjectTypes = Project::distinct()->pluck('project_type')->sort()->toArray();
 
         // 4. Ambil data proyek UTAMA setelah semua filter dasar diterapkan
         $projects = $baseQuery->get(); // Ini adalah data yang akan ditampilkan di tabel utama dashboard
@@ -507,69 +525,52 @@ class ProjectController extends Controller
         // =======================================================
         // BAGIAN 2: LOGIKA FUNNELING OLT (BERADA DI DASHBOARD)
         // =======================================================
-        $funnelingData = [];
-        $totalFunnelingCounts = $this->initializeFunnelingMetrics(); // Menggunakan nama variabel berbeda agar tidak bentrok
+    $selectedType = $request->input('project_type', 'Project TA'); // null artinya semua project type
+    $regions = Regional::cases();
 
-        $regions = Regional::cases(); // Dapatkan semua Regional dari Enum
+    $tableData = [];
+    $totalCounts = $this->initializeFunnelingMetrics();
 
-        foreach ($regions as $regionalEnum) {
-            $regionName = $regionalEnum->value;
+    foreach ($regions as $regionalEnum) {
+        $regionName = $regionalEnum->value;
 
-            // Base query untuk funneling OLT per regional (tanpa filter dashboard utama)
-            // ATAU, jika Anda ingin filter dashboard utama juga mempengaruhi tabel funneling OLT:
-            // $funnelingQuery = $baseQuery->clone()->where('regional', $regionName); // Gunakan ini jika filter dashboard memengaruhi funneling
+        $query = Project::where('regional', $regionName)
+            ->where(function($q) {
+                $q->where('status_osp', '!=', 'Drop')
+                  ->orWhereNull('status_osp');
+            });
 
-            // Jika funneling OLT adalah tabel independen tanpa dipengaruhi filter dashboard:
-            $funnelingQuery = Project::where('regional', $regionName);
-
-            $regionalFunnelingCounts = $this->initializeFunnelingMetrics();
-
-            // PLAN CSF (hitung project yang punya catuan_id)
-            $regionalFunnelingCounts['plan_csf'] = $funnelingQuery->clone()->where('drop_data', 'No')->where('category','CSF')->count();
-
-
-            // FTTH READY
-            $regionalFunnelingCounts['ftth_ready_csf'] = $funnelingQuery->clone()->where('priority_ta', 'P1')->where('category', 'CSF')->count();
-
-            // DELIVERY
-            $regionalFunnelingCounts['delivery_plan'] = $funnelingQuery->clone()->whereNotNull('plan_delivery')
-            ->where('drop_data', 'No')->where('category', 'CSF')->count();
-            
-            $regionalFunnelingCounts['delivery_done'] = $funnelingQuery->clone()->whereNotNull('realisasi_delivery')
-            ->where('drop_data', 'No')->where('category', 'CSF')->count();
-
-            // INSTALASI
-            $regionalFunnelingCounts['instalasi_plan'] = $funnelingQuery->clone()->whereNotNull('plan_instalasi')
-            ->where('drop_data', 'No')->where('category', 'CSF')->count();
-            $regionalFunnelingCounts['instalasi_done'] = $funnelingQuery->clone()->whereNotNull('realisasi_instalasi')
-            ->where('drop_data', 'No')->where('category', 'CSF')->count();
-
-            // INTEGRASI
-            $regionalFunnelingCounts['integrasi_plan'] = $funnelingQuery->clone()->whereNotNull('plan_integrasi')
-            ->where('drop_data', 'No')->where('category', 'CSF')->count();
-            $regionalFunnelingCounts['integrasi_done'] = $funnelingQuery->clone()->whereNotNull('realisasi_integrasi')
-            ->where('drop_data', 'No')->where('category', 'CSF')->count();
-
-            // GO LIVE
-            $regionalFunnelingCounts['golive_status'] = $funnelingQuery->clone()->whereNotNull('golive_status')
-            ->where('drop_data', 'No')->where('category', 'CSF')->count();
-            $regionalFunnelingCounts['jumlah_port'] = $funnelingQuery->clone()->whereNotNull('jumlah_port')
-            ->where('drop_data', 'No')->where('category', 'CSF')->sum('jumlah_port');
-
-            // UPLINK MINI OLT READINESS (Asumsi 'READY' dan 'NOT READY' adalah string yang ada di status_uplink)
-            $regionalFunnelingCounts['uplink_ready'] = $funnelingQuery->clone()->where('status_uplink', 'Ready')
-            ->where('drop_data', 'No')->where('category', 'CSF')->count();
-            $regionalFunnelingCounts['uplink_not_ready'] = $funnelingQuery->clone()->where('status_uplink', 'Not Ready')
-            ->where('drop_data', 'No')->where('category', 'CSF')->count();
-
-            // Simpan data untuk regional ini
-            $funnelingData[$regionName] = $regionalFunnelingCounts;
-
-            // Tambahkan ke total Funneling OLT
-            foreach ($regionalFunnelingCounts as $key => $count) {
-                $totalFunnelingCounts[$key] += $count;
-            }
+        // Filter project type jika dipilih
+        if (!empty($selectedType)) {
+            $query->where('project_type', $selectedType);
         }
+
+        $counts = $this->initializeFunnelingMetrics();
+
+        $counts['plan_csf']         = (clone $query)->where('category','CSF')->count();
+        $counts['ftth_ready_csf']   = (clone $query)->where('priority_ta', 'P1')->where('category', 'CSF')->count();
+        $counts['jumlah_port']      = (clone $query)->whereNotNull('jumlah_port')->where('category', 'CSF')->sum('jumlah_port');
+        $counts['delivery_plan']    = (clone $query)->whereNotNull('plan_delivery')->where('category', 'CSF')->count();
+        $counts['delivery_done']    = (clone $query)->whereNotNull('realisasi_delivery')->where('category', 'CSF')->count();
+        $counts['instalasi_plan']   = (clone $query)->whereNotNull('plan_instalasi')->where('category', 'CSF')->count();
+        $counts['instalasi_done']   = (clone $query)->whereNotNull('realisasi_instalasi')->where('category', 'CSF')->count();
+        $counts['integrasi_plan']   = (clone $query)->whereNotNull('plan_integrasi')->where('category', 'CSF')->count();
+        $counts['integrasi_done']   = (clone $query)->whereNotNull('realisasi_integrasi')->where('category', 'CSF')->count();
+        $counts['golive_status']    = (clone $query)->whereNotNull('golive_status')->where('category', 'CSF')->count();
+        $counts['uplink_ready']     = (clone $query)->where('status_uplink', 'Ready')->where('category', 'CSF')->count();
+        $counts['uplink_not_ready'] = (clone $query)->where('status_uplink', 'Not Ready')->where('category', 'CSF')->count();
+
+        $tableData[$regionName] = $counts;
+
+        // Hitung total
+        foreach ($counts as $key => $value) {
+            $totalCounts[$key] += $value;
+        }
+    }
+
+
+
+
         // =======================================================
 // BAGIAN 3: LOGIKA SKENARIO INTEGRASI (PER REGIONAL) - FIXED
 // =======================================================
@@ -712,10 +713,11 @@ foreach ($regionsForSkenario as $regionalEnum) {
             'selectedMitra',
             'selectedRegional',
             'selectedWitel',
+            'selectedType',
             'allMitras',
+            'allProjectTypes',
             // Variabel untuk Funneling OLT yang akan digunakan di dashboard.blade.php
-            'funnelingData',
-            'totalFunnelingCounts',
+            'tableData', 'totalCounts', 'regions', 'selectedType',
             // Variabel untuk Skenario Integrasi (per Regional)
             'skenarioUplinkColumns', // Kirim juga daftar kolomnya untuk header tabel
             'skenarioIntegrasiByRegional',
