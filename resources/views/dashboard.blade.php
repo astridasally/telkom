@@ -42,7 +42,7 @@
             <th rowspan="2" class="regional-header">Regional</th>
             <th rowspan="2">PLAN CSF</th>
             <th rowspan="2">FTTH READY</th>
-            <th rowspan="2">JUMLAH P
+            <th rowspan="2">JUMLAH PORT</th>
             <th colspan="2">MOS</th>
             <th colspan="2">INSTALASI</th>
             <th colspan="2">INTEGRASI</th>
@@ -117,6 +117,23 @@
                 <form action="{{ route('dashboard') }}" method="GET">
                 <div class="dashboard-filters-row">
 
+                    <div class="filter-item">
+                    <label for="project_type_filter" class="sr-only">Pilih Project Type</label>
+                    <select id="project_type_filter" name="project_type">
+                        {{-- Opsi untuk melihat semua project type --}}
+                        <option value="All Project" {{ request('project_type', 'All Project') == 'All Project' ? 'selected' : '' }}>
+                            Project All
+                        </option>
+
+                        {{-- Iterasi melalui nilai-nilai dari $allProjectTypes --}}
+                        @foreach ($allProjectTypes as $type)
+                            <option value="{{ $type }}" {{ request('project_type') == $type ? 'selected' : '' }}>
+                                {{ $type }}
+                            </option>
+                        @endforeach
+                    </select>
+                </div>
+
                 <div class="filter-item">
                         <label for="regional_filter" class="sr-only">Pilih Regional</label>
                         <select id="regional_filter" name="regional">
@@ -149,21 +166,7 @@
                     </select>
                 </div>
 
-                    <div class="filter-item">
-                        <label for="regional_filter" class="sr-only">Pilih Regional</label>
-                        <select id="regional_filter" name="regional">
-                            {{-- Opsi untuk melihat semua regional --}}
-                            <option value="All Regional" {{ request('regional', 'All Regional') == 'All Regional' ? 'selected' : '' }}>All Regional</option>
 
-                            {{-- Iterasi melalui nilai-nilai dari Enum Regional --}}
-                            @foreach (\App\Enums\Regional::cases() as $regionalEnum)
-                                <option value="{{ $regionalEnum->value }}"
-                                    {{ request('regional') == $regionalEnum->value ? 'selected' : '' }}>
-                                    {{ $regionalEnum->value }}
-                                </option>
-                            @endforeach
-                        </select>
-                    </div>
                    
                    <div class="filter-item">
                     <label for="witel_filter" class="sr-only">Pilih Witel</label>
@@ -203,7 +206,7 @@
 
                     <div class="stage-card" onclick="showPopup('mos')">
                         <div class="card-header">
-                            <span>deliv</span>
+                            <span>MOS</span>
                         </div>
                         <div class="card-body">
                             <span class="material-symbols-outlined">local_shipping</span>

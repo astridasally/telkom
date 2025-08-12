@@ -168,8 +168,12 @@ class ProjectController extends Controller
         $allWitels = Project::distinct('witel')->pluck('witel')->sort()->toArray();
         $allStos = Project::distinct('sto')->pluck('sto')->sort()->toArray();
         $allMitras = Project::distinct('assign_to')->pluck('assign_to')->sort()->toArray();
-        $allProjectTypes = Project::distinct()->pluck('project_type')->sort()->toArray();
-
+        $allProjectTypes = Project::whereNotNull('project_type')
+            ->where('project_type', '!=', '')
+            ->distinct()
+            ->pluck('project_type')
+            ->sort()
+            ->toArray();
 
         // --- AKHIR PASTIKAN BAGIAN INI ---
 
@@ -492,7 +496,13 @@ class ProjectController extends Controller
 
         // Ambil semua opsi filter
         $allMitras       = Project::distinct()->pluck('assign_to')->sort()->toArray();
-        $allProjectTypes = Project::distinct()->pluck('project_type')->sort()->toArray();
+       $allProjectTypes = Project::whereNotNull('project_type')
+        ->where('project_type', '!=', '')
+        ->distinct()
+        ->pluck('project_type')
+        ->sort()
+        ->toArray();
+
 
         // 4. Ambil data proyek UTAMA setelah semua filter dasar diterapkan
         $projects = $baseQuery->get(); // Ini adalah data yang akan ditampilkan di tabel utama dashboard

@@ -154,7 +154,7 @@ tfoot tr:last-child td:last-child { border-bottom-right-radius: 6px; }
 
 /* --- STYLE UNTUK GRAPH PLACEHOLDER DAN MAIN CONTAINER --- */
 .graph-placeholder {
-    flex: 3;
+    flex: 4;
     background-color: #ffffff;
     min-width: 400px; /* Pertahankan min-width untuk layar menengah */
     border-radius: 8px;
@@ -180,7 +180,7 @@ tfoot tr:last-child td:last-child { border-bottom-right-radius: 6px; }
 
 .main-container { /* Ini adalah container untuk kartu-kartu Survey, Delivery, dst. */
     padding: 0px;
-    flex: 2;
+    flex: 3;
     background-color: #ffffff ;
     flex-direction: column;
     align-items: center;
@@ -207,8 +207,8 @@ tfoot tr:last-child td:last-child { border-bottom-right-radius: 6px; }
 .filter-item {
     flex-grow: 1;
     flex-basis: 0;
-    min-width: 100px;
-    max-width: 200px;
+    min-width: 30px;
+    max-width: 150px;
 }
 
 .dashboard-filters-row select {
