@@ -40,9 +40,8 @@
                 <label>Witel</label>
                 {{-- Untuk select, gunakan disabled dan pastikan option yang benar terpilih --}}
                 <select name="witel" disabled class="form-control-readonly">
-                    <option value="">-- Pilih Witel --</option>
                     @foreach (App\Enums\Witel::cases() as $witel)
-                        <option value="{{ $witel->value }}" {{ $project->witel == $witel->value ? 'selected' : '' }}>{{ $witel->value }}</option>
+                    <option value="{{ $witel->value }}" {{ $project->witel == $witel->value ? 'selected' : '' }}>{{ $witel->value }}</option>
                     @endforeach
                 </select>
                 {{-- Penting: Gunakan input hidden untuk mengirimkan nilai Witel ke backend --}}
@@ -105,7 +104,7 @@
 
             <div class="form-group">
                 <label>Witel</label>
-                <select name="witel" required>
+                <select name="witel" id="witel" required>
                     <option value="">-- Pilih Witel --</option>
                     @foreach (App\Enums\Witel::cases() as $witel)
                     <option value="{{ $witel->value }}" {{ $project->witel == $witel->value ? 'selected' : '' }}>{{ $witel->value }}</option>
@@ -233,9 +232,11 @@
                             </select>                        
                         </div>
                         <div style="flex: 1;"><label>Witel (Relokasi)</label>
-                            <select name="relok_witel">
+                            <select name="relok_witel" id="relok_witel">
                                 <option value="">-- Pilih Witel --</option>
-                                <option value="{{ $witel->value }}" {{ $project->relok_witel == $witel->value ? 'selected' : '' }}>{{ $witel->value }}</option>
+                                @foreach (App\Enums\Witel::cases() as $witel)
+                                <option value="{{ $witel->value }}" {{ $project->relok_witel == $witel->value ? 'selected' : '' }}> {{ $witel->value }}</option>
+                                @endforeach
                             </select>
                         </div>
                     </div>
@@ -252,27 +253,6 @@
                         </div>
                     </div>
                 </div>
-
-            <script>
-    document.querySelector('[name="relok_regional"]').addEventListener('change', function() {
-        let regional = this.value;
-        let witelSelect = document.querySelector('[name="relok_witel"]');
-        witelSelect.innerHTML = '<option value="">-- Pilih Witel --</option>';
-
-    if (regional) {
-        fetch(`/witels/${encodeURIComponent(regional)}`)
-            .then(response => response.json())
-            .then(data => {
-                data.forEach(witel => {
-                    let option = document.createElement('option');
-                    option.value = witel;
-                    option.text = witel;
-                    witelSelect.appendChild(option);
-                });
-            });
-        }
-    });
-    </script>
 
             </div>
 
@@ -398,7 +378,7 @@
 
             <div class="form-group">
                 <label>Witel</label>
-                <select name="witel" required>
+                <select name="witel" id="witel" required>
                     <option value="">-- Pilih Witel --</option>
                     @foreach (App\Enums\Witel::cases() as $witel)
                     <option value="{{ $witel->value }}" {{ $project->witel == $witel->value ? 'selected' : '' }}>{{ $witel->value }}</option>
@@ -677,9 +657,45 @@
     </script>
 
     <script>
-    document.querySelector('[name="regional"]').addEventListener('change', function() {
+    document.addEventListener('DOMContentLoaded', function () {
+        const regionalSelect = document.querySelector('[name="regional"]');
+        const witelSelect = document.querySelector('[name="witel"]');
+        const savedValue = "{{ $project->witel }}"; // Witel dari DB
+
+        function fetchWitel() {
+            const regional = regionalSelect.value;
+            witelSelect.innerHTML = '<option value="">-- Pilih Witel --</option>';
+
+            if (regional) {
+                fetch(`/witels/${encodeURIComponent(regional)}`)
+                    .then(response => response.json())
+                    .then(data => {
+                        data.forEach(witel => {
+                            let option = document.createElement('option');
+                            option.value = witel;
+                            option.text = witel;
+                            if (witel === savedValue) {
+                                option.selected = true;
+                            }
+                            witelSelect.appendChild(option);
+                        });
+                    });
+            }
+        }
+
+        // Jalankan saat halaman pertama kali load
+        fetchWitel();
+
+        // Jalankan setiap kali ganti regional
+        regionalSelect.addEventListener('change', fetchWitel);
+    });
+    </script>
+
+
+     <script>
+    document.querySelector('[name="relok_regional"]').addEventListener('change', function() {
         let regional = this.value;
-        let witelSelect = document.querySelector('[name="witel"]');
+        let witelSelect = document.querySelector('[name="relok_witel"]');
         witelSelect.innerHTML = '<option value="">-- Pilih Witel --</option>';
 
     if (regional) {
@@ -697,5 +713,44 @@
     });
     </script>
 
+    <script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const dropSelect = document.querySelector('[name="drop_data"]');
+        const relokasiFields = document.getElementById('relokasi-fields');
+
+        function loadRelokasiWitel() {
+            let regional = document.getElementById('relok_regional').value;
+            let witelSelect = document.getElementById('relok_witel');
+            witelSelect.innerHTML = '<option value="">-- Pilih Witel --</option>';
+
+            if (regional) {
+                fetch(`/witels/${encodeURIComponent(regional)}`)
+                    .then(res => res.json())
+                    .then(data => {
+                        data.forEach(witel => {
+                            let opt = document.createElement('option');
+                            opt.value = witel;
+                            opt.text = witel;
+                            if (witel === "{{ $project->relok_witel }}") {
+                                opt.selected = true;
+                            }
+                            witelSelect.appendChild(opt);
+                        });
+                    });
+            }
+        }
+
+        // Saat ganti relok_regional
+        document.getElementById('relok_regional').addEventListener('change', loadRelokasiWitel);
+
+        // Saat halaman load & drop_data = Relokasi
+        if (dropSelect.value === 'Relokasi') {
+            relokasiFields.style.display = 'block';
+            loadRelokasiWitel();
+        }
+    });
+    </script>
+    
+    
 </div>
 </x-app-layout>

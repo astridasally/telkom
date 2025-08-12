@@ -4,59 +4,43 @@ namespace App\Enums;
 
 enum Witel: string
 {
-    case ACEH = 'ACEH';
-    case BALI = 'BALI';
-    case BANTEN = 'BANTEN';
-    case BABEL = 'BABEL';
-    case BANDUNG = 'BANDUNG';
-    case BENGKULU = 'BENGKULU';
-    case BODETABEK = 'BODETABEK';
-    case BOGOR = 'BOGOR';
-    case CIAMIS = 'CIAMIS';
-    case CIANJUR = 'CIANJUR';
-    case CIREBON = 'CIREBON';
-    case GORONTALO = 'GORONTALO';
-    case JAMBI = 'JAMBI';
-    case JAKARTA_BARAT = 'JAKARTA BARAT';
-    case JAKARTA_PUSAT = 'JAKARTA PUSAT';
-    case JAKARTA_SELATAN = 'JAKARTA SELATAN';
-    case JAKARTA_TIMUR = 'JAKARTA TIMUR';
-    case JAKARTA_UTARA = 'JAKARTA UTARA';
-    case JEMBER = 'JEMBER';
-    case KALTARA = 'KALTARA';
-    case KALBAR = 'KALBAR';
-    case KALSEL = 'KALSEL';
-    case KALTENG = 'KALTENG';
-    case KALTIM = 'KALTIM';
-    case KARAWANG = 'KARAWANG';
-    case KEDIRI = 'KEDIRI';
-    case KEPRI = 'KEPRI';
-    case KUDUS = 'KUDUS';
-    case LAMPUNG = 'LAMPUNG';
-    case MAGELANG = 'MAGELANG';
-    case MALANG = 'MALANG';
-    case MALUKU = 'MALUKU';
-    case MALUT = 'MALUT';
-    case MADIUN = 'MADIUN';
-    case NTB = 'NTB';
-    case NTT = 'NTT';
-    case PAPUA = 'PAPUA';
-    case PAPUA_BARAT = 'PAPUA BARAT';
-    case PASURUAN = 'PASURUAN';
-    case PURWOKERTO = 'PURWOKERTO';
-    case RIAU = 'RIAU';
-    case SEMARANG = 'SEMARANG';
-    case SIDOARJO = 'SIDOARJO';
-    case SOLO = 'SOLO';
-    case SULBAR = 'SULBAR';
-    case SULSEL = 'SULSEL';
-    case SULTENG = 'SULTENG';
-    case SULTRA = 'SULTRA';
-    case SULUT = 'SULUT';
-    case SUMBAR = 'SUMBAR';
-    case SUMSEL = 'SUMSEL';
-    case SUMUT = 'SUMUT';
-    case YOGYAKARTA = 'YOGYAKARTA';
+    case ACEH                   = 'ACEH';
+    case LAMPUNG_BENGKULU       = 'LAMPUNG BENGKULU';
+    case RIAU                   = 'RIAU';
+    case SUMBAGSEL              = 'SUMBAGSEL';
+    case SUMBAR_JAMBI           = 'SUMBAR JAMBI';
+    case SUMUT                  = 'SUMUT';
+
+    case BANDUNG                = 'BANDUNG';
+    case BANTEN                 = 'BANTEN';
+    case BEKASI_KARAWANG        = 'BEKASI KARAWANG';
+    case JAKARTA_CENTRUM        = 'JAKARTA CENTRUM';
+    case JAKARTA_INNER          = 'JAKARTA INNER';
+    case JAKARTA_OUTER          = 'JAKARTA OUTER';
+    case PRIANGAN_BARAT         = 'PRIANGAN BARAT';
+    case PRIANGAN_TIMUR         = 'PRIANGAN TIMUR';
+
+    case BALI                   = 'BALI';
+    case JATIM_BARAT            = 'JATIM BARAT';
+    case JATIM_TIMUR            = 'JATIM TIMUR';
+    case NUSA_TENGGARA          = 'NUSA TENGGARA';
+    case SEMARANG_JATENG_UTARA  = 'SEMARANG JATENG UTARA';
+    case SOLO_JATENG_TIMUR      = 'SOLO JATENG TIMUR';
+    case SURAMADU               = 'SURAMADU';
+    case YOGYA_JATENG_SELATAN   = 'YOGYA JATENG SELATAN';
+
+    case BALIKPAPAN             = 'BALIKPAPAN';
+    case KALBAR                 = 'KALBAR';
+    case KALSELTENG             = 'KALSELTENG';
+    case KALTIMTARA             = 'KALTIMTARA';
+
+    case PAPUA                  = 'PAPUA';
+    case PAPUA_BARAT            = 'PAPUA BARAT';
+    case SULBAGSEL              = 'SULBAGSEL';
+    case SULBAGTENG             = 'SULBAGTENG';
+    case SUMALUT                = 'SUMALUT';
+
+
 
     public static function values(): array
     {
