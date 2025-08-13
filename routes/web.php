@@ -55,6 +55,9 @@ Route::middleware('auth')->group(function () {
     return Excel::download(new ProjectsExport($type), 'projects.xlsx');
         })->name('download_projects');
 
+    Route::post('/dashboard/export', [ProjectController::class, 'exportFunneling'])->name('funneling.export');
+
+
 });
 
 require __DIR__ . '/auth.php';

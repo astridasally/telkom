@@ -27,18 +27,21 @@
                     Project Mitratel
                 </a>
             </div>
-
+            <form action="{{ route('funneling.export') }}" method="POST" id="exportForm">
+                @csrf
+                <input type="hidden" name="tableData" id="tableData">
+                <input type="hidden" name="selectedType" value="{{ $selectedType }}">
+                <button type="submit" class="download-btn">
+                    Download Excel
+                </button>
+            </form>
         </div>
         <div class="date-right">Cut Off Data: {{ date('d F Y') }}</div>
     </div>
     
-
-
-
-            <div class="table-wrapper">
-                <table>
+    <div class="table-wrapper">
+    <table id="funnelingTable">
     <thead>
-        
         <tr>
             <th rowspan="2" class="regional-header">Regional</th>
             <th rowspan="2">PLAN CSF</th>
@@ -613,39 +616,20 @@ document.addEventListener('DOMContentLoaded', function () {
 
 </script>
 @endpush
-
 <script>
-    let currentProject = 'Project TA'; // ganti sesuai filter aktif
-let tableData = [
-    ['Regional 1', 289, 61, 57028, 234, 226, 232, 223, 232, 201, 0, 201, 36],
-    ['Regional 2', 116, 19, 10304, 94, 92, 94, 90, 93, 88, 0, 88, 6],
-    ['Regional 3', 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-    ['Regional 4', 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-    ['Regional 5', 3, 0, 968, 3, 3, 3, 3, 3, 3, 0, 3, 0],
-    ['TOTAL', 408, 80, 68300, 331, 321, 329, 316, 328, 292, 0, 292, 42],
-];
-
-document.getElementById('downloadBtn').addEventListener('click', function() {
-    fetch('/funneling/export', {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json',
-            'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content
-        },
-        body: JSON.stringify({
-            project: currentProject,
-            data: tableData
-        })
-    })
-    .then(response => response.blob())
-    .then(blob => {
-        let link = document.createElement('a');
-        link.href = window.URL.createObjectURL(blob);
-        link.download = `funneling_${currentProject}.xlsx`;
-        link.click();
+document.getElementById('exportForm').addEventListener('submit', function(e) {
+    let tableData = [];
+    // Ambil HANYA dari tabel FUNNELING OLT
+    document.querySelectorAll("#funnelingTable tbody tr").forEach(row => {
+        let rowData = [];
+        row.querySelectorAll("td").forEach(cell => {
+            rowData.push(cell.innerText.trim());
+        });
+        if (rowData.length > 0) tableData.push(rowData);
     });
-});
 
-    </script>
+    document.getElementById('tableData').value = JSON.stringify(tableData);
+});
+</script>
 
 </x-app-layout>

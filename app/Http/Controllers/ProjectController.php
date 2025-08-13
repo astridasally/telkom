@@ -845,6 +845,15 @@ public function getPopupDetail(Request $request)
     return back()->with('success', 'Data project berhasil diimport!');
 }
 
+public function exportFunneling(Request $request)
+{
+    $data = json_decode($request->input('tableData'), true);
+    $project = $request->input('selectedType', 'Unknown');
+
+    return Excel::download(new FunnelingExport($data, $project), "funneling_{$project}.xlsx");
+}
+
+
 }
 
    
