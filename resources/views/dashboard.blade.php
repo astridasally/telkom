@@ -27,10 +27,11 @@
                     Project Mitratel
                 </a>
             </div>
+
         </div>
         <div class="date-right">Cut Off Data: {{ date('d F Y') }}</div>
     </div>
-
+    
 
 
 
@@ -612,4 +613,39 @@ document.addEventListener('DOMContentLoaded', function () {
 
 </script>
 @endpush
+
+<script>
+    let currentProject = 'Project TA'; // ganti sesuai filter aktif
+let tableData = [
+    ['Regional 1', 289, 61, 57028, 234, 226, 232, 223, 232, 201, 0, 201, 36],
+    ['Regional 2', 116, 19, 10304, 94, 92, 94, 90, 93, 88, 0, 88, 6],
+    ['Regional 3', 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    ['Regional 4', 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    ['Regional 5', 3, 0, 968, 3, 3, 3, 3, 3, 3, 0, 3, 0],
+    ['TOTAL', 408, 80, 68300, 331, 321, 329, 316, 328, 292, 0, 292, 42],
+];
+
+document.getElementById('downloadBtn').addEventListener('click', function() {
+    fetch('/funneling/export', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content
+        },
+        body: JSON.stringify({
+            project: currentProject,
+            data: tableData
+        })
+    })
+    .then(response => response.blob())
+    .then(blob => {
+        let link = document.createElement('a');
+        link.href = window.URL.createObjectURL(blob);
+        link.download = `funneling_${currentProject}.xlsx`;
+        link.click();
+    });
+});
+
+    </script>
+
 </x-app-layout>

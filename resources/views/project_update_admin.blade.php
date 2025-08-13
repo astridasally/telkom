@@ -85,7 +85,7 @@
                 <label>Project Type</label>
                 <select name="project_type" required>
                     <option value="">-- Pilih --</option>
-                    <option value="Project CSF TA" {{ $project->project_type == 'Project CSF TA' ? 'selected' : '' }}>Project CSF TA</option>
+                    <option value="Project TA" {{ $project->project_type == 'Project TA' ? 'selected' : '' }}>Project TA</option>
                     <option value="Project Mitratel" {{ $project->project_type == 'Project Mitratel' ? 'selected' : '' }}>Project Mitratel</option>
                 </select>
             </div>
@@ -145,7 +145,7 @@
                 <label>Project Type</label>
                 <select name="project_type" required>
                     <option value="">-- Pilih --</option>
-                    <option value="Project CSF TA" {{ $project->project_type == 'Project CSF TA' ? 'selected' : '' }}>Project CSF TA</option>
+                    <option value="Project TA" {{ $project->project_type == 'Project TA' ? 'selected' : '' }}>Project TA</option>
                     <option value="Project Mitratel" {{ $project->project_type == 'Project Mitratel' ? 'selected' : '' }}>Project Mitratel</option>
                 </select>
             </div>
@@ -429,7 +429,7 @@
                 <label>Project Type</label>
                 <select name="project_type" required>
                     <option value="">-- Pilih --</option>
-                    <option value="Project CSF TA" {{ $project->project_type == 'Project CSF TA' ? 'selected' : '' }}>Project CSF TA</option>
+                    <option value="Project TA" {{ $project->project_type == 'Project TA' ? 'selected' : '' }}>Project TA</option>
                     <option value="Project Mitratel" {{ $project->project_type == 'Project Mitratel' ? 'selected' : '' }}>Project Mitratel</option>
                 </select>
             </div>

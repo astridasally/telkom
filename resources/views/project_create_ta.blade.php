@@ -28,6 +28,15 @@
             <div class="form-column">
 
             <div class="form-group">
+                <label>Project Type</label>
+                <select name="project_type" required>
+                    <option value="">-- Pilih --</option>
+                    <option value="Project TA">Project TA</option>
+                    <option value="Project Mitratel">Project Mitratel</option>
+                </select>
+            </div>
+
+            <div class="form-group">
                 <label>Regional</label>
                 <select name="regional" required>
                     <option value="">-- Pilih Regional --</option>
@@ -83,15 +92,6 @@
                     <option value="">-- Pilih --</option>
                     <option value="CSF">CSF</option>
                     <option value="NON CSF">NON CSF</option>
-                </select>
-            </div>
-
-            <div class="form-group">
-                <label>Project Type</label>
-                <select name="project_type" required>
-                    <option value="">-- Pilih --</option>
-                    <option value="Project CSF TA">Project CSF TA</option>
-                    <option value="Project Mitratel">Project Mitratel</option>
                 </select>
             </div>
 

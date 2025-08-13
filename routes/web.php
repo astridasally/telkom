@@ -3,6 +3,11 @@
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\ProjectController;
 use Illuminate\Support\Facades\Route;
+use App\Exports\ProjectsExport;
+use Maatwebsite\Excel\Facades\Excel;
+use Illuminate\Http\Request;
+
+
 
 Route::get('/', function () {
     return view('welcome');
@@ -42,6 +47,14 @@ Route::middleware('auth')->group(function () {
     Route::post('/projects/import', [ProjectController::class, 'import'])->name('projects.import');
 
     Route::get('/popup-detail', [ProjectController::class, 'getPopupDetail'])->name('popup.detail');
+
+
+    //download REPORT
+    Route::get('/download-projects', function (Request $request) {
+    $type = $request->get('project_type'); // 'Project TA' atau 'Project Mitratel'
+    return Excel::download(new ProjectsExport($type), 'projects.xlsx');
+        })->name('download_projects');
+
 });
 
 require __DIR__ . '/auth.php';

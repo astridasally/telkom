@@ -12,6 +12,8 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 use Maatwebsite\Excel\Facades\Excel;
 use App\Imports\DataExcel;
+use App\Exports\FunnelingExport;
+
 
 
 class ProjectController extends Controller
@@ -844,3 +846,5 @@ public function getPopupDetail(Request $request)
 }
 
 }
+
+   
