@@ -86,12 +86,11 @@
 
     {{$projects->appends(request()->query())->links()}}
     <br>
-    <a href="{{ route('download_projects', array_merge(request()->query(), ['project_type' => request('project_type')])) }}" 
-    class="btn btn-success">
-    <i class="fas fa-download"></i> Download Excel
-    </a>
+   
+    📥  <a href="{{ route('download_projects', array_merge(request()->query(), ['project_type' => request('project_type')])) }}" class="text-blue-600 italic underline text-base" download>
+            Download Excel
+        </a>
 
-    
 
     <div class="table-container">
     <table class="sticky-header-table border border-gray-400">
