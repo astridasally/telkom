@@ -13,6 +13,8 @@ use Illuminate\Support\Facades\Storage;
 use Maatwebsite\Excel\Facades\Excel;
 use App\Imports\DataExcel;
 use App\Exports\FunnelingExport;
+use App\Exports\PopupExport;
+
 
 
 
@@ -513,24 +515,24 @@ class ProjectController extends Controller
         $projectCount = $baseQuery->clone()->count();
 
         // SURVEY
-        $planSurveyCount = $baseQuery->clone()->whereNotNull('plan_survey')->where('drop_data', 'No')->where('category', 'CSF')->count();
-        $realSurveyCount = $baseQuery->clone()->whereNotNull('realisasi_survey')->where('drop_data', 'No')->where('category', 'CSF')->count();
+        $planSurveyCount = $baseQuery->clone()->whereNotNull('plan_survey')->where('status_osp', '!=', 'Drop')->orWhereNull('status_osp')->where('category', 'CSF')->count();
+        $realSurveyCount = $baseQuery->clone()->whereNotNull('realisasi_survey')->where('status_osp', '!=', 'Drop')->orWhereNull('status_osp')->where('category', 'CSF')->count();
 
         // DELIVERY (untuk dashboard utama)
-        $planDeliveryCount = $baseQuery->clone()->whereNotNull('plan_delivery')->where('drop_data', 'No')->where('category', 'CSF')->count();
-        $realDeliveryCount = $baseQuery->clone()->whereNotNull('realisasi_delivery')->where('drop_data', 'No')->where('category', 'CSF')->count();
+        $planDeliveryCount = $baseQuery->clone()->whereNotNull('plan_delivery')->where('status_osp', '!=', 'Drop')->orWhereNull('status_osp')->where('category', 'CSF')->count();
+        $realDeliveryCount = $baseQuery->clone()->whereNotNull('realisasi_delivery')->where('status_osp', '!=', 'Drop')->orWhereNull('status_osp')->where('category', 'CSF')->count();
 
         // INSTALASI (untuk dashboard utama)
-        $planInstalasiCount = $baseQuery->clone()->whereNotNull('plan_instalasi')->where('drop_data', 'No')->where('category', 'CSF')->count();
-        $realInstalasiCount = $baseQuery->clone()->whereNotNull('realisasi_instalasi')->where('drop_data', 'No')->where('category', 'CSF')->count();
+        $planInstalasiCount = $baseQuery->clone()->whereNotNull('plan_instalasi')->where('status_osp', '!=', 'Drop')->orWhereNull('status_osp')->where('category', 'CSF')->count();
+        $realInstalasiCount = $baseQuery->clone()->whereNotNull('realisasi_instalasi')->where('status_osp', '!=', 'Drop')->orWhereNull('status_osp')->where('category', 'CSF')->count();
 
         // INTEGRASI (untuk dashboard utama)
-        $planIntegrasiCount = $baseQuery->clone()->whereNotNull('plan_integrasi')->where('drop_data', 'No')->where('category', 'CSF')->count();
-        $realIntegrasiCount = $baseQuery->clone()->whereNotNull('realisasi_integrasi')->where('drop_data', 'No')->where('category', 'CSF')->count();
+        $planIntegrasiCount = $baseQuery->clone()->whereNotNull('plan_integrasi')->where('status_osp', '!=', 'Drop')->orWhereNull('status_osp')->where('category', 'CSF')->count();
+        $realIntegrasiCount = $baseQuery->clone()->whereNotNull('realisasi_integrasi')->where('status_osp', '!=', 'Drop')->orWhereNull('status_osp')->where('category', 'CSF')->count();
 
         // DROP
-        $dropYesCount      = $baseQuery->clone()->where('drop_data', 'Yes')->count();
-        $dropNoCount       = $baseQuery->clone()->where('drop_data', 'No')->count();
+        $dropYesCount      = $baseQuery->clone()->where('status_osp', 'Drop')->count();
+        $dropNoCount       = $baseQuery->clone()->where('status_osp', '!=', 'Drop')->count();
         $dropRelokasiCount = $baseQuery->clone()->where('drop_data', 'Relokasi')->count();
 
 
@@ -853,6 +855,14 @@ public function exportFunneling(Request $request)
     return Excel::download(new FunnelingExport($data, $project), "funneling_{$project}.xlsx");
 }
 
+public function exportPopup(Request $request)
+{
+    $data = json_decode($request->input('popupData'), true);
+    $columns = json_decode($request->input('popupColumns'), true);
+    $stage = $request->input('stage', 'popup');
+
+    return Excel::download(new PopupExport($data, $columns), "popup_{$stage}.xlsx");
+}
 
 }
 

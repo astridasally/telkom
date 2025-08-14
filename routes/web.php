@@ -56,6 +56,7 @@ Route::middleware('auth')->group(function () {
         })->name('download_projects');
 
     Route::post('/dashboard/export', [ProjectController::class, 'exportFunneling'])->name('funneling.export');
+        Route::post('/popup/export', [ProjectController::class, 'exportPopup'])->name('popup.export');
 
 
 });

@@ -404,6 +404,14 @@
             <div class="popup-content">
                 <span class="close-btn" onclick="closePopup()">&times;</span>
                 <h3 id="popup-title">Detail</h3>
+                <form action="{{ route('popup.export') }}" method="POST" id="exportPopupForm">
+                    @csrf
+                    <input type="hidden" name="popupData" id="popupData">
+                    <input type="hidden" name="popupColumns" id="popupColumns">
+                    <input type="hidden" name="stage" id="popupStage">
+                    <button type="submit">Download Excel</button>
+                </form>
+
                 <div class="table-scroll-container">
                     <table class="table table-bordered table-striped" style="width: 100%;">
                         <thead>
@@ -631,5 +639,30 @@ document.getElementById('exportForm').addEventListener('submit', function(e) {
     document.getElementById('tableData').value = JSON.stringify(tableData);
 });
 </script>
+
+<script>
+
+document.getElementById('exportPopupForm').addEventListener('submit', function() {
+    let popupData = [];
+    document.querySelectorAll("#popup-table-body tr").forEach(row => {
+        let rowData = [];
+        row.querySelectorAll("td").forEach(cell => {
+            rowData.push(cell.innerText.trim());
+        });
+        if (rowData.length > 0) popupData.push(rowData);
+    });
+
+    let popupColumns = [];
+    document.querySelectorAll("#popup-table-head th").forEach(th => {
+        popupColumns.push(th.innerText.trim());
+    });
+
+    document.getElementById('popupData').value = JSON.stringify(popupData);
+    document.getElementById('popupColumns').value = JSON.stringify(popupColumns);
+    document.getElementById('popupStage').value = document.getElementById('popup-title').innerText;
+});
+
+</script>
+
 
 </x-app-layout>
