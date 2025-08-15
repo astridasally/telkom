@@ -81,16 +81,17 @@
                 <i class="fas fa-xmark"></i> 
             </a>
         @endif
+
+        <a href="{{ route('download_projects', array_merge(request()->query(), ['project_type' => request('project_type')])) }}" 
+            class="icon-button download-btn" download
+            title="Download Excel">
+            <i class="fas fa-download"></i>
+        </a>
     </form>
 </div>
 
     {{$projects->appends(request()->query())->links()}}
     <br>
-   
-    📥  <a href="{{ route('download_projects', array_merge(request()->query(), ['project_type' => request('project_type')])) }}" class="text-blue-600 italic underline text-base" download>
-            Download Excel
-        </a>
-
 
     <div class="table-container">
     <table class="sticky-header-table border border-gray-400">

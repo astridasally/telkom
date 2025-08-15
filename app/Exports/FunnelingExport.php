@@ -5,20 +5,27 @@ namespace App\Exports;
 use Maatwebsite\Excel\Concerns\FromArray;
 use Maatwebsite\Excel\Concerns\WithHeadings;
 
-class PopupExport implements FromArray, WithHeadings
+class FunnelingExport implements FromArray, WithHeadings
 {
     protected $data;
-    protected $columns;
+    protected $project;
 
-    public function __construct(array $data, array $columns)
+    public function __construct(array $data, $project)
     {
         $this->data = $data;
-        $this->columns = $columns;
+        $this->project = $project;
     }
 
     public function headings(): array
     {
-        return $this->columns;
+        return [
+            'Regional', 'PLAN CSF', 'FTTH READY', 'JUMLAH PORT',
+            'MOS Plan', 'MOS Done',
+            'INSTALASI Plan', 'INSTALASI Done',
+            'INTEGRASI Plan', 'INTEGRASI Done',
+            'GO LIVE',
+            'UPLINK MINI OLT READY', 'UPLINK MINI OLT NOT READY'
+        ];
     }
 
     public function array(): array
@@ -26,3 +33,4 @@ class PopupExport implements FromArray, WithHeadings
         return $this->data;
     }
 }
+

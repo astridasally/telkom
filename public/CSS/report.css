@@ -205,3 +205,24 @@ tbody tr:nth-child(even) td {
     transform: translateY(-2px);
     box-shadow: 0 4px 12px #c47980;
 }
+
+.icon-button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 32px;
+    height: 35px;
+    border-radius: 6px;
+    color: white;
+    font-size: 18px;
+    text-decoration: none;
+    transition: background-color 0.3s ease;
+}
+
+.download-btn {
+    background-color: #27a73f;
+}
+
+.download-btn:hover {
+    background-color: #30c44b; /* biru lebih gelap saat hover */
+}
