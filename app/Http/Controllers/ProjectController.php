@@ -473,7 +473,7 @@ class ProjectController extends Controller
         // 2. Dapatkan nilai filter dari Request
         $selectedMitra    = $request->input('filter_assign_to');
         $selectedRegional = $request->input('regional');
-        $selectedWitel    = $request->input('witel');
+        $selectedWitelFilter = $request->input('filter_witel');
         $selectedType     = $request->input('project_type', 'Project TA'); // default Project TA
 
         // 3. Terapkan filter berdasarkan input dari Request
@@ -488,9 +488,8 @@ class ProjectController extends Controller
             $baseQuery->where('regional', $selectedRegional);
         }
 
-        // FILTER WITEL
-        if ($selectedWitel && $selectedWitel !== 'All Witel') {
-            $baseQuery->where('witel', $selectedWitel);
+        if ($selectedWitelFilter && $selectedWitelFilter !== 'all') {
+            $baseQuery->where('witel', $selectedWitelFilter);
         }
 
         // FILTER TYPE
@@ -500,6 +499,8 @@ class ProjectController extends Controller
 
         // Ambil semua opsi filter
         $allMitras       = Project::distinct()->pluck('assign_to')->sort()->toArray();
+        $allWitels       = Project::distinct('witel')->pluck('witel')->sort()->toArray();
+
        $allProjectTypes = Project::whereNotNull('project_type')
         ->where('project_type', '!=', '')
         ->distinct()
@@ -532,7 +533,7 @@ class ProjectController extends Controller
 
         // DROP
         $dropYesCount      = $baseQuery->clone()->where('status_osp', 'Drop')->count();
-        $dropNoCount       = $baseQuery->clone()->where('status_osp', '!=', 'Drop')->count();
+        $dropNoCount       = $baseQuery->clone()->where('status_osp', '!=', 'Drop')->orWhereNull('status_osp')->count();
         $dropRelokasiCount = $baseQuery->clone()->where('drop_data', 'Relokasi')->count();
 
 
@@ -726,9 +727,10 @@ foreach ($regionsForSkenario as $regionalEnum) {
             'dropRelokasiCount',
             'selectedMitra',
             'selectedRegional',
-            'selectedWitel',
+            'selectedWitelFilter',
             'selectedType',
             'allMitras',
+            'allWitels',
             'allProjectTypes',
             // Variabel untuk Funneling OLT yang akan digunakan di dashboard.blade.php
             'tableData', 'totalCounts', 'regions', 'selectedType',
@@ -788,9 +790,9 @@ public function getPopupDetail(Request $request)
         $query->where('regional', $request->regional);
     }
 
-    // 🔹 Filter Witel
-    if ($request->has('witel') && $request->witel !== 'All Witel') {
-        $query->where('witel', $request->witel);
+    // 🔹 Filter Witel - Fixed this part
+    if ($request->has('filter_witel') && $request->filter_witel !== 'all') {
+        $query->where('witel', $request->filter_witel);
     }
 
     switch ($stage) {
@@ -833,7 +835,6 @@ public function getPopupDetail(Request $request)
 
     return response()->json($query->select($fields)->paginate(200));
 }
-
 
 
     public function import(Request $request)

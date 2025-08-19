@@ -157,19 +157,17 @@
                    
                    <div class="filter-item">
                     <label for="witel_filter" class="sr-only">Pilih Witel</label>
-                    <select id="witel_filter" name="witel">
-                        {{-- Opsi untuk melihat semua witel --}}
-                        <option value="All Witel" {{ request('witel', 'All Witel') == 'All Witel' ? 'selected' : '' }}>All Witel</option>
+                   <select id="filter_witel" name="filter_witel" class="filter-select">
+    <option value="all" {{ request('filter_witel', 'all') == 'all' ? 'selected' : '' }}>All Witel</option>
+    @foreach($allWitels as $witel)
+        <option value="{{ $witel }}" {{ request('filter_witel', 'all') == $witel ? 'selected' : '' }}>
+            {{ $witel }}
+        </option>
+    @endforeach
+</select>
 
-                        {{-- Iterasi melalui nilai-nilai dari Enum Witel --}}
-                        @foreach (\App\Enums\Witel::cases() as $witelEnum)
-                            <option value="{{ $witelEnum->value }}"
-                                {{ request('witel', 'All Witel') == $witelEnum->value ? 'selected' : '' }}>
-                                {{ $witelEnum->value }}
-                            </option>
-                        @endforeach
-                    </select>
                 </div>
+                
 
                     <button type="submit" class="filter-apply-btn">Apply</button>
                   
@@ -550,10 +548,11 @@ function showPopup(stage, page = 1) {
     // 🔹 Ambil filter dari dashboard
     const mitra = document.getElementById("filter_assign_to")?.value || 'all';
     const regional = document.getElementById("regional_filter")?.value || 'All Regional';
-    const witel = document.getElementById("witel_filter")?.value || 'All Witel';
+    const witel = document.querySelector("[name='filter_witel']")?.value || 'all';
 
-    // 🔹 Kirim filter ke API
-    const url = `/popup-detail?stage=${stage}&page=${page}&filter_assign_to=${encodeURIComponent(mitra)}&regional=${encodeURIComponent(regional)}&witel=${encodeURIComponent(witel)}`;
+
+// 🚀 ubah jadi filter_witel
+    const url = `/popup-detail?stage=${stage}&page=${page}&filter_assign_to=${encodeURIComponent(mitra)}&regional=${encodeURIComponent(regional)}&filter_witel=${encodeURIComponent(witel)}`;
 
     fetch(url)
         .then(res => res.json())
