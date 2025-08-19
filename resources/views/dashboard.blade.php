@@ -31,8 +31,8 @@
                 @csrf
                 <input type="hidden" name="tableData" id="tableData">
                 <input type="hidden" name="selectedType" value="{{ $selectedType }}">
-                <button type="submit" class="download-btn">
-                    Download Excel
+                <button type="submit" class="icon-button download-btn" download>
+                    <i class="fas fa-download"></i>
                 </button>
             </form>
         </div>
@@ -120,23 +120,6 @@
                 {{-- Filter (tetap seperti sebelumnya) --}}
                 <form action="{{ route('dashboard') }}" method="GET">
                 <div class="dashboard-filters-row">
-
-                    <div class="filter-item">
-                    <label for="project_type_filter" class="sr-only">Pilih Project Type</label>
-                    <select id="project_type_filter" name="project_type">
-                        {{-- Opsi untuk melihat semua project type --}}
-                        <option value="All Project" {{ request('project_type', 'All Project') == 'All Project' ? 'selected' : '' }}>
-                            Project All
-                        </option>
-
-                        {{-- Iterasi melalui nilai-nilai dari $allProjectTypes --}}
-                        @foreach ($allProjectTypes as $type)
-                            <option value="{{ $type }}" {{ request('project_type') == $type ? 'selected' : '' }}>
-                                {{ $type }}
-                            </option>
-                        @endforeach
-                    </select>
-                </div>
 
                 <div class="filter-item">
                         <label for="regional_filter" class="sr-only">Pilih Regional</label>

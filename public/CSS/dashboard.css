@@ -86,6 +86,30 @@ body {
     color: white;
 }
 
+/*tombol download excel*/
+.icon-button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 28px;
+    height: 25px;
+    border-radius: 6px;
+    color: white;
+    font-size: 15px;
+    text-decoration: none;
+    transition: background-color 0.2s, color 0.2s ease-in-out ;
+}
+
+.download-btn {
+    background-color: #27a73f;
+    transition: background-color 0.2s, color 0.2s ease-in-out ;
+}
+
+.download-btn:hover {
+    background-color: #30c44b; /* biru lebih gelap saat hover */
+    transform: translateY(-1px);
+    box-shadow: 0 4px 8px rgb(148, 147, 147);
+}
 
 .total-all-row td{
     background-color: #b4b4b4 !important; /* hijau muda */

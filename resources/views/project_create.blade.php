@@ -178,8 +178,41 @@
         <div style="margin-top: 20px; text-align: right">
             <button type="submit" class="update-btn">Simpan</button>
         </div>
+
+        @if ($errors->any())
+    <div class="alert alert-danger" style="margin-bottom: 20px;">
+        <strong>Periksa kembali input Anda:</strong>
+        <ul>
+            @foreach ($errors->all() as $error)
+            <li>{{ $error }}</li>
+            @endforeach
+        </ul>
+    </div>
+    @endif
+
+    {{-- Notifikasi Success --}}
+    @if(session('success'))
+    <div class="notification-popup success">
+        {{ session('success') }}
+        <button class="close-btn" onclick="this.parentElement.style.display='none';">&times;</button>
+    </div>
+    @endif
+
+    {{-- Notifikasi Error --}}
+    @if(session('error'))
+    <div class="notification-popup error">
+        {{ session('error') }}
+        <button class="close-btn" onclick="this.parentElement.style.display='none';">&times;</button>
+    </div>
+    @endif
+
+    <div class="form-container">
+        {{-- ... (kode form Anda) ... --}}
+    </div>
     </form>
 </div>
+
+
 
 {{-- Script Drop & Relokasi --}}
 <script>

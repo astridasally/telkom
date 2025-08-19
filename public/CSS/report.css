@@ -221,8 +221,12 @@ tbody tr:nth-child(even) td {
 
 .download-btn {
     background-color: #27a73f;
+    transition: background-color 0.2s, color 0.2s ease-in-out ;
+
 }
 
 .download-btn:hover {
     background-color: #30c44b; /* biru lebih gelap saat hover */
+    transform: translateY(-1px);
+    box-shadow: 0 4px 8px rgb(148, 147, 147);
 }
