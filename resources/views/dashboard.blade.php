@@ -382,16 +382,23 @@
 
         {{-- ========== MODAL POPUP DETAIL (Dinamis untuk semua stage) ========== --}}
         <div id="popupDetail" class="popup-modal" style="display: none;">
-            <div class="popup-content">
+            <div class="popup-content" >
                 <span class="close-btn" onclick="closePopup()">&times;</span>
-                <h3 id="popup-title">Detail</h3>
-                <form action="{{ route('popup.export') }}" method="POST" id="exportPopupForm">
-                    @csrf
-                    <input type="hidden" name="popupData" id="popupData">
-                    <input type="hidden" name="popupColumns" id="popupColumns">
-                    <input type="hidden" name="stage" id="popupStage">
-                    <button type="submit">Download Excel</button>
-                </form>
+                <div style="border-bottom: 1px solid #ddd; margin-top:10px; margin-bottom: 15px; padding-bottom: 5px;">
+                    <div style="display: flex; align-items: center; justify-content: flex-start;">
+                        <h3 id="popup-title" style="margin: 0; font-weight:500; font-size:18px;">Detail</h3>
+                        <form action="{{ route('popup.export') }}" method="POST" id="exportPopupForm" style="margin: 0; margin-left: 10px">
+                            @csrf
+                            <input type="hidden" name="popupData" id="popupData">
+                            <input type="hidden" name="popupColumns" id="popupColumns">
+                            <input type="hidden" name="stage" id="popupStage">
+                            <button type="submit" class="icon-button download-btn" download>
+                                <i class="fas fa-download"></i>
+                            </button>
+                        </form>
+                    </div>
+                </div>
+
 
                 <div class="table-scroll-container">
                     <table class="table table-bordered table-striped" style="width: 100%;">
@@ -403,10 +410,6 @@
                 </div>
             </div>
         </div>
-
-
-
-
 
 
 
@@ -630,6 +633,23 @@ document.getElementById('exportPopupForm').addEventListener('submit', function()
     document.getElementById('popupStage').value = document.getElementById('popup-title').innerText;
 });
 
+</script>
+
+<script>
+    // Ambil elemen
+    const popup = document.getElementById('popupDetail');
+
+    // Tutup popup kalau klik area di luar konten
+    window.addEventListener('click', function(e) {
+        if (e.target === popup) {
+            popup.style.display = 'none';
+        }
+    });
+
+    // Fungsi close popup (tombol silang)
+    function closePopup() {
+        popup.style.display = 'none';
+    }
 </script>
 
 
