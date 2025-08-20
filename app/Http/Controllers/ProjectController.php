@@ -514,28 +514,97 @@ class ProjectController extends Controller
 
         // 5. Hitung semua metrik untuk dashboard utama
         $projectCount = $baseQuery->clone()->count();
-
         // SURVEY
-        $planSurveyCount = $baseQuery->clone()->whereNotNull('plan_survey')->where('status_osp', '!=', 'Drop')->orWhereNull('status_osp')->where('category', 'CSF')->count();
-        $realSurveyCount = $baseQuery->clone()->whereNotNull('realisasi_survey')->where('status_osp', '!=', 'Drop')->orWhereNull('status_osp')->where('category', 'CSF')->count();
+        $planSurveyCount = $baseQuery->clone()
+            ->whereNotNull('plan_survey')
+            ->where(function ($q) {
+                $q->where('status_osp', '!=', 'Drop')
+                ->orWhereNull('status_osp');
+            })
+            ->where('category', 'CSF')
+            ->count();
+
+        $realSurveyCount = $baseQuery->clone()
+            ->whereNotNull('realisasi_survey')
+            ->where(function ($q) {
+                $q->where('status_osp', '!=', 'Drop')
+                ->orWhereNull('status_osp');
+            })
+            ->where('category', 'CSF')
+            ->count();
 
         // DELIVERY (untuk dashboard utama)
-        $planDeliveryCount = $baseQuery->clone()->whereNotNull('plan_delivery')->where('status_osp', '!=', 'Drop')->orWhereNull('status_osp')->where('category', 'CSF')->count();
-        $realDeliveryCount = $baseQuery->clone()->whereNotNull('realisasi_delivery')->where('status_osp', '!=', 'Drop')->orWhereNull('status_osp')->where('category', 'CSF')->count();
+        $planDeliveryCount = $baseQuery->clone()
+            ->whereNotNull('plan_delivery')
+            ->where(function ($q) {
+                $q->where('status_osp', '!=', 'Drop')
+                ->orWhereNull('status_osp');
+            })
+            ->where('category', 'CSF')
+            ->count();
+
+        $realDeliveryCount = $baseQuery->clone()
+            ->whereNotNull('realisasi_delivery')
+            ->where(function ($q) {
+                $q->where('status_osp', '!=', 'Drop')
+                ->orWhereNull('status_osp');
+            })
+            ->where('category', 'CSF')
+            ->count();
 
         // INSTALASI (untuk dashboard utama)
-        $planInstalasiCount = $baseQuery->clone()->whereNotNull('plan_instalasi')->where('status_osp', '!=', 'Drop')->orWhereNull('status_osp')->where('category', 'CSF')->count();
-        $realInstalasiCount = $baseQuery->clone()->whereNotNull('realisasi_instalasi')->where('status_osp', '!=', 'Drop')->orWhereNull('status_osp')->where('category', 'CSF')->count();
+        $planInstalasiCount = $baseQuery->clone()
+            ->whereNotNull('plan_instalasi')
+            ->where(function ($q) {
+                $q->where('status_osp', '!=', 'Drop')
+                ->orWhereNull('status_osp');
+            })
+            ->where('category', 'CSF')
+            ->count();
+
+        $realInstalasiCount = $baseQuery->clone()
+            ->whereNotNull('realisasi_instalasi')
+            ->where(function ($q) {
+                $q->where('status_osp', '!=', 'Drop')
+                ->orWhereNull('status_osp');
+            })
+            ->where('category', 'CSF')
+            ->count();
 
         // INTEGRASI (untuk dashboard utama)
-        $planIntegrasiCount = $baseQuery->clone()->whereNotNull('plan_integrasi')->where('status_osp', '!=', 'Drop')->orWhereNull('status_osp')->where('category', 'CSF')->count();
-        $realIntegrasiCount = $baseQuery->clone()->whereNotNull('realisasi_integrasi')->where('status_osp', '!=', 'Drop')->orWhereNull('status_osp')->where('category', 'CSF')->count();
+        $planIntegrasiCount = $baseQuery->clone()
+            ->whereNotNull('plan_integrasi')
+            ->where(function ($q) {
+                $q->where('status_osp', '!=', 'Drop')
+                ->orWhereNull('status_osp');
+            })
+            ->where('category', 'CSF')
+            ->count();
+
+        $realIntegrasiCount = $baseQuery->clone()
+            ->whereNotNull('realisasi_integrasi')
+            ->where(function ($q) {
+                $q->where('status_osp', '!=', 'Drop')
+                ->orWhereNull('status_osp');
+            })
+            ->where('category', 'CSF')
+            ->count();
 
         // DROP
-        $dropYesCount      = $baseQuery->clone()->where('status_osp', 'Drop')->count();
-        $dropNoCount       = $baseQuery->clone()->where('status_osp', '!=', 'Drop')->orWhereNull('status_osp')->count();
-        $dropRelokasiCount = $baseQuery->clone()->where('drop_data', 'Relokasi')->count();
+        $dropYesCount = $baseQuery->clone()
+            ->where('status_osp', 'Drop')
+            ->count();
 
+        $dropNoCount = $baseQuery->clone()
+            ->where(function ($q) {
+                $q->where('status_osp', '!=', 'Drop')
+                ->orWhereNull('status_osp');
+            })
+            ->count();
+
+        $dropRelokasiCount = $baseQuery->clone()
+            ->where('drop_data', 'Relokasi')
+            ->count();
 
         // =======================================================
         // BAGIAN 2: LOGIKA FUNNELING OLT (BERADA DI DASHBOARD)
@@ -582,8 +651,6 @@ class ProjectController extends Controller
             $totalCounts[$key] += $value;
         }
     }
-
-
 
 
         // =======================================================
@@ -777,8 +844,7 @@ public function getPopupDetail(Request $request)
     $stage = $request->query('stage');
 
     $query = Project::query()
-        ->where('drop_data', 'No')
-        ->where('category', 'CSF');
+        ->where('category', 'CSF'); // category selalu dipakai
 
     // 🔹 Filter Mitra
     if ($request->has('filter_assign_to') && $request->filter_assign_to !== 'all') {
@@ -790,38 +856,61 @@ public function getPopupDetail(Request $request)
         $query->where('regional', $request->regional);
     }
 
-    // 🔹 Filter Witel - Fixed this part
+    // 🔹 Filter Witel
     if ($request->has('filter_witel') && $request->filter_witel !== 'all') {
         $query->where('witel', $request->filter_witel);
     }
 
+    // 🔹 Kondisi sesuai stage
     switch ($stage) {
         case 'lainnya':
             $query->where(function ($q) {
+                $q->where('status_osp','!=', 'Drop')
+                  ->orWhereNull('status_osp');
+            })
+            ->where(function ($q) {
                 $q->whereNotNull('plan_survey')
                   ->orWhereNotNull('realisasi_survey');
             });
             break;
+
         case 'mos':
             $query->where(function ($q) {
+                $q->where('status_osp','!=', 'Drop')
+                  ->orWhereNull('status_osp');
+            })
+            ->where(function ($q) {
                 $q->whereNotNull('plan_delivery')
                   ->orWhereNotNull('realisasi_delivery');
             });
             break;
+
         case 'instalasi':
             $query->where(function ($q) {
+                $q->where('status_osp','!=', 'Drop')
+                  ->orWhereNull('status_osp');
+            })
+            ->where(function ($q) {
                 $q->whereNotNull('plan_instalasi')
                   ->orWhereNotNull('realisasi_instalasi');
             });
             break;
+
         case 'integrasi':
             $query->where(function ($q) {
+                $q->where('status_osp','!=', 'Drop')
+                  ->orWhereNull('status_osp');
+            })
+            ->where(function ($q) {
                 $q->whereNotNull('plan_integrasi')
                   ->orWhereNotNull('realisasi_integrasi');
             });
             break;
+
         case 'drop':
-            $query = Project::query(); 
+            $query->where(function ($q) {
+                $q->where('status_osp', 'Drop');
+            });
             break;
     }
 
@@ -830,12 +919,11 @@ public function getPopupDetail(Request $request)
         'mos' => ['regional', 'witel', 'sto', 'ihld', 'catuan_id', 'plan_delivery', 'realisasi_delivery'],
         'instalasi' => ['regional', 'witel', 'sto', 'ihld', 'catuan_id', 'plan_instalasi', 'realisasi_instalasi'],
         'integrasi' => ['regional', 'witel', 'sto', 'ihld', 'catuan_id', 'plan_integrasi', 'realisasi_integrasi'],
-        'drop' => ['regional', 'witel', 'sto', 'ihld', 'catuan_id', 'drop_data'],
+        'drop' => ['regional', 'witel', 'sto', 'ihld', 'catuan_id', 'status_osp'],
     };
 
     return response()->json($query->select($fields)->paginate(200));
 }
-
 
     public function import(Request $request)
 {

@@ -506,13 +506,13 @@ new Chart(ctx, {
 <script>
 const popupConfig = {
     lainnya: {
-        title: "Detail Survey",
-        columns: ['No', 'Regional', 'Witel', 'STO', 'IHLD', 'Catuan ID', 'Plan Survey', 'Realisasi Survey'],
+        title: "Detail Lainnya",
+        columns: ['No', 'Regional', 'Witel', 'STO', 'IHLD', 'Catuan ID', 'Plan Lainnya', 'Realisasi Lainnya'],
         fields: ['regional', 'witel', 'sto', 'ihld', 'catuan_id', 'plan_survey', 'realisasi_survey']
     },
     mos: {
-        title: "Detail Delivery (MOS)",
-        columns: ['No', 'Regional', 'Witel', 'STO', 'IHLD', 'Catuan ID', 'Plan Delivery', 'Realisasi Delivery'],
+        title: "Detail MOS",
+        columns: ['No', 'Regional', 'Witel', 'STO', 'IHLD', 'Catuan ID', 'Plan MOS', 'Realisasi MOS'],
         fields: ['regional', 'witel', 'sto', 'ihld', 'catuan_id', 'plan_delivery', 'realisasi_delivery']
     },
     instalasi: {
@@ -528,7 +528,7 @@ const popupConfig = {
     drop: {
         title: "Detail Drop",
         columns: ['No', 'Regional', 'Witel', 'STO', 'IHLD', 'Catuan ID', 'Drop Status'],
-        fields: ['regional', 'witel', 'sto', 'ihld', 'catuan_id', 'drop_data']
+        fields: ['regional', 'witel', 'sto', 'ihld', 'catuan_id', 'status_osp']
     }
 };
 
