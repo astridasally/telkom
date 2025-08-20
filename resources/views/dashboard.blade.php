@@ -119,6 +119,7 @@
 
                 {{-- Filter (tetap seperti sebelumnya) --}}
                 <form action="{{ route('dashboard') }}" method="GET">
+                <input type="hidden" name="project_type" value="{{ $selectedType }}"> 
                 <div class="dashboard-filters-row">
 
                 <div class="filter-item">
@@ -551,13 +552,15 @@ function showPopup(stage) {
     const mitra = document.getElementById("filter_assign_to")?.value || 'all';
     const regional = document.getElementById("regional_filter")?.value || 'All Regional';
     const witel = document.querySelector("[name='filter_witel']")?.value || 'all';
+    const projectType = "{{ $selectedType }}"; // ambil langsung dari blade
 
-    const url = `/popup-detail?stage=${stage}&filter_assign_to=${encodeURIComponent(mitra)}&regional=${encodeURIComponent(regional)}&filter_witel=${encodeURIComponent(witel)}`;
+    // ✅ URL lengkap dengan project_type
+    const url = `/popup-detail?stage=${stage}&project_type=${encodeURIComponent(projectType)}&filter_assign_to=${encodeURIComponent(mitra)}&regional=${encodeURIComponent(regional)}&filter_witel=${encodeURIComponent(witel)}`;
 
     fetch(url)
         .then(res => res.json())
         .then(result => {
-            const data = result || []; // ✅ langsung array, bukan result.data
+            const data = result || [];
             tbody.innerHTML = '';
 
             if (!data.length) {

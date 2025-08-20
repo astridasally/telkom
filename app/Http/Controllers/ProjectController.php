@@ -844,7 +844,12 @@ public function getPopupDetail(Request $request)
     $stage = $request->query('stage');
 
     $query = Project::query()
-        ->where('category', 'CSF'); // category selalu dipakai
+        ->where('category', 'CSF');
+
+    // 🔹 Filter Project Type (TAMBAHAN WAJIB)
+    if ($request->has('project_type') && $request->project_type !== 'All Project') {
+        $query->where('project_type', $request->project_type);
+    }
 
     // 🔹 Filter Mitra
     if ($request->has('filter_assign_to') && $request->filter_assign_to !== 'all') {
@@ -860,7 +865,7 @@ public function getPopupDetail(Request $request)
     if ($request->has('filter_witel') && $request->filter_witel !== 'all') {
         $query->where('witel', $request->filter_witel);
     }
-
+    
     // 🔹 Kondisi sesuai stage
     switch ($stage) {
         case 'lainnya':
