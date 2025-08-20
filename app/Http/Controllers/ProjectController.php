@@ -922,7 +922,7 @@ public function getPopupDetail(Request $request)
         'drop' => ['regional', 'witel', 'sto', 'ihld', 'catuan_id', 'status_osp'],
     };
 
-    return response()->json($query->select($fields)->paginate(200));
+    return response()->json($query->select($fields)->get());
 }
 
     public function import(Request $request)

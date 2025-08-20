@@ -531,8 +531,7 @@ const popupConfig = {
         fields: ['regional', 'witel', 'sto', 'ihld', 'catuan_id', 'status_osp']
     }
 };
-
-function showPopup(stage, page = 1) {
+function showPopup(stage) {
     const config = popupConfig[stage];
     if (!config) return;
 
@@ -550,14 +549,12 @@ function showPopup(stage, page = 1) {
     const regional = document.getElementById("regional_filter")?.value || 'All Regional';
     const witel = document.querySelector("[name='filter_witel']")?.value || 'all';
 
-
-// 🚀 ubah jadi filter_witel
-    const url = `/popup-detail?stage=${stage}&page=${page}&filter_assign_to=${encodeURIComponent(mitra)}&regional=${encodeURIComponent(regional)}&filter_witel=${encodeURIComponent(witel)}`;
+    const url = `/popup-detail?stage=${stage}&filter_assign_to=${encodeURIComponent(mitra)}&regional=${encodeURIComponent(regional)}&filter_witel=${encodeURIComponent(witel)}`;
 
     fetch(url)
         .then(res => res.json())
         .then(result => {
-            const data = result.data || [];
+            const data = result || []; // ✅ langsung array, bukan result.data
             tbody.innerHTML = '';
 
             if (!data.length) {
@@ -567,21 +564,10 @@ function showPopup(stage, page = 1) {
 
             const rows = data.map((row, index) => {
                 const rowHTML = config.fields.map(field => `<td>${row[field] ?? '-'}</td>`).join('');
-                return `<tr><td>${(result.from || 1) + index}</td>${rowHTML}</tr>`;
+                return `<tr><td>${index + 1}</td>${rowHTML}</tr>`;
             }).join('');
 
             tbody.innerHTML = rows;
-
-            let pagination = `<tr><td colspan="${config.columns.length}" class="text-center">`;
-            if (result.prev_page_url) {
-                pagination += `<button onclick="showPopup('${stage}', ${result.current_page - 1})">Previous</button>`;
-            }
-            pagination += ` Page ${result.current_page} of ${result.last_page} `;
-            if (result.next_page_url) {
-                pagination += `<button onclick="showPopup('${stage}', ${result.current_page + 1})">Next</button>`;
-            }
-            pagination += `</td></tr>`;
-            tbody.innerHTML += pagination;
         })
         .catch(error => {
             console.error("Error:", error);
