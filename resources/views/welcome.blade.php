@@ -16,7 +16,6 @@
         <h1 class="text-2xl mb-5 text-gray-800">
             Welcome to
         </h1>
-
         <!-- Logo -->
         <a href="{{ route('dashboard') }}" class="inline-block mb-2">
             <img src="{{ asset('image/minibolt-logo.png') }}" class="h-24 mx-auto" alt="Minibold Logo">

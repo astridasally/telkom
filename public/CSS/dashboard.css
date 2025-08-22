@@ -77,7 +77,6 @@ body {
     }
 }
 
-
 @media (max-width: 480px) {
     .filter-buttons {
         flex-wrap: wrap;  /* tombol bisa turun ke baris kedua kalau kepanjangan */
