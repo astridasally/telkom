@@ -99,6 +99,9 @@
             <x-responsive-nav-link :href="route('project_create')" :active="request()->routeIs('project_create')">
                 {{ __('Form') }}
             </x-responsive-nav-link>
+            <x-responsive-nav-link :href="route('projects.import')" :active="request()->routeIs('projects.import')">
+                {{ __('Import') }}
+            </x-responsive-nav-link>
             @endif
 
             {{-- Menambahkan Link Form untuk Vendor --}}

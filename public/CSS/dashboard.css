@@ -41,12 +41,54 @@ body {
     margin-bottom: 15px;
     padding-bottom: 10px;
     border-bottom: 1px solid #e0e0e0;
+    flex-wrap: wrap; /* biar item bisa turun ke bawah */
 }
+
 .left-group {
     display: flex;
     align-items: center;
-    gap: 15px; /* jarak antara judul dan tombol */
+    gap: 10px; /* jarak antar item */
 }
+
+.filter-buttons {
+    display: flex;
+    gap: 10px;
+}
+
+/* --- Responsive kecil --- */
+@media (max-width: 768px) {
+    .title-left {
+        font-size: 18px;
+    }
+
+    .filter-btn {
+        font-size: 11px;
+        padding: 4px 6px;
+    }
+
+    .icon-button {
+        width: 26px;
+        height: 24px;
+        font-size: 14px;
+    }
+
+    .date-right {
+        font-size: 12px;
+    }
+}
+
+@media (max-width: 480px) {
+    .filter-buttons {
+        flex-wrap: wrap;  /* tombol bisa turun ke baris kedua kalau kepanjangan */
+        gap: 6px;
+    }
+
+    .title-left {
+        font-size: 16px;
+    }
+
+}
+
 .title-left {
     font-size: 20px;
     font-weight: bold;
@@ -235,6 +277,7 @@ tfoot tr:last-child td:last-child { border-bottom-right-radius: 6px; }
     max-width: 150px;
 }
 
+
 .dashboard-filters-row select {
     width: 100%;
     padding-top: 5px;
@@ -292,7 +335,16 @@ tfoot tr:last-child td:last-child { border-bottom-right-radius: 6px; }
 .filter-sidebar {
     display: none;
 }
+.table-wrapper {
+    width: 100%;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    margin-bottom: 15px;
+}
 
+.table-wrapper table {
+    min-width: 900px; 
+}
 /* --- CARD STYLES (DIPERBARUI) --- */
 .content-grid {
     display: grid;
@@ -593,5 +645,14 @@ tfoot tr:last-child td:last-child { border-bottom-right-radius: 6px; }
         border-radius: 0;
         box-shadow: none;
     }
+.table-wrapper {
+    width: 100%;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch; /* smooth scroll di iOS */
+}
 
+#funnelingTable {
+    min-width: 900px; /* biar tabel nggak terlalu ngecil */
+    border-collapse: collapse;
+}
 }

@@ -26,8 +26,7 @@
                    class="filter-btn {{ $selectedType == 'Project Mitratel' ? 'active' : '' }}">
                     Project Mitratel
                 </a>
-            </div>
-            <form action="{{ route('funneling.export') }}" method="POST" id="exportForm">
+                <form action="{{ route('funneling.export') }}" method="POST" id="exportForm">
                 @csrf
                 <input type="hidden" name="tableData" id="tableData">
                 <input type="hidden" name="selectedType" value="{{ $selectedType }}">
@@ -35,6 +34,8 @@
                     <i class="fas fa-download"></i>
                 </button>
             </form>
+            </div>
+            
         </div>
         <div class="date-right">Cut Off Data: {{ date('d F Y') }}</div>
     </div>
@@ -254,6 +255,7 @@
                 <div class="sken-area">
                     <h3>SKENARIO INTEGRASI</h3>
                     <hr class="custom-line">
+                    <div class="table-wrapper">
                     <table class="table table-bordered table-striped" style="width:100%">
                     <thead>
                             <tr>
@@ -302,12 +304,14 @@
                             </tr>
                         </tfoot>
                     </table>
+                    </div>
                 </div>
 
             <div class="integrasi-wrapper">
                 {{-- Di sini nanti bisa tambahkan div untuk Daily Integrasi --}}
                 <div class="daily-area">
                     <h3>DAILY INTEGRASI</h3>
+                    <div class="table-wrapper">
                     <div class="table-scroll-container"> {{-- DIV INI HARUS ADA --}}
                     <table class="table table-bordered table-striped" style="width:100%">
                         <thead>
@@ -341,12 +345,13 @@
                     </table>
                     </div>
                     </div>
+                    </div>
 
             {{-- Di sini nanti bisa tambahkan div untuk Failed Integrasi --}}
             <div class="failed-area">
                 <h3>FAILED INTEGRASI</h3>
                  <div class="table-scroll-container"> {{-- DIV INI HARUS ADA --}}
-
+                <div class="table-wrapper">
                 <table class="table table-bordered table-striped" style="width:100%">
                     <thead>
                         <tr class="main-header-row">
@@ -378,6 +383,7 @@
                     </tbody>
                 </table>
                 </div>
+            </div>
             </div>
         </div>
 

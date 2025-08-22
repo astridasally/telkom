@@ -23,7 +23,7 @@
         </a>
 
         <!-- Subtext -->
-        <p class="text-gray-600 mb-8">Your journey begins here.</p>
+        <p class="text-gray-600 mb-8">Explore miniBolt here.</p>
 
         <!-- Tombol Login -->
         <a href="{{ route('login') }}">
@@ -31,7 +31,7 @@
                 {{ __('Log in') }}
             </x-primary-button>
         </a>
-
+<!--
         @if (Route::has('register'))
             <a
                 href="{{ route('register') }}"
@@ -40,7 +40,7 @@
                 Register
             </a>
         @endif
-
+-->
     </div>
 
 </body>
