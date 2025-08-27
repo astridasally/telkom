@@ -163,7 +163,7 @@ class ProjectController extends Controller
 
         $query->orderBy('created_at', 'desc');
 
-        $projects = $query->paginate(100)->appends($request->query());
+        $projects = $query->paginate(200)->appends($request->query());
 
         // --- PASTIKAN BAGIAN INI ADA DAN BENAR ---
         // Untuk mengisi dropdown di view, kita perlu mendapatkan daftar unik Regional, Witel, STO
