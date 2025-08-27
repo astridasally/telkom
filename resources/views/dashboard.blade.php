@@ -361,6 +361,7 @@
                             <th>STO</th>
                             <th>IHLD</th>
                             <th>Catuan ID</th>
+                            <th>Plan Integrasi</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -373,6 +374,7 @@
                                 <td>{{ $project->sto }}</td>
                                 <td>{{ $project->ihld }}</td>
                                 <td>{{ $project->catuan_id }}</td>
+                                <td>{{ $project->plan_integrasi }}</td>
                             </tr>
                         @empty
                             <tr>

@@ -719,7 +719,7 @@ foreach ($regionsForSkenario as $regionalEnum) {
                                              ->whereNull('realisasi_integrasi')   // realisasi_integrasi masih kosong
                                              ->whereDate('plan_integrasi', '<=', $today) // plan_integrasi adalah hari ini atau di masa lalu
                                              ->with('user')
-                                             ->select('regional', 'witel', 'sto', 'site', 'ihld', 'catuan_id', 'assign_to')
+                                             ->select('regional', 'witel', 'sto', 'site', 'ihld', 'catuan_id', 'assign_to','plan_integrasi')
                                              ->get();
 
         // =======================================================
