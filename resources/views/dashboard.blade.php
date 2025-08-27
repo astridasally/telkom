@@ -418,99 +418,104 @@
             </div>
         </div>
 
-
-
-     {{-- Script untuk Chart.js (HARUS DI BAWAH ELEMEN CANVAS) --}}
-    
+{{-- Script untuk Chart.js (HARUS DI BAWAH ELEMEN CANVAS) --}}
 <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@2"></script>
 <script>
     const sCurveLabels = @json($sCurveLabels);
     const sCurvePlanData = @json($sCurvePlanData);
     const sCurveRealData = @json($sCurveRealData);
 
+    console.log("Labels:", sCurveLabels);
+    console.log("Plan Data:", sCurvePlanData);
+    console.log("Real Data:", sCurveRealData);
+
     const ctx = document.getElementById('sCurveChart');
     if (ctx) {
-new Chart(ctx, {
-    type: 'line',
-    data: {
-        labels: sCurveLabels,
-        datasets: [
-            {
-                label: 'PLAN',
-                data: sCurvePlanData,
-                borderColor: 'rgb(54, 162, 235)',
-                backgroundColor: 'rgba(54, 162, 235, 0.2)',
-                tension: 0.3,
-                fill: false,
-                datalabels: {
-                    align: 'top',
-                    anchor: 'end',
-                    color: 'rgb(54, 162, 235)',
-                    font: {
-                        weight: 'bold'
+        new Chart(ctx, {
+            type: 'line',
+            data: {
+                labels: sCurveLabels,
+                datasets: [
+                    {
+                        label: 'PLAN',
+                        data: sCurvePlanData,
+                        borderColor: 'rgb(54, 162, 235)',
+                        backgroundColor: 'rgba(54, 162, 235, 0.2)',
+                        tension: 0.3,
+                        fill: false,
+                        spanGaps: true,
+                        datalabels: {
+                            align: 'top',
+                            anchor: 'end',
+                            color: 'rgb(54, 162, 235)',
+                            font: { weight: 'bold' }
+                        }
+                    },
+                    {
+                        label: 'REALISASI',
+                        data: sCurveRealData,
+                        borderColor: 'rgb(255, 159, 64)',
+                        backgroundColor: 'rgba(255, 159, 64, 0.2)',
+                        tension: 0.3,
+                        fill: false,
+                        datalabels: {
+                            align: 'bottom',
+                            anchor: 'start',
+                            color: 'rgb(255, 159, 64)',
+                            font: { weight: 'bold' }
+                        }
+                    }
+                ]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                scales: {
+                    x: {
+                        title: {
+                            display: true,
+                            text: 'BULAN'
+                        },
+                        ticks: {
+                            padding: 10,
+                            autoSkip: false,   // pastikan semua label muncul
+                            maxRotation: 45,
+                            minRotation: 0
+                        }
+                    },
+                    y: {
+                        title: {
+                            display: true,
+                            text: 'Jumlah Project'
+                        },
+                        beginAtZero: true,
+                        ticks: {
+                            stepSize: 1
+                        },
+                        // skala otomatis sesuai data terbesar
+                        suggestedMax: Math.max(
+                            ...sCurvePlanData,
+                            ...sCurveRealData
+                        ) + 1
+                    }
+                },
+                plugins: {
+                    tooltip: {
+                        mode: 'index',
+                        intersect: false
+                    },
+                    datalabels: {
+                        display: true
                     }
                 }
             },
-            {
-                label: 'REALISASI',
-                data: sCurveRealData,
-                borderColor: 'rgb(255, 159, 64)',
-                backgroundColor: 'rgba(255, 159, 64, 0.2)',
-                tension: 0.3,
-                fill: false,
-                datalabels: {
-                    align: 'bottom',
-                    anchor: 'start',
-                    color: 'rgb(255, 159, 64)',
-                    font: {
-                        weight: 'bold'
-                    }
-                }
-            }
-        ]
-    },
-    options: {
-        responsive: true,
-        maintainAspectRatio: false,
-        scales: {
-            x: {
-                title: {
-                    display: true,
-                    text: 'BULAN'
-                },
-                ticks: {
-                    padding: 20,
-                    autoSkip: false,
-                    maxRotation: 45,
-                    minRotation: 0,
-                    maxTicksLimit: 12
-                }
-            },
-            y: {
-                title: {
-                    display: true,
-                    text: 'Jumlah Project'
-                },
-                beginAtZero: true,
-                ticks: {
-                    stepSize: 1
-                }
-            }
-        },
-        plugins: {
-            tooltip: {
-                mode: 'index',
-                intersect: false
-            }
-        }
-    },
-    plugins: [ChartDataLabels] // ini WAJIB supaya datalabels muncul
-});
-
-    } else {
-        console.error("Canvas element with ID 'sCurveChart' not found.");
+            plugins: [ChartDataLabels]
+        });
     }
 </script>
+
+
+
 
 @push('scripts')
 <script>

@@ -219,7 +219,7 @@ tfoot tr:last-child td:last-child { border-bottom-right-radius: 6px; }
 
 /* --- STYLE UNTUK GRAPH PLACEHOLDER DAN MAIN CONTAINER --- */
 .graph-placeholder {
-    flex: 4;
+    flex: 5;
     background-color: #ffffff;
     min-width: 400px; /* Pertahankan min-width untuk layar menengah */
     border-radius: 8px;

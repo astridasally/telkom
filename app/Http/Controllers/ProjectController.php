@@ -743,53 +743,65 @@ foreach ($regionsForSkenario as $regionalEnum) {
                                             ->select('regional', 'witel', 'sto', 'site', 'ihld', 'catuan_id', 'assign_to') // Pilih kolom yang dibutuhkan
                                             ->get();
         // =======================================================
-        // BAGIAN 4: LOGIKA GRAFIK S-CURVE (PLAN & REALISASI INTEGRASI)
         // =======================================================
-        $sCurveLabels = [];
-        $sCurvePlanData = [];
-        $sCurveRealData = [];
+// BAGIAN 4: LOGIKA GRAFIK S-CURVE (PLAN & REALISASI INTEGRASI)
+// =======================================================
+$sCurveLabels = [];
+$sCurvePlanData = [];
+$sCurveRealData = [];
 
-        // Tentukan rentang tanggal untuk grafik
-        // Start Date: Selalu 12 bulan yang lalu dari bulan ini
-        $startDate = Carbon::now()->subMonths(11)->startOfMonth(); // Mengambil 12 bulan termasuk bulan ini
-        // End Date: Akhir bulan saat ini atau bulan depan (sesuai kebutuhan Anda)
-        $endDate = Carbon::now()->endOfMonth(); // Hingga akhir bulan ini
+// Ambil tanggal terakhir dari plan_integrasi & realisasi_integrasi
+$lastPlan = Project::whereNotNull('plan_integrasi')->max('plan_integrasi');
+$lastReal = Project::whereNotNull('realisasi_integrasi')->max('realisasi_integrasi');
 
-        // Atau jika Anda ingin sampai bulan depan:
-        // $endDate = Carbon::now()->addMonth()->startOfMonth();
+// Tentukan tanggal terakhir yang valid (ambil yang paling besar)
+$lastDate = collect([$lastPlan, $lastReal])
+    ->filter()
+    ->map(fn($date) => Carbon::parse($date))
+    ->max();
 
-        $currentDate = $startDate->copy();
+// Kalau ternyata null semua, fallback ke sekarang
+if (!$lastDate) {
+    $lastDate = now();
+}
 
-        while ($currentDate->lessThanOrEqualTo($endDate)) {
-            $monthYear = $currentDate->format('M Y'); // Contoh: Jun 2025
-            $sCurveLabels[] = $monthYear;
+$lastDate = $lastDate->endOfMonth();
 
-            // Clone base query untuk memastikan filter dashboard diterapkan jika diinginkan
-            // Jika Anda ingin grafik ini TIDAK dipengaruhi filter dashboard, gunakan Project::query()
-            $queryForGraph = $baseQuery->clone(); // Menggunakan filter dashboard
+// Start date = 12 bulan ke belakang dari endDate
+$startDate = $lastDate->copy()->subMonths(11)->startOfMonth();
+$currentDate = $startDate->copy();
 
-            // Hitung kumulatif PLAN INTEGRASI hingga akhir bulan ini
-            $planIntegrasiCumulative = $queryForGraph->clone()
-                                                    ->whereNotNull('plan_integrasi')
-                                                    ->where('plan_integrasi', '<=', $currentDate->endOfMonth()->toDateString())
-                                                     ->where(function ($q) {
-                                                        $q->where('status_osp', '!=', 'Drop')
-                                                        ->orWhereNull('status_osp');
-                                                    })->where('category', 'CSF')->count();
-            $sCurvePlanData[] = $planIntegrasiCumulative;
+while ($currentDate->lessThanOrEqualTo($lastDate)) {
+    $monthYear = $currentDate->format('M Y');
+    $sCurveLabels[] = $monthYear;
 
-            // Hitung kumulatif REALISASI INTEGRASI hingga akhir bulan ini
-            $realIntegrasiCumulative = $queryForGraph->clone()
-                                                    ->whereNotNull('realisasi_integrasi')
-                                                    ->where('realisasi_integrasi', '<=', $currentDate->endOfMonth()->toDateString())
-                                                    ->where(function ($q) {
-                                                        $q->where('status_osp', '!=', 'Drop')
-                                                        ->orWhereNull('status_osp');
-                                                    })->where('category', 'CSF')->count();
-            $sCurveRealData[] = $realIntegrasiCumulative;
+    $queryForGraph = $baseQuery->clone();
 
-            $currentDate->addMonth(); // Maju ke bulan berikutnya
-        }
+    $planIntegrasiCumulative = $queryForGraph->clone()
+        ->whereNotNull('plan_integrasi')
+        ->where('plan_integrasi', '<=', $currentDate->copy()->endOfMonth()->toDateString())
+        ->where(function ($q) {
+            $q->where('status_osp', '!=', 'Drop')
+              ->orWhereNull('status_osp');
+        })
+        ->where('category', 'CSF')
+        ->count();
+    $sCurvePlanData[] = $planIntegrasiCumulative;
+
+    $realIntegrasiCumulative = $queryForGraph->clone()
+        ->whereNotNull('realisasi_integrasi')
+        ->where('realisasi_integrasi', '<=', $currentDate->copy()->endOfMonth()->toDateString())
+        ->where(function ($q) {
+            $q->where('status_osp', '!=', 'Drop')
+              ->orWhereNull('status_osp');
+        })
+        ->where('category', 'CSF')
+        ->count();
+    $sCurveRealData[] = $realIntegrasiCumulative;
+
+    $currentDate->addMonth(); // ini sekarang aman
+}
+
         // =======================================================
         // BAGIAN 5: MENGIRIMKAN SEMUA VARIABEL KE VIEW DASHBOARD
         // =======================================================
