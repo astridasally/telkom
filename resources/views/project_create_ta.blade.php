@@ -153,7 +153,7 @@
                     <option value="OTN">OTN</option>
                     <option value="ONT">ONT</option>
                     <option value="Direct Core">Direct Core</option>
-                    <option value="Re_engineering">Re-engineering</option>
+                    <option value="Re-engineering">Re-engineering</option>
                     <option value="SFP Bidi">SFP Bidi</option>
                     <option value="Cascading">Cascading</option>
                     <option value="Lainnya">Lainnya</option>

@@ -343,6 +343,8 @@
                     <option value="Direct Core" {{ $project->scenario_uplink == 'Direct Core' ? 'selected' : '' }}>Direct Core</option>
                     <option value="Re-engineering" {{ $project->scenario_uplink == 'Re-engineering' ? 'selected' : '' }}>Re-engineering</option>
                     <option value="SFP Bidi" {{ $project->scenario_uplink == 'SFP Bidi' ? 'selected' : '' }}>SFP Bidi</option>
+                    <option value="Cascading" {{ $project->scenario_uplink == 'Cascading' ? 'selected' : '' }}>Cascading</option>
+                    <option value="Lainnya" {{ $project->scenario_uplink == 'Lainnya' ? 'selected' : '' }}>Lainnya</option>
                 </select>
             </div>
 
@@ -499,6 +501,8 @@
                     <option value="Direct Core" {{ $project->scenario_uplink == 'Direct Core' ? 'selected' : '' }}>Direct Core</option>
                     <option value="Re-engineering" {{ $project->scenario_uplink == 'Re-engineering' ? 'selected' : '' }}>Re-engineering</option>
                     <option value="SFP Bidi" {{ $project->scenario_uplink == 'SFP Bidi' ? 'selected' : '' }}>SFP Bidi</option>
+                    <option value="Cascading" {{ $project->scenario_uplink == 'Cascading' ? 'selected' : '' }}>Cascading</option>
+                    <option value="Lainnya" {{ $project->scenario_uplink == 'Lainnya' ? 'selected' : '' }}>Lainnya</option>
                 </select>
             </div>
 

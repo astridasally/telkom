@@ -664,7 +664,7 @@ $skenarioUplinkColumns = [
     'L2S',
     'OTN',
     'ONT',
-    'Re_engineering',
+    'Re-engineering',
     'Lainnya',
 ];
 
@@ -683,7 +683,10 @@ foreach ($regionsForSkenario as $regionalEnum) {
     // ✅ Filter berdasarkan region, drop_data, dan category
     $regionalSkenarioQuery = $baseQuery->clone()
         ->where('regional', $regionName)
-        ->where('drop_data', 'No')
+        ->where(function ($q) {
+                $q->where('status_osp', '!=', 'Drop')
+                ->orWhereNull('status_osp');
+            })
         ->where('category', 'CSF');
 
     $selectStatements = [];
@@ -715,7 +718,10 @@ foreach ($regionsForSkenario as $regionalEnum) {
         // =======================================================
         $failedIntegrasiProjects = $baseQuery->clone()
                                              ->whereNotNull('plan_integrasi') // plan_integrasi sudah diisi
-                                             ->where('drop_data', 'No')->where('category', 'CSF')
+                                             ->where(function ($q) {
+                                                $q->where('status_osp', '!=', 'Drop')
+                                                ->orWhereNull('status_osp');})
+                                                ->where('category', 'CSF')
                                              ->whereNull('realisasi_integrasi')   // realisasi_integrasi masih kosong
                                              ->whereDate('plan_integrasi', '<=', $today) // plan_integrasi adalah hari ini atau di masa lalu
                                              ->with('user')
@@ -729,7 +735,10 @@ foreach ($regionsForSkenario as $regionalEnum) {
 
         $dailyIntegrasiProjects = $baseQuery->clone()
                                             ->whereDate('plan_integrasi', $today) // Filter berdasarkan tanggal hari ini
-                                            ->where('drop_data', 'No')->where('category', 'CSF')
+                                            ->where(function ($q) {
+                                                $q->where('status_osp', '!=', 'Drop')
+                                                ->orWhereNull('status_osp');
+                                            })->where('category', 'CSF')
                                             ->with('user') // Eager load user untuk mendapatkan nama mitra
                                             ->select('regional', 'witel', 'sto', 'site', 'ihld', 'catuan_id', 'assign_to') // Pilih kolom yang dibutuhkan
                                             ->get();
@@ -763,14 +772,20 @@ foreach ($regionsForSkenario as $regionalEnum) {
             $planIntegrasiCumulative = $queryForGraph->clone()
                                                     ->whereNotNull('plan_integrasi')
                                                     ->where('plan_integrasi', '<=', $currentDate->endOfMonth()->toDateString())
-                                                    ->where('drop_data', 'No')->where('category', 'CSF')->count();
+                                                     ->where(function ($q) {
+                                                        $q->where('status_osp', '!=', 'Drop')
+                                                        ->orWhereNull('status_osp');
+                                                    })->where('category', 'CSF')->count();
             $sCurvePlanData[] = $planIntegrasiCumulative;
 
             // Hitung kumulatif REALISASI INTEGRASI hingga akhir bulan ini
             $realIntegrasiCumulative = $queryForGraph->clone()
                                                     ->whereNotNull('realisasi_integrasi')
                                                     ->where('realisasi_integrasi', '<=', $currentDate->endOfMonth()->toDateString())
-                                                    ->where('drop_data', 'No')->where('category', 'CSF')->count();
+                                                    ->where(function ($q) {
+                                                        $q->where('status_osp', '!=', 'Drop')
+                                                        ->orWhereNull('status_osp');
+                                                    })->where('category', 'CSF')->count();
             $sCurveRealData[] = $realIntegrasiCumulative;
 
             $currentDate->addMonth(); // Maju ke bulan berikutnya

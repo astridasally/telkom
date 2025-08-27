@@ -264,7 +264,7 @@
                                     <th>
                                         @if($column === 'DIRECT')
                                             Direct
-                                        @elseif($column === 'Re_engineering')
+                                        @elseif($column === 'Re-engineering')
                                             Re-Engineering
                                         @elseif($column === 'lainnya')
                                             Lainnya
