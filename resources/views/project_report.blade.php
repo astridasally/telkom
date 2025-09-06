@@ -141,7 +141,9 @@
             <th rowspan="2">Remark TA</th>
         @endif
         
+        @if(auth()->user()->role === 'vendor' || auth()->user()->role === 'admin' || auth()->user()->role === 'mitra')
         <th rowspan="2">Action</th>
+        @endif
     </tr>
 
     {{-- BARIS 2 - hanya ditampilkan kalau role MITRA/ADMIN --}}
@@ -239,8 +241,10 @@
         @endif
 
         
-        
+        @if(auth()->user()->role === 'vendor' || auth()->user()->role === 'admin' || auth()->user()->role === 'mitra')
         <td><a href="{{ route('project_update', $project->id) }}" class="edit-button">Edit</a></td>
+        @endif
+
     </tr>
     @endforeach
 </tbody>
