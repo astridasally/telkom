@@ -27,7 +27,7 @@
                 </select>
                 
             {{-- Dropdown Filter Assign To (Mitra) - HANYA TAMPIL JIKA ADMIN ATAU VENDOR --}}
-            @if(auth()->user()->role === 'admin' || auth()->user()->role === 'vendor')
+            @if(auth()->user()->role === 'admin' || auth()->user()->role === 'vendor' || auth()->user()->role === 'viewer')
                 <select name="filter_assign_to" id="filter_assign_to" class="filter-select">
                     <option value="all" {{ request('filter_assign_to', 'all') == 'all' ? 'selected' : '' }}>All Mitra</option>
                     @foreach($allMitras as $mitraName)
@@ -99,7 +99,7 @@
     <tr class="main-header-row">
         
         <th rowspan="2">No</th>
-        @if(auth()->user()->role === 'admin'|| auth()->user()->role === 'vendor')
+        @if(auth()->user()->role === 'admin'|| auth()->user()->role === 'vendor' || auth()->user()->role === 'viewer')
         <th rowspan="2">Add by</th>
         @endif
         <th rowspan="2">Project Type</th>
@@ -111,7 +111,7 @@
         <th rowspan="2">Catuan ID</th>
         
 
-        @if(auth()->user()->role === 'mitra' || auth()->user()->role === 'admin')
+        @if(auth()->user()->role === 'mitra' || auth()->user()->role === 'admin' || auth()->user()->role === 'viewer')
             <th rowspan="2">Category</th>
             <th colspan="2" class="header-group">LAINNYA</th>
             <th colspan="2" class="header-group">MOS</th>
@@ -126,11 +126,11 @@
              <th rowspan="2">Status Uplink</th>
         @endif
 
-        @if(auth()->user()->role === 'mitra' || auth()->user()->role === 'admin')
+        @if(auth()->user()->role === 'mitra' || auth()->user()->role === 'admin' || auth()->user()->role === 'viewer')
             <th rowspan="2">Remark</th>
         @endif
 
-        @if(auth()->user()->role === 'vendor' || auth()->user()->role === 'admin')
+        @if(auth()->user()->role === 'vendor' || auth()->user()->role === 'admin' || auth()->user()->role === 'viewer')
             <th rowspan="2">Priority TA</th>
             <th rowspan="2">Dependensi</th>
             <th rowspan="2">Assign to</th>
@@ -148,7 +148,7 @@
 
     {{-- BARIS 2 - hanya ditampilkan kalau role MITRA/ADMIN --}}
     <tr class="sub-header-row">
-    @if(auth()->user()->role === 'mitra' || auth()->user()->role === 'admin')
+    @if(auth()->user()->role === 'mitra' || auth()->user()->role === 'admin' || auth()->user()->role === 'viewer')
         <th>Plan</th>
         <th>Realisasi</th>
         <th>Plan</th>
@@ -166,7 +166,7 @@
     
     @endif
 
-     @if(auth()->user()->role === 'vendor' || auth()->user()->role === 'admin')
+     @if(auth()->user()->role === 'vendor' || auth()->user()->role === 'admin' || auth()->user()->role === 'viewer')
     
         <th>Skenario</th>
         <th>Status</th>
@@ -179,7 +179,7 @@
     @foreach($projects as $project)
     <tr>
         <td>{{ $projects->firstItem() + $no++ }}</td>
-        @if(auth()->user()->role === 'vendor' || auth()->user()->role === 'admin')
+        @if(auth()->user()->role === 'vendor' || auth()->user()->role === 'admin' || auth()->user()->role === 'viewer')
         <td>{{ $project->user->name }}</td>
         @endif
         
@@ -192,7 +192,7 @@
         <td>{{ $project->catuan_id }}</td>
       
 
-        @if(auth()->user()->role === 'mitra' || auth()->user()->role === 'admin')
+        @if(auth()->user()->role === 'mitra' || auth()->user()->role === 'admin' || auth()->user()->role === 'viewer')
             <td>{{ $project->category }}</td>
             <td>{{ $project->plan_survey }}</td>
             <td>{{ $project->realisasi_survey }}</td>
@@ -220,13 +220,13 @@
              <td>{{ $project->status_uplink }}</td>
         @endif
 
-        @if(auth()->user()->role === 'mitra' || auth()->user()->role === 'admin')
+        @if(auth()->user()->role === 'mitra' || auth()->user()->role === 'admin' || auth()->user()->role === 'viewer')
             <td>{{ $project->remark }}</td>
         @endif
             
             
         
-        @if(auth()->user()->role === 'vendor' || auth()->user()->role === 'admin')
+        @if(auth()->user()->role === 'vendor' || auth()->user()->role === 'admin' || auth()->user()->role === 'viewer')
             <td>{{ $project->priority_ta }}</td>
             <td>{{ $project->dependensi }}</td>
             <td>{{ $project->assign_to }}</td>

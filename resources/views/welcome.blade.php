@@ -39,7 +39,7 @@
                 Register
             </a>
         @endif
--->
+
     </div>
 
 </body>
