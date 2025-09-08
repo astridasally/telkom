@@ -62,8 +62,15 @@ class ProjectController extends Controller
 
 
         // Simpan bukti drop (jika ada)
-        if ($request->hasFile('bukti_drop')) {
-            $validated['bukti_drop'] = $request->file('bukti_drop')->store('bukti_drop', 'public');
+       if ($request->hasFile('bukti_drop')) {
+            $file = $request->file('bukti_drop');
+            $filename = time() . '_' . $file->getClientOriginalName();
+
+            // simpan langsung ke public_html/storage/bukti_drop
+            $file->move(public_path('storage/bukti_drop'), $filename);
+
+            // simpan path relatif ke DB
+            $validated['bukti_drop'] = 'bukti_drop/' . $filename;
         }
 
 
