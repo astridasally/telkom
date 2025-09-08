@@ -30,7 +30,7 @@
                 {{ __('Log in') }}
             </x-primary-button>
         </a>
-
+ <!--
         @if (Route::has('register'))
             <a
                 href="{{ route('register') }}"
@@ -39,7 +39,7 @@
                 Register
             </a>
         @endif
-
+-->
     </div>
 
 </body>
