@@ -640,7 +640,7 @@ class ProjectController extends Controller
         $counts['instalasi_done']   = (clone $query)->whereNotNull('realisasi_instalasi')->where('category', 'CSF')->count();
         $counts['integrasi_plan']   = (clone $query)->whereNotNull('plan_integrasi')->where('category', 'CSF')->count();
         $counts['integrasi_done']   = (clone $query)->whereNotNull('realisasi_integrasi')->where('category', 'CSF')->count();
-        $counts['golive_status']    = (clone $query)->whereNotNull('golive_status')->where('category', 'CSF')->count();
+        $counts['golive_status']    = (clone $query)->whereNotNull('golive_status')->where('golive_status', 'Ready')->where('category', 'CSF')->count();
         $counts['uplink_ready']     = (clone $query)->where('status_uplink', 'Ready')->where('category', 'CSF')->count();
         $counts['uplink_not_ready'] = (clone $query)->where('status_uplink', 'Not Ready')->where('category', 'CSF')->count();
 
