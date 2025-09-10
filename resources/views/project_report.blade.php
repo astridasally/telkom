@@ -242,7 +242,13 @@
 
         
         @if(auth()->user()->role === 'vendor' || auth()->user()->role === 'admin' || auth()->user()->role === 'mitra')
-        <td><a href="{{ route('project_update', $project->id) }}" class="edit-button">Edit</a></td>
+        <td><a href="{{ route('project_update', $project->id) }}" class="edit-button">Edit</a><br>    
+            <form action="{{ route('projects.destroy', $project->id) }}" method="POST" style="display:inline;">
+              @csrf
+            @method('DELETE')
+            <button type="submit" class="delete-button" onclick="return confirm('Yakin mau hapus project ini?')">Delete</button>
+            </form>
+        </td>
         @endif
 
     </tr>

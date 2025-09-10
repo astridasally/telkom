@@ -92,6 +92,8 @@ tbody tr:nth-child(even) td {
     background-color: #ffffff;
 }
 .edit-button {
+    width:50px;   /* 👉 lebar sama */
+    height: 20px;  /* 👉 tinggi sama */
     background-color: #4CAF50; /* Green */
     color: white;
     padding: 2px 12px;
@@ -99,11 +101,31 @@ tbody tr:nth-child(even) td {
     text-decoration: none;
     display: inline-block;
     border-radius: 20px; /* Optional: for rounded corners */
+    margin-bottom: 3px;
 }
 .edit-button:hover{
     background-color: #19b31e;
     transform: translateY(-2px);
     box-shadow: 0 4px 12px #8dc18f;
+}
+.delete-button {
+    width: 50px;   /* 👉 lebar sama */
+    height: 20px;  /* 👉 tinggi sama */
+    background-color: #f44336; /* Merah */
+    color: white;
+    padding: 2px 12px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    border-radius: 20px; /* Biar sama kayak edit */
+    border: none; /* Hilangin border default button */
+    cursor: pointer;
+}
+
+.delete-button:hover {
+    background-color: #d32f2f; /* Merah lebih gelap saat hover */
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px #e68a86;
 }
 
 

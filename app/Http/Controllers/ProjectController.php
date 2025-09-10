@@ -467,7 +467,16 @@ class ProjectController extends Controller
     return redirect()->route('project_report')->with('success', 'Data berhasil diperbarui.');
 }
 
-   public function dashboard(Request $request)
+public function destroy($id)
+{
+    $project = Project::findOrFail($id);
+    $project->delete();
+
+    return redirect()->route('project_report')->with('success', 'Project berhasil dihapus');
+}
+
+
+public function dashboard(Request $request)
     {
         // =======================================================
         // BAGIAN 1: LOGIKA DASHBOARD UTAMA (FILTER & COUNT)
