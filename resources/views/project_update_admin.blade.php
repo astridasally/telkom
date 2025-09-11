@@ -51,25 +51,25 @@
             {{-- STO --}}
             <div class="form-group">
                 <label>STO</label>
-                <input type="text" name="sto" required value="{{ $project->sto }}" readonly class="form-control-readonly">
+                <input type="text" name="sto" value="{{ $project->sto }}" readonly class="form-control-readonly">
             </div>
 
             {{-- Site --}}
             <div class="form-group">
                 <label>Site</label>
-                <input type="text" name="site" required value="{{ $project->site }}" readonly class="form-control-readonly">
+                <input type="text" name="site" value="{{ $project->site }}" readonly class="form-control-readonly">
             </div>
 
             {{-- IHLD --}}
             <div class="form-group">
                 <label>IHLD</label>
-                <input type="text" name="ihld" required value="{{ $project->ihld }}" readonly class="form-control-readonly" />
+                <input type="text" name="ihld" value="{{ $project->ihld }}" readonly class="form-control-readonly" />
             </div>
 
             {{-- Catuan ID --}}
             <div class="form-group">
                 <label>Catuan ID</label>
-                <input type="text" name="catuan_id" value="{{ $project->catuan_id }}" required readonly class="form-control-readonly">
+                <input type="text" name="catuan_id" value="{{ $project->catuan_id }}" readonly class="form-control-readonly">
             </div>
 
             <div class="form-group">
