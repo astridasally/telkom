@@ -47,6 +47,7 @@ class ProjectsExport implements FromCollection, WithHeadings, WithMapping
 
         if (in_array($this->role, ['mitra', 'admin'])) {
             $headings = array_merge($headings, [
+                'Assign To',
                 'Category',
                 'LAINNYA Plan',
                 'LAINNYA Realisasi',
@@ -111,6 +112,7 @@ class ProjectsExport implements FromCollection, WithHeadings, WithMapping
 
         if (in_array($this->role, ['mitra', 'admin'])) {
             $row = array_merge($row, [
+                $project->assign_to,
                 $project->category,
                 $project->plan_survey,
                 $project->realisasi_survey,
