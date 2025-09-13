@@ -111,7 +111,7 @@
         <th rowspan="2">Catuan ID</th>
         
 
-        @if(auth()->user()->role === 'mitra' || auth()->user()->role === 'admin' || auth()->user()->role === 'viewer')
+        @if(auth()->user()->role === 'mitra' || auth()->user()->role === 'admin' || auth()->user()->role === 'viewer' || auth()->user()->role === 'vendor')
             <th rowspan="2">Category</th>
             <th colspan="2" class="header-group">LAINNYA</th>
             <th colspan="2" class="header-group">MOS</th>
@@ -148,7 +148,7 @@
 
     {{-- BARIS 2 - hanya ditampilkan kalau role MITRA/ADMIN --}}
     <tr class="sub-header-row">
-    @if(auth()->user()->role === 'mitra' || auth()->user()->role === 'admin' || auth()->user()->role === 'viewer')
+    @if(auth()->user()->role === 'mitra' || auth()->user()->role === 'admin' || auth()->user()->role === 'viewer' || auth()->user()->role === 'vendor')
         <th>Plan</th>
         <th>Realisasi</th>
         <th>Plan</th>
@@ -192,7 +192,7 @@
         <td>{{ $project->catuan_id }}</td>
       
 
-        @if(auth()->user()->role === 'mitra' || auth()->user()->role === 'admin' || auth()->user()->role === 'viewer')
+        @if(auth()->user()->role === 'mitra' || auth()->user()->role === 'admin' || auth()->user()->role === 'viewer' || auth()->user()->role === 'vendor')
             <td>{{ $project->category }}</td>
             <td>{{ $project->plan_survey }}</td>
             <td>{{ $project->realisasi_survey }}</td>
