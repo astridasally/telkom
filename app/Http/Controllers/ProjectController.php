@@ -614,7 +614,11 @@ public function dashboard(Request $request)
         }
 
         $counts = $this->initializeFunnelingMetrics();
-        $counts['plan_csf']         = (clone $query)->where('category','CSF')->count();
+        $counts['plan_csf']         = (clone $query)->where('category','CSF')
+        ->where(function($q) {
+                $q->where('status_osp', '!=', 'Drop')
+                  ->orWhereNull('status_osp');
+            })->count();
         $counts['ftth_ready_csf']   = (clone $query)->where('priority_ta', 'P1')->where('category', 'CSF')
         ->where(function($q) {
                 $q->where('status_osp', '!=', 'Drop')
