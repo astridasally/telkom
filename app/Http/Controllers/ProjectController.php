@@ -603,7 +603,7 @@ public function dashboard(Request $request)
         $regionName = $regionalEnum->value;
 
         $query = Project::where('regional', $regionName);
-            
+
 
         // Filter project type jika dipilih
         if (!empty($selectedType)) {
@@ -687,10 +687,7 @@ foreach ($regionsForSkenario as $regionalEnum) {
     // ✅ Filter berdasarkan region, drop_data, dan category
     $regionalSkenarioQuery = $baseQuery->clone()
         ->where('regional', $regionName)
-        ->where(function ($q) {
-                $q->where('status_osp', '!=', 'Drop')
-                ->orWhereNull('status_osp');
-            })
+        ->where('drop_data','No')
         ->where('category', 'CSF');
 
     $selectStatements = [];
@@ -722,9 +719,7 @@ foreach ($regionsForSkenario as $regionalEnum) {
         // =======================================================
         $failedIntegrasiProjects = $baseQuery->clone()
                                              ->whereNotNull('plan_integrasi') // plan_integrasi sudah diisi
-                                             ->where(function ($q) {
-                                                $q->where('status_osp', '!=', 'Drop')
-                                                ->orWhereNull('status_osp');})
+                                             ->where('drop_data','No')
                                                 ->where('category', 'CSF')
                                              ->whereNull('realisasi_integrasi')   // realisasi_integrasi masih kosong
                                              ->whereDate('plan_integrasi', '<=', $today) // plan_integrasi adalah hari ini atau di masa lalu
@@ -739,10 +734,8 @@ foreach ($regionsForSkenario as $regionalEnum) {
 
         $dailyIntegrasiProjects = $baseQuery->clone()
                                             ->whereDate('plan_integrasi', $today) // Filter berdasarkan tanggal hari ini
-                                            ->where(function ($q) {
-                                                $q->where('status_osp', '!=', 'Drop')
-                                                ->orWhereNull('status_osp');
-                                            })->where('category', 'CSF')
+                                            ->where('drop_data','No')
+                                            ->where('category', 'CSF')
                                             ->with('user') // Eager load user untuk mendapatkan nama mitra
                                             ->select('regional', 'witel', 'sto', 'site', 'ihld', 'catuan_id', 'assign_to') // Pilih kolom yang dibutuhkan
                                             ->get();
@@ -778,10 +771,7 @@ foreach ($regionsForSkenario as $regionalEnum) {
         $planIntegrasiCumulative = $queryForGraph->clone()
             ->whereNotNull('plan_integrasi')
             ->where('plan_integrasi', '<=', $currentDate->copy()->endOfMonth()->toDateString())
-            ->where(function ($q) {
-                $q->where('status_osp', '!=', 'Drop')
-                  ->orWhereNull('status_osp');
-            })
+            ->where('drop_data','No')
             ->where('category', 'CSF')
             ->count();
         $sCurvePlanData[] = $planIntegrasiCumulative;
@@ -789,10 +779,7 @@ foreach ($regionsForSkenario as $regionalEnum) {
         $realIntegrasiCumulative = $queryForGraph->clone()
             ->whereNotNull('realisasi_integrasi')
             ->where('realisasi_integrasi', '<=', $currentDate->copy()->endOfMonth()->toDateString())
-            ->where(function ($q) {
-                $q->where('status_osp', '!=', 'Drop')
-                  ->orWhereNull('status_osp');
-            })
+            ->where('drop_data','No')
             ->where('category', 'CSF')
             ->count();
 
