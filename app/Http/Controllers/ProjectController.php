@@ -889,10 +889,7 @@ public function getPopupDetail(Request $request)
     // 🔹 Kondisi sesuai stage
     switch ($stage) {
         case 'lainnya':
-            $query->where(function ($q) {
-                $q->where('status_osp','!=', 'Drop')
-                  ->orWhereNull('status_osp');
-            })
+            $query->where('drop_data', 'No')
             ->where(function ($q) {
                 $q->whereNotNull('plan_survey')
                   ->orWhereNotNull('realisasi_survey');
@@ -900,10 +897,7 @@ public function getPopupDetail(Request $request)
             break;
 
         case 'mos':
-            $query->where(function ($q) {
-                $q->where('status_osp','!=', 'Drop')
-                  ->orWhereNull('status_osp');
-            })
+            $query->where('drop_data', 'No')
             ->where(function ($q) {
                 $q->whereNotNull('plan_delivery')
                   ->orWhereNotNull('realisasi_delivery');
@@ -911,10 +905,7 @@ public function getPopupDetail(Request $request)
             break;
 
         case 'instalasi':
-            $query->where(function ($q) {
-                $q->where('status_osp','!=', 'Drop')
-                  ->orWhereNull('status_osp');
-            })
+            $query->where('drop_data', 'No')
             ->where(function ($q) {
                 $q->whereNotNull('plan_instalasi')
                   ->orWhereNotNull('realisasi_instalasi');
@@ -922,10 +913,7 @@ public function getPopupDetail(Request $request)
             break;
 
         case 'integrasi':
-            $query->where(function ($q) {
-                $q->where('status_osp','!=', 'Drop')
-                  ->orWhereNull('status_osp');
-            })
+            $query->where('drop_data', 'No')
             ->where(function ($q) {
                 $q->whereNotNull('plan_integrasi')
                   ->orWhereNotNull('realisasi_integrasi');
