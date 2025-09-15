@@ -602,11 +602,8 @@ public function dashboard(Request $request)
     foreach ($regions as $regionalEnum) {
         $regionName = $regionalEnum->value;
 
-        $query = Project::where('regional', $regionName)
-            ->where(function($q) {
-                $q->where('status_osp', '!=', 'Drop')
-                  ->orWhereNull('status_osp');
-            });
+        $query = Project::where('regional', $regionName);
+            
 
         // Filter project type jika dipilih
         if (!empty($selectedType)) {
@@ -614,8 +611,7 @@ public function dashboard(Request $request)
         }
 
         $counts = $this->initializeFunnelingMetrics();
-        $counts['plan_csf']         = (clone $query)->where('category','CSF')
-        ->where(function($q) {
+        $counts['plan_csf']         = (clone $query)->where('category','CSF')->where(function($q) {
                 $q->where('status_osp', '!=', 'Drop')
                   ->orWhereNull('status_osp');
             })->count();
