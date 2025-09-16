@@ -326,10 +326,12 @@
                 <label>Status OSP</label>
                 <select name="status_osp">
                     <option value="">-- Pilih --</option>
-                    <option value="Finish Instalasi" {{ $project->status_osp == 'Finish Instalasi' ? 'selected' : '' }}>Finish Instalasi</option>
-                    <option value="Proses Instalasi" {{ $project->status_osp == 'Proses Instalasi' ? 'selected' : '' }}>Proses Instalasi</option>
-                    <option value="Persiapan" {{ $project->status_osp == 'Persiapan' ? 'selected' : '' }}>Persiapan</option>
                     <option value="Drop" {{ $project->status_osp == 'Drop' ? 'selected' : '' }}>Drop</option>
+                    <option value="Persiapan" {{ $project->status_osp == 'Persiapan' ? 'selected' : '' }}>Persiapan</option>
+                    <option value="Matdel" {{ $project->status_osp == 'Matdel' ? 'selected' : '' }}>Matdel</option>
+                    <option value="OGP Instalasi" {{ $project->status_osp == 'OGP Instalasi' ? 'selected' : '' }}>OGP Instalasi</option>
+                    <option value="Finish Instalasi" {{ $project->status_osp == 'Finish Instalasi' ? 'selected' : '' }}>Finish Instalasi</option>
+                    <option value="Go Live" {{ $project->status_osp == 'Go_live' ? 'selected' : '' }}>Go Live</option>
                 </select>
             </div>
 
@@ -484,10 +486,12 @@
                 <label>Status OSP</label>
                 <select name="status_osp">
                     <option value="">-- Pilih --</option>
-                    <option value="Finish Instalasi" {{ $project->status_osp == 'Finish Instalasi' ? 'selected' : '' }}>Finish Instalasi</option>
-                    <option value="Proses Instalasi" {{ $project->status_osp == 'Proses Instalasi' ? 'selected' : '' }}>Proses Instalasi</option>
-                    <option value="Persiapan" {{ $project->status_osp == 'Persiapan' ? 'selected' : '' }}>Persiapan</option>
                     <option value="Drop" {{ $project->status_osp == 'Drop' ? 'selected' : '' }}>Drop</option>
+                    <option value="Persiapan" {{ $project->status_osp == 'Persiapan' ? 'selected' : '' }}>Persiapan</option>
+                    <option value="Matdel" {{ $project->status_osp == 'Matdel' ? 'selected' : '' }}>Matdel</option>
+                    <option value="OGP Instalasi" {{ $project->status_osp == 'OGP Instalasi' ? 'selected' : '' }}>OGP Instalasi</option>
+                    <option value="Finish Instalasi" {{ $project->status_osp == 'Finish Instalasi' ? 'selected' : '' }}>Finish Instalasi</option>
+                    <option value="Go Live" {{ $project->status_osp == 'Go_live' ? 'selected' : '' }}>Go Live</option>
                 </select>
             </div>
 

@@ -141,7 +141,7 @@
                     <option value="Matdel">Matdel</option>
                     <option value="OGP Instalasi">OGP Instalasi</option>
                     <option value="Finish Instalasi">Finish Instalasi</option>
-                    <option value="Go_live">Go Live</option>
+                    <option value="Go Live">Go Live</option>
                 </select>
             </div>
 
