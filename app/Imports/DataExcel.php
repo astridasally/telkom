@@ -12,6 +12,7 @@ class DataExcel implements ToModel, WithHeadingRow
     public function model(array $row)
     {
         return new Project([
+            'user_id'             => auth()->id(), // 🔹 Tambahin ini
             'project_type'        => $row['project_type'] ?? null,
             'regional'            => $row['regional'] ?? null,
             'witel'               => $row['witel'] ?? null,

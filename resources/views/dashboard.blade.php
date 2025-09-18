@@ -155,18 +155,17 @@
 
 
                    
-                   <div class="filter-item">
+                <div class="filter-item">
                     <label for="witel_filter" class="sr-only">Pilih Witel</label>
                    <select id="filter_witel" name="filter_witel" class="filter-select">
-    <option value="all" {{ request('filter_witel', 'all') == 'all' ? 'selected' : '' }}>All Witel</option>
-    @foreach($allWitels as $witel)
-        <option value="{{ $witel }}" {{ request('filter_witel', 'all') == $witel ? 'selected' : '' }}>
-            {{ $witel }}
-        </option>
-    @endforeach
-</select>
-
-                </div>
+                        <option value="all" {{ request('filter_witel', 'all') == 'all' ? 'selected' : '' }}>All Witel</option>
+                        @foreach($allWitels as $witel)
+                            <option value="{{ $witel }}" {{ request('filter_witel', 'all') == $witel ? 'selected' : '' }}>
+                                {{ $witel }}
+                            </option>
+                        @endforeach
+                    </select>
+                     </div>
                 
 
                     <button type="submit" class="filter-apply-btn">Apply</button>
