@@ -440,7 +440,11 @@
                     <option value="NON CSF" {{ $project->category == 'NON CSF' ? 'selected' : '' }}>NON CSF</option>
                 </select>
             </div>
+            </div>
 
+            <div class="form-column">
+
+            <div class="form-column">
             <div class="form-group">
                 <label>Project Type</label>
                 <select name="project_type" required>
@@ -449,11 +453,7 @@
                     <option value="Project Mitratel" {{ $project->project_type == 'Project Mitratel' ? 'selected' : '' }}>Project Mitratel</option>
                 </select>
             </div>
-            </div>
 
-            <div class="form-column">
-
-            <div class="form-column">
             <div style="display: flex; gap: 15px; width: 100%;">
                 <div class="form-group" style="flex: 1;">
                     <label for="dependensi">Dependensi</label>
@@ -464,18 +464,6 @@
                         <option value="Dependence" {{ $project->dependensi == 'Dependence' ? 'selected' : '' }}>Dependence</option>
                     </select>
                 </div>
-
-                    <div class="form-group" style="flex: 1;">
-                        <label for="assign_to">Assign To</label>
-                        <select name="assign_to" id="assign_to" class="form-control">
-                            <option value="">-- Pilih --</option>
-
-                            {{-- Logika untuk mempertahankan pilihan Assign To --}}
-                            <option value="ZTE" {{ $project->assign_to == 'ZTE' ? 'selected' : '' }}>ZTE</option>
-                            <option value="Huawei" {{ $project->assign_to == 'Huawei' ? 'selected' : '' }}>Huawei</option>
-                            <option value="FiberHome" {{ $project->assign_to == 'FiberHome' ? 'selected' : '' }}>FiberHome</option>
-                        </select>
-                    </div>
                 </div>
             </div>
 
