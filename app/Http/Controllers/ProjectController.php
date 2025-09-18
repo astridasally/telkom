@@ -249,7 +249,7 @@ public function report(Request $request)
             'scenario_uplink' => 'nullable',
             'status_uplink' => 'nullable',
             'remark_ta' => 'nullable|string',
-            'golive_status' => 'nullable',
+
             'jumlah_port' => 'nullable',
 
         ]);
@@ -303,7 +303,6 @@ public function report(Request $request)
         'dependensi' => 'nullable',
         'assign_to' => 'nullable',
         'project_type' =>'required',
-        'golive_status' => 'nullable',
         'jumlah_port' => 'nullable',
         'status_osp' => 'nullable',
         'scenario_uplink' => 'nullable',
@@ -389,7 +388,6 @@ public function report(Request $request)
         'dependensi' => 'nullable',
         'assign_to' => 'nullable',
         'project_type' =>'required',
-        'golive_status' => 'nullable',
         'jumlah_port' => 'nullable',
         'status_osp' => 'nullable',
         'scenario_uplink' => 'nullable',
@@ -575,42 +573,22 @@ public function dashboard(Request $request)
         }
 
         $counts = $this->initializeFunnelingMetrics();
-        $counts['plan_csf']         = (clone $query)->where('category','CSF')->where(function($q) {
-                $q->where('status_osp', '!=', 'Drop')
-                  ->orWhereNull('status_osp');
-            })->count();
+        $counts['plan_csf']         = (clone $query)->where('category','CSF')->where(function($q) {$q->where('status_osp', '!=', 'Drop')->orWhereNull('status_osp'); })->count();
         $counts['ftth_ready_csf']   = (clone $query)->where('priority_ta', 'P1')->where('category', 'CSF')
-        ->where(function($q) {
-                $q->where('status_osp', '!=', 'Drop')
-                  ->orWhereNull('status_osp');
-            })->count();
+            ->where(function($q) {$q->where('status_osp', '!=', 'Drop')->orWhereNull('status_osp'); })->count();
         $counts['jumlah_port']      = (clone $query)->whereNotNull('jumlah_port')->where('category', 'CSF')
-        ->where(function($q) {
-                $q->where('status_osp', '!=', 'Drop')
-                  ->orWhereNull('status_osp');
-            })->sum('jumlah_port');
+            ->where(function($q) {$q->where('status_osp', '!=', 'Drop')->orWhereNull('status_osp');})->sum('jumlah_port');
         $counts['delivery_plan']    = (clone $query)->whereNotNull('plan_delivery')->where('category', 'CSF')->where('drop_data','No')->count();
         $counts['delivery_done']    = (clone $query)->whereNotNull('realisasi_delivery')->where('category', 'CSF')->where('drop_data','No')->count();
         $counts['instalasi_plan']   = (clone $query)->whereNotNull('plan_instalasi')->where('category', 'CSF')->where('drop_data','No')->count();
         $counts['instalasi_done']   = (clone $query)->whereNotNull('realisasi_instalasi')->where('category', 'CSF')->where('drop_data','No')->count();
         $counts['integrasi_plan']   = (clone $query)->whereNotNull('plan_integrasi')->where('category', 'CSF')->where('drop_data','No')->count();
         $counts['integrasi_done']   = (clone $query)->whereNotNull('realisasi_integrasi')->where('category', 'CSF')->where('drop_data','No')->count();
-        $counts['golive_status']    = (clone $query)->whereNotNull('golive_status')->where('golive_status', 'Ready')->where('category', 'CSF')
-        ->where(function($q) {
-                $q->where('status_osp', '!=', 'Drop')
-                  ->orWhereNull('status_osp');
-            })->count();
-
+        $counts['golive_status'] = (clone $query)->where('status_osp', 'Go Live') ->where('category', 'CSF')->count();
         $counts['uplink_ready']     = (clone $query)->where('status_uplink', 'Ready')->where('category', 'CSF')
-        ->where(function($q) {
-                $q->where('status_osp', '!=', 'Drop')
-                  ->orWhereNull('status_osp');
-            })->count();
+            ->where(function($q) {$q->where('status_osp', '!=', 'Drop')->orWhereNull('status_osp'); })->count();
         $counts['uplink_not_ready'] = (clone $query)->where('status_uplink', 'Not Ready')->where('category', 'CSF')
-        ->where(function($q) {
-                $q->where('status_osp', '!=', 'Drop')
-                  ->orWhereNull('status_osp');
-            })->count();
+            ->where(function($q) {$q->where('status_osp', '!=', 'Drop')->orWhereNull('status_osp'); })->count();
 
         $tableData[$regionName] = $counts;
 
