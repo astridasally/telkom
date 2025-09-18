@@ -43,11 +43,11 @@ class ProjectsExport implements FromCollection, WithHeadings, WithMapping
             'Site',
             'IHLD',
             'Catuan ID',
+            'Assign To',
         ]);
 
         if (in_array($this->role, ['mitra', 'admin'])) {
             $headings = array_merge($headings, [
-                'Assign To',
                 'Category',
                 'LAINNYA Plan',
                 'LAINNYA Realisasi',
@@ -78,7 +78,6 @@ class ProjectsExport implements FromCollection, WithHeadings, WithMapping
             $headings = array_merge($headings, [
                 'Priority TA',
                 'Dependensi',
-                'Assign to',
                 'Jumlah Port',
                 'Go Live Status',
                 'Status OSP',
@@ -108,11 +107,12 @@ class ProjectsExport implements FromCollection, WithHeadings, WithMapping
             $project->site,
             $project->ihld,
             $project->catuan_id,
+            $project->assign_to,
+
         ]);
 
         if (in_array($this->role, ['mitra', 'admin'])) {
             $row = array_merge($row, [
-                $project->assign_to,
                 $project->category,
                 $project->plan_survey,
                 $project->realisasi_survey,
@@ -143,7 +143,6 @@ class ProjectsExport implements FromCollection, WithHeadings, WithMapping
             $row = array_merge($row, [
                 $project->priority_ta,
                 $project->dependensi,
-                $project->assign_to,
                 $project->jumlah_port,
                 $project->golive_status,
                 $project->status_osp,
