@@ -75,7 +75,7 @@
 
                 <div class="form-group">
                     <label>IHLD</label>
-                    <input type="text" name="ihld" required />
+                    <input type="text" name="ihld" />
                 </div>
             </div>
 
@@ -92,7 +92,7 @@
 
                 <div class="form-group">
                     <label>Catuan ID</label>
-                    <input type="text" name="catuan_id" required />
+                    <input type="text" name="catuan_id" />
                 </div>
 
 

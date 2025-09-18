@@ -124,12 +124,12 @@
 
             <div class="form-group">
                 <label>IHLD</label>
-                <input type="text" name="ihld" required value="{{ $project->ihld }}" />
+                <input type="text" name="ihld" value="{{ $project->ihld }}" />
             </div>
             
             <div class="form-group">
                 <label>Catuan ID</label>
-                <input type="text" name="catuan_id" value="{{ $project->catuan_id }}" required>
+                <input type="text" name="catuan_id" value="{{ $project->catuan_id }}">
                 </div>
 
             <div class="form-group">
@@ -154,6 +154,18 @@
             </div>
 
             <div class="form-column">
+            
+            @if (Auth::user()->role === 'mitra')
+            <div class="form-group">
+                <label>Assign To</label>
+                <select name="assign_to" class="form-control">
+                    <option value="">-- Pilih --</option>
+                    <option value="ZTE">ZTE</option>
+                    <option value="Huawei">Huawei</option>
+                    <option value="FiberHome">FiberHome</option>
+                </select>
+            </div> 
+            @endif
 
             <div class="form-group">
                 <label style="color: #0d6efd; font-weight: 650;"></label>
@@ -402,12 +414,12 @@
 
             <div class="form-group">
                 <label>IHLD</label>
-                <input type="text" name="ihld" required value="{{ $project->ihld }}" />
+                <input type="text" name="ihld"  value="{{ $project->ihld }}" />
             </div>
             
             <div class="form-group">
                 <label>Catuan ID</label>
-                <input type="text" name="catuan_id" value="{{ $project->catuan_id }}" required>
+                <input type="text" name="catuan_id" value="{{ $project->catuan_id }}" >
             </div>
 
             <div class="form-group">

@@ -65,12 +65,12 @@
 
             <div class="form-group">
                 <label>IHLD</label>
-                <input type="text" name="ihld" required />
+                <input type="text" name="ihld" />
             </div>
             
             <div class="form-group">
                 <label>Catuan ID</label>
-                <input type="text" name="catuan_id" required />
+                <input type="text" name="catuan_id" />
             </div>
 
             <div class="form-group">
@@ -102,16 +102,6 @@
                             <option value="">-- Pilih --</option>
                             <option value="Main">Main</option>
                             <option value="Dependence">Dependence</option>
-                        </select>
-                    </div>
-
-                    <div class="form-group" style="flex: 1;">
-                        <label for="assign_to">Assign To</label>
-                        <select name="assign_to" id="assign_to" class="form-control">
-                            <option value="">-- Pilih --</option>
-                            <option value="ZTE">ZTE</option>
-                            <option value="Huawei">Huawei</option>
-                            <option value="FiberHome">FiberHome</option>
                         </select>
                     </div>
                 </div>
