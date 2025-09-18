@@ -324,13 +324,6 @@
                 <div class="form-group" style="flex: 1;"><label>Jumlah Port</label>
                         <input type="number" name="jumlah_port" class="form-control" value="{{ $project->jumlah_port }}">
                     </div>
-                    <div class="form-group" style="flex: 1;"><label>Status Go Live</label>
-                        <select name="golive_status">
-                            <option value="">-- Pilih --</option>
-                            <option value="Ready" {{ $project->golive_status == 'Ready' ? 'selected' : '' }}>Ready</option>
-                            <option value="Not Yet" {{ $project->golive_status == 'Not Yet' ? 'selected' : '' }}>Not Yet</option>
-                        </select>
-                    </div>
                 </div>
             </div>
 
@@ -343,7 +336,7 @@
                     <option value="Matdel" {{ $project->status_osp == 'Matdel' ? 'selected' : '' }}>Matdel</option>
                     <option value="OGP Instalasi" {{ $project->status_osp == 'OGP Instalasi' ? 'selected' : '' }}>OGP Instalasi</option>
                     <option value="Finish Instalasi" {{ $project->status_osp == 'Finish Instalasi' ? 'selected' : '' }}>Finish Instalasi</option>
-                    <option value="Go Live" {{ $project->status_osp == 'Go_live' ? 'selected' : '' }}>Go Live</option>
+                    <option value="Go Live" {{ $project->status_osp == 'Go Live' ? 'selected' : '' }}>Go Live</option>
                 </select>
             </div>
 
@@ -471,13 +464,6 @@
             <div style="display: flex; gap: 15px; width: 100%;">
                 <div class="form-group" style="flex: 1;"><label>Jumlah Port</label>
                         <input type="number" name="jumlah_port" class="form-control" value="{{ $project->jumlah_port }}">
-                    </div>
-                    <div class="form-group" style="flex: 1;"><label>Status Go Live</label>
-                        <select name="golive_status">
-                            <option value="">-- Pilih --</option>
-                            <option value="Ready" {{ $project->golive_status == 'Ready' ? 'selected' : '' }}>Ready</option>
-                            <option value="Not Yet" {{ $project->golive_status == 'Not Yet' ? 'selected' : '' }}>Not Yet</option>
-                        </select>
                     </div>
                 </div>
             </div>

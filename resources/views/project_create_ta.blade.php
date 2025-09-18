@@ -112,13 +112,6 @@
                     <div class="form-group" style="flex: 1;"><label>Jumlah Port</label>
                             <input type="number" name="jumlah_port" class="form-control">
                         </div>
-                     <div class="form-group" style="flex: 1;"><label>Status Go Live</label>
-                        <select name="golive_status">
-                            <option value="">-- Pilih --</option>
-                            <option value="Ready">Ready</option>
-                            <option value="Not Yet">Not Yet</option>
-                        </select>
-                    </div>
                 </div>
             </div>
 
