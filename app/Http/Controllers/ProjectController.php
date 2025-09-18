@@ -84,184 +84,135 @@ class ProjectController extends Controller
             return redirect()->back()->with('error', 'Gagal menyimpan project.');
         }
     }
+public function report(Request $request)
+{
+    $user = Auth::user();
+    $query = Project::query(); // Mulai query builder
 
-    public function report(Request $request)
-    {
-        $user = Auth::user();
-        $query = Project::query(); // Mulai query builder
+    // --- FILTER PERAN ---
+    if ($user->role === 'mitra') {
+        $query->where(function ($q) use ($user) {
+            $q->where('assign_to', $user->name)
+              ->orWhereNull('assign_to')
+              ->orWhere('assign_to', '');
+        });
+    }
 
-       // Logika filter berdasarkan peran pengguna (revisi)
-        if ($user->role === 'mitra') {
-            // Mitra hanya melihat proyek di mana 'assign_to' adalah nama mitra itu sendiri
-            // PENTING: Pastikan Auth::user()->name untuk role 'mitra' sama dengan nilai di kolom 'assign_to'
-            $query->where('assign_to', $user->name);
-        }
+    // --- TAMBAHAN UNTUK FILTER DROPDOWN ---
+    $selectedRegionalFilter = $request->input('filter_regional');
+    $selectedWitelFilter    = $request->input('filter_witel');
+    $selectedStoFilter      = $request->input('filter_sto');
 
-        // --- TAMBAHAN UNTUK FILTER DROPDOWN ---
-        $selectedRegionalFilter = $request->input('filter_regional');
-        $selectedWitelFilter = $request->input('filter_witel');
-        $selectedStoFilter = $request->input('filter_sto');
-        $selectedMitraFilter = $request->input('filter_assign_to');
-        $selectedType     = $request->input('project_type', 'Project TA'); // default Project TA
+    // 🔹 Handle filter mitra (default beda sesuai role)
+    if ($user->role === 'mitra') {
+        $selectedMitraFilter = $request->input('filter_assign_to', $user->name);
+    } else {
+        $selectedMitraFilter = $request->input('filter_assign_to', 'all');
+    }
 
+    $selectedType = $request->input('project_type', 'Project TA'); // default Project TA
 
-        if ($selectedRegionalFilter && $selectedRegionalFilter !== 'all') {
-            $query->where('regional', $selectedRegionalFilter);
-        }
+    if ($selectedRegionalFilter && $selectedRegionalFilter !== 'all') {
+        $query->where('regional', $selectedRegionalFilter);
+    }
 
-        if ($selectedWitelFilter && $selectedWitelFilter !== 'all') {
-            $query->where('witel', $selectedWitelFilter);
-        }
+    if ($selectedWitelFilter && $selectedWitelFilter !== 'all') {
+        $query->where('witel', $selectedWitelFilter);
+    }
 
-        if ($selectedStoFilter && $selectedStoFilter !== 'all') {
-            $query->where('sto', $selectedStoFilter);
-        }
+    if ($selectedStoFilter && $selectedStoFilter !== 'all') {
+        $query->where('sto', $selectedStoFilter);
+    }
 
-        if ($selectedMitraFilter && $selectedMitraFilter !== 'all') {
+    // 🔹 Filter assign_to
+    if ($selectedMitraFilter && $selectedMitraFilter !== 'all') {
+        if ($selectedMitraFilter === 'unassigned') {
+            $query->where(function($q) {
+                $q->whereNull('assign_to')
+                  ->orWhere('assign_to', '');
+            });
+        } else {
             $query->where('assign_to', $selectedMitraFilter);
         }
-        // FILTER TYPE
-        if ($selectedType && $selectedType !== 'All Project') {
-            $query->where('project_type', $selectedType);
-        }
-        // --- AKHIR TAMBAHAN UNTUK FILTER DROPDOWN ---
-
-
-        // Logika pencarian utama (tetap dipertahankan dan digabungkan)
-        if ($request->has('search') && $request->search != '') {
-            $searchTerm = strtolower($request->search);
-
-            $query->where(function($q) use ($searchTerm, $user) {
-                $q->whereRaw('LOWER(regional) LIKE ?', ['%' . $searchTerm . '%'])
-                  ->orWhereRaw('LOWER(witel) LIKE ?', ['%' . $searchTerm . '%'])
-                  ->orWhereRaw('LOWER(sto) LIKE ?', ['%' . $searchTerm . '%'])
-                  ->orWhereRaw('LOWER(site) LIKE ?', ['%' . $searchTerm . '%'])
-                  ->orWhereRaw('LOWER(ihld) LIKE ?', ['%' . $searchTerm . '%'])
-                  ->orWhereRaw('LOWER(catuan_id) LIKE ?', ['%' . $searchTerm . '%']);
-
-                if ($user->role === 'mitra' || $user->role === 'admin') {
-                    $q->orWhereRaw('LOWER(category) LIKE ?', ['%' . $searchTerm . '%'])
-                      ->orWhereRaw('LOWER(remark) LIKE ?', ['%' . $searchTerm . '%']);
-                }
-
-                if ($user->role === 'vendor' || $user->role === 'admin') {
-                    $q->orWhereRaw('LOWER(priority_ta) LIKE ?', ['%' . $searchTerm . '%'])
-                      ->orWhereRaw('LOWER(dependensi) LIKE ?', ['%' . $searchTerm . '%'])
-                      ->orWhereRaw('LOWER(assign_to) LIKE ?', ['%' . $searchTerm . '%'])
-                      ->orWhereRaw('LOWER(golive_status) LIKE ?', ['%' . $searchTerm . '%'])
-                      ->orWhereRaw('LOWER(jumlah_port) LIKE ?', ['%' . $searchTerm . '%'])
-                      ->orWhereRaw('LOWER(status_osp) LIKE ?', ['%' . $searchTerm . '%'])
-                      ->orWhereRaw('LOWER(scenario_uplink) LIKE ?', ['%' . $searchTerm . '%'])
-                      ->orWhereRaw('LOWER(status_uplink) LIKE ?', ['%' . $searchTerm . '%'])
-                      ->orWhereRaw('LOWER(remark_ta) LIKE ?', ['%' . $searchTerm . '%'])
-                      ->orWhereRaw('LOWER(relok_regional) LIKE ?', ['%' . $searchTerm . '%'])
-                      ->orWhereRaw('LOWER(relok_witel) LIKE ?', ['%' . $searchTerm . '%'])
-                      ->orWhereRaw('LOWER(relok_sto) LIKE ?', ['%' . $searchTerm . '%'])
-                      ->orWhereRaw('LOWER(relok_site) LIKE ?', ['%' . $searchTerm . '%']);
-                }
-
-                if ($user->role === 'admin' || $user->role === 'vendor') {
-                    $q->orWhereHas('user', function ($userQuery) use ($searchTerm) {
-                        $userQuery->whereRaw('LOWER(name) LIKE ?', ['%' . $searchTerm . '%']);
-                    });
-                }
-            });
-        }
-
-        $query->orderBy('created_at', 'desc');
-
-        $projects = $query->paginate(200)->appends($request->query());
-
-        // --- PASTIKAN BAGIAN INI ADA DAN BENAR ---
-        // Untuk mengisi dropdown di view, kita perlu mendapatkan daftar unik Regional, Witel, STO
-        // Ambil dari database, pastikan model Project terhubung dengan kolom-kolom ini
-        $allRegionals = Project::distinct('regional')->pluck('regional')->sort()->toArray();
-        $allWitels = Project::distinct('witel')->pluck('witel')->sort()->toArray();
-        $allStos = Project::distinct('sto')->pluck('sto')->sort()->toArray();
-        $allMitras = Project::distinct('assign_to')->pluck('assign_to')->sort()->toArray();
-        $allProjectTypes = Project::whereNotNull('project_type')
-            ->where('project_type', '!=', '')
-            ->distinct()
-            ->pluck('project_type')
-            ->sort()
-            ->toArray();
-
-        // --- AKHIR PASTIKAN BAGIAN INI ---
-
-        return view('project_report', compact(
-            'projects',
-            'allRegionals', // Pastikan ini ada
-            'allWitels',    // Pastikan ini ada
-            'allStos',      // Pastikan ini ada
-            'allMitras',
-            'allProjectTypes',
-            'selectedRegionalFilter',
-            'selectedWitelFilter',
-            'selectedStoFilter',
-            'selectedMitraFilter',
-            'selectedType'
-            
-
-        ));
-
-        // Logika pencarian utama
-        if ($request->has('search') && $request->search != '') {
-            $searchTerm = strtolower($request->search); // Konversi searchTerm ke huruf kecil
-
-            // Gunakan where(function) untuk mengelompokkan semua kondisi OR
-            // ini sangat penting agar filter peran (user_id) tetap berfungsi sebagai AND
-            // dan pencarian OR berlaku di dalam grup ini.
-            $query->where(function($q) use ($searchTerm, $user) {
-                // Kolom-kolom umum yang selalu dicari (gunakan LOWER() untuk case-insensitivity)
-                $q->whereRaw('LOWER(regional) LIKE ?', ['%' . $searchTerm . '%'])
-                  ->orWhereRaw('LOWER(witel) LIKE ?', ['%' . $searchTerm . '%'])
-                  ->orWhereRaw('LOWER(sto) LIKE ?', ['%' . $searchTerm . '%'])
-                  ->orWhereRaw('LOWER(site) LIKE ?', ['%' . $searchTerm . '%'])
-                  ->orWhereRaw('LOWER(ihld) LIKE ?', ['%' . $searchTerm . '%'])
-                  ->orWhereRaw('LOWER(catuan_id) LIKE ?', ['%' . $searchTerm . '%']);
-
-                // Kolom spesifik untuk peran 'mitra' atau 'admin'
-                if ($user->role === 'mitra' || $user->role === 'admin') {
-                    $q->orWhereRaw('LOWER(category) LIKE ?', ['%' . $searchTerm . '%'])
-                      ->orWhereRaw('LOWER(remark) LIKE ?', ['%' . $searchTerm . '%']);
-                }
-
-                // Kolom spesifik untuk peran 'vendor' atau 'admin'
-                if ($user->role === 'vendor' || $user->role === 'admin') {
-                    $q->orWhereRaw('LOWER(priority_ta) LIKE ?', ['%' . $searchTerm . '%'])
-                      ->orWhereRaw('LOWER(dependensi) LIKE ?', ['%' . $searchTerm . '%'])
-                      ->orWhereRaw('LOWER(assign_to) LIKE ?', ['%' . $searchTerm . '%'])
-                      ->orWhereRaw('LOWER(golive_status) LIKE ?', ['%' . $searchTerm . '%'])
-                      ->orWhereRaw('LOWER(jumlah_port) LIKE ?', ['%' . $searchTerm . '%'])
-                      ->orWhereRaw('LOWER(status_osp) LIKE ?', ['%' . $searchTerm . '%'])
-                      ->orWhereRaw('LOWER(scenario_uplink) LIKE ?', ['%' . $searchTerm . '%'])
-                      ->orWhereRaw('LOWER(status_uplink) LIKE ?', ['%' . $searchTerm . '%'])
-                      ->orWhereRaw('LOWER(remark_ta) LIKE ?', ['%' . $searchTerm . '%'])
-                      // Kolom relokasi
-                      ->orWhereRaw('LOWER(relok_regional) LIKE ?', ['%' . $searchTerm . '%'])
-                      ->orWhereRaw('LOWER(relok_witel) LIKE ?', ['%' . $searchTerm . '%'])
-                      ->orWhereRaw('LOWER(relok_sto) LIKE ?', ['%' . $searchTerm . '%'])
-                      ->orWhereRaw('LOWER(relok_site) LIKE ?', ['%' . $searchTerm . '%']);
-                }
-
-                // Jika user adalah admin atau vendor, tambahkan pencarian berdasarkan nama mitra
-                if ($user->role === 'admin' || $user->role === 'vendor') {
-                    $q->orWhereHas('user', function ($userQuery) use ($searchTerm) {
-                        $userQuery->whereRaw('LOWER(name) LIKE ?', ['%' . $searchTerm . '%']);
-                    });
-                }
-            });
-        }
-
-        // Mengurutkan proyek (opsional: agar hasilnya konsisten)
-        $query->orderBy('created_at', 'desc');
-
-        // Ambil proyek dengan paginasi
-        // Pagination limit diseragamkan menjadi 10 (seperti yang ada di logika pencarian)
-        $projects = $query->paginate(100)->appends($request->query()); // appends() untuk mempertahankan parameter search
-
-        return view('project_report', compact('projects'));
     }
+
+    // 🔹 Filter project type
+    if ($selectedType && $selectedType !== 'All Project') {
+        $query->where('project_type', $selectedType);
+    }
+    // --- END FILTER DROPDOWN ---
+
+    // --- Pencarian utama ---
+    if ($request->has('search') && $request->search != '') {
+        $searchTerm = strtolower($request->search);
+
+        $query->where(function($q) use ($searchTerm, $user) {
+            $q->whereRaw('LOWER(regional) LIKE ?', ['%' . $searchTerm . '%'])
+              ->orWhereRaw('LOWER(witel) LIKE ?', ['%' . $searchTerm . '%'])
+              ->orWhereRaw('LOWER(sto) LIKE ?', ['%' . $searchTerm . '%'])
+              ->orWhereRaw('LOWER(site) LIKE ?', ['%' . $searchTerm . '%'])
+              ->orWhereRaw('LOWER(ihld) LIKE ?', ['%' . $searchTerm . '%'])
+              ->orWhereRaw('LOWER(catuan_id) LIKE ?', ['%' . $searchTerm . '%']);
+
+            if ($user->role === 'mitra' || $user->role === 'admin') {
+                $q->orWhereRaw('LOWER(category) LIKE ?', ['%' . $searchTerm . '%'])
+                  ->orWhereRaw('LOWER(remark) LIKE ?', ['%' . $searchTerm . '%']);
+            }
+
+            if ($user->role === 'vendor' || $user->role === 'admin') {
+                $q->orWhereRaw('LOWER(priority_ta) LIKE ?', ['%' . $searchTerm . '%'])
+                  ->orWhereRaw('LOWER(dependensi) LIKE ?', ['%' . $searchTerm . '%'])
+                  ->orWhereRaw('LOWER(assign_to) LIKE ?', ['%' . $searchTerm . '%'])
+                  ->orWhereRaw('LOWER(golive_status) LIKE ?', ['%' . $searchTerm . '%'])
+                  ->orWhereRaw('LOWER(jumlah_port) LIKE ?', ['%' . $searchTerm . '%'])
+                  ->orWhereRaw('LOWER(status_osp) LIKE ?', ['%' . $searchTerm . '%'])
+                  ->orWhereRaw('LOWER(scenario_uplink) LIKE ?', ['%' . $searchTerm . '%'])
+                  ->orWhereRaw('LOWER(status_uplink) LIKE ?', ['%' . $searchTerm . '%'])
+                  ->orWhereRaw('LOWER(remark_ta) LIKE ?', ['%' . $searchTerm . '%'])
+                  ->orWhereRaw('LOWER(relok_regional) LIKE ?', ['%' . $searchTerm . '%'])
+                  ->orWhereRaw('LOWER(relok_witel) LIKE ?', ['%' . $searchTerm . '%'])
+                  ->orWhereRaw('LOWER(relok_sto) LIKE ?', ['%' . $searchTerm . '%'])
+                  ->orWhereRaw('LOWER(relok_site) LIKE ?', ['%' . $searchTerm . '%']);
+            }
+
+            if ($user->role === 'admin' || $user->role === 'vendor') {
+                $q->orWhereHas('user', function ($userQuery) use ($searchTerm) {
+                    $userQuery->whereRaw('LOWER(name) LIKE ?', ['%' . $searchTerm . '%']);
+                });
+            }
+        });
+    }
+
+    $query->orderBy('created_at', 'desc');
+    $projects = $query->paginate(200)->appends($request->query());
+
+    // --- Data untuk dropdown ---
+    $allRegionals = Project::distinct('regional')->pluck('regional')->sort()->toArray();
+    $allWitels    = Project::distinct('witel')->pluck('witel')->sort()->toArray();
+    $allStos      = Project::distinct('sto')->pluck('sto')->sort()->toArray();
+    $allMitras    = Project::distinct('assign_to')->pluck('assign_to')->sort()->toArray();
+    $allProjectTypes = Project::whereNotNull('project_type')
+        ->where('project_type', '!=', '')
+        ->distinct()
+        ->pluck('project_type')
+        ->sort()
+        ->toArray();
+
+    return view('project_report', compact(
+        'projects',
+        'allRegionals',
+        'allWitels',
+        'allStos',
+        'allMitras',
+        'allProjectTypes',
+        'selectedRegionalFilter',
+        'selectedWitelFilter',
+        'selectedStoFilter',
+        'selectedMitraFilter',
+        'selectedType'
+    ));
+}
+
 
 //ini WITEL REGIONAL
     public function getWitels($regional)
@@ -317,9 +268,10 @@ class ProjectController extends Controller
         return view('project_update_admin', compact('project'));
     }
 
-    public function store_project_update(Request $request, $id)
+   public function store_project_update(Request $request, $id)
 {
     $project = Project::findOrFail($id);
+    $user = Auth::user();
 
     // Definisikan aturan validasi secara terpisah
     $rules = [
@@ -346,7 +298,7 @@ class ProjectController extends Controller
         'relok_sto' => 'required_if:drop_data,Relokasi',
         'relok_site' => 'required_if:drop_data,Relokasi',
 
-        //validate form edit TA
+        // validate form edit TA
         'priority_ta' => 'nullable',
         'dependensi' => 'nullable',
         'assign_to' => 'nullable',
@@ -360,7 +312,6 @@ class ProjectController extends Controller
     ];
 
     // Logika validasi kondisional untuk 'bukti_drop'
-    // Validasi 'required' hanya akan diaktifkan jika drop_data = 'Yes' DAN belum ada file di database.
     if ($request->input('drop_data') === 'Yes' && is_null($project->bukti_drop)) {
         $rules['bukti_drop'] = 'required|mimes:pdf,jpg,jpeg,png|max:5200';
     } else {
@@ -387,11 +338,24 @@ class ProjectController extends Controller
 
     $validated['user_id'] = auth()->id();
 
-    // Perbarui proyek
+    // 🔹 Logika role mitra
+    if ($user->role === 'mitra') {
+        // Kalau kosong/null → boleh klaim
+        if (empty($project->assign_to)) {
+            $validated['assign_to'] = $user->name;
+        }
+        // Kalau sudah ada isinya dan bukan milik dia → tolak
+        elseif ($project->assign_to !== $user->name) {
+            abort(403, 'Project ini sudah dimiliki mitra lain.');
+        }
+    }
+
+    // Update project
     $project->update($validated);
 
     return redirect()->route('project_report')->with('success', 'Project berhasil diperbarui.');
 }
+
     
    public function store_project_update_admin(Request $request, $id)
 {

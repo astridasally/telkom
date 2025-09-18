@@ -25,8 +25,7 @@
                         </option>
                     @endforeach
                 </select>
-                
-            {{-- Dropdown Filter Assign To (Mitra) - HANYA TAMPIL JIKA ADMIN ATAU VENDOR --}}
+             {{-- Dropdown Filter Assign To (Mitra) --}}
             @if(auth()->user()->role === 'admin' || auth()->user()->role === 'vendor' || auth()->user()->role === 'viewer')
                 <select name="filter_assign_to" id="filter_assign_to" class="filter-select">
                     <option value="all" {{ request('filter_assign_to', 'all') == 'all' ? 'selected' : '' }}>All Mitra</option>
@@ -36,7 +35,18 @@
                         </option>
                     @endforeach
                 </select>
+            @elseif(auth()->user()->role === 'mitra')
+                <select name="filter_assign_to" id="filter_assign_to" class="filter-select">
+                    <option value="{{ auth()->user()->name }}" {{ request('filter_assign_to', auth()->user()->name) == auth()->user()->name ? 'selected' : '' }}>
+                        {{ auth()->user()->name }}
+                    </option>
+                    <option value="unassigned" {{ request('filter_assign_to') == 'unassigned' ? 'selected' : '' }}>
+                        Belum Assign
+                    </option>
+                    <option value="all" {{ request('filter_assign_to') == 'all' ? 'selected' : '' }}>Semua</option>
+                </select>
             @endif
+
             
             {{-- Dropdown Filter Regional --}}
             <select name="filter_regional" class="filter-select">
