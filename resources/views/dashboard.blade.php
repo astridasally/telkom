@@ -457,21 +457,22 @@
                             font: { weight: 'bold' }
                         }
                     },
-                    {
-                        label: 'REALISASI',
-                        data: sCurveRealData,
-                        borderColor: 'rgb(255, 159, 64)',
-                        backgroundColor: 'rgba(255, 159, 64, 0.2)',
-                        tension: 0.3,
-                        fill: false,
-                        spanGaps: false, // <--- penting biar garis putus kalau null
-                        datalabels: {
-                            align: 'bottom',
-                            anchor: 'start',
-                            color: 'rgb(255, 159, 64)',
-                            font: { weight: 'bold' }
-                        }
+                   {
+                    label: 'REALISASI',
+                    data: sCurveRealData,
+                    borderColor: 'rgb(255, 159, 64)',
+                    backgroundColor: 'rgba(255, 159, 64, 0.2)',
+                    tension: 0.3,
+                    fill: false,
+                    spanGaps: false, // <--- penting biar garis putus kalau null
+                    datalabels: {
+                        align: 'bottom',
+                        anchor: 'start',
+                        color: 'rgb(255, 159, 64)',
+                        font: { weight: 'bold' }
                     }
+                }
+
                 ]
             },
             options: {
