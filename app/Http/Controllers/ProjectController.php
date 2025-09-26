@@ -962,20 +962,20 @@ public function exportFunnelingDetail(Request $request)
             break;
 
         case 'jumlah_port':
-            $query->whereNotNull('jumlah_port');
+            $query->whereNotNull('jumlah_port')->where(function($q) {$q->where('status_osp', '!=', 'Drop')->orWhereNull('status_osp'); });
             $columns[] = 'Jumlah Port';
             $select[] = 'jumlah_port';
             break;
 
         case 'golive_status':
-            $query->where('status_osp', 'Go Live');
+            $query->where('status_osp', 'Go Live')->where(function($q) {$q->where('status_osp', '!=', 'Drop')->orWhereNull('status_osp'); });
             $columns[] = 'Status OSP';
             $select[] = 'status_osp';
             break;
 
         case 'uplink_ready':
         case 'uplink_not_ready':
-            $query->where('status_uplink', $stage === 'uplink_ready' ? 'Ready' : 'Not Ready');
+            $query->where('status_uplink', $stage === 'uplink_ready' ? 'Ready' : 'Not Ready')->where(function($q) {$q->where('status_osp', '!=', 'Drop')->orWhereNull('status_osp'); });
             $columns[] = 'Status Uplink';
             $select[] = 'status_uplink';
             break;
@@ -1013,7 +1013,7 @@ public function exportSkenarioIntegrasi(Request $request)
     $skenario = $request->get('skenario');
     $projectType = $request->get('project_type', 'All Project');
 
-    $query = Project::query()->where('category', 'CSF');
+    $query = Project::query()->where('category', 'CSF')->where('drop_data', 'No');
     if ($projectType !== 'All Project') {
         $query->where('project_type', $projectType);
     }

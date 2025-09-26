@@ -298,7 +298,7 @@
                             <td class="px-3 py-2">Total</td>
                             @foreach($skenarioUplinkColumns as $column)
                                 <td 
-                                    class="clickable-skenario px-3 py-2 text-blue-600 hover:text-blue-800 cursor-pointer hover:underline text-center"
+                                    class="clickable-skenario px-3 py-2 text-blue-1000 hover:text-blue-700 cursor-pointer hover:underline text-center"
                                     data-skenario="{{ $column }}"
                                 >
                                     {{ $totalSkenarioIntegrasiPerColumn[$column] ?? 0 }}
