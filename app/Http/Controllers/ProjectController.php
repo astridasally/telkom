@@ -14,6 +14,8 @@ use Maatwebsite\Excel\Facades\Excel;
 use App\Imports\DataExcel;
 use App\Exports\FunnelingExport;
 use App\Exports\PopupExport;
+use App\Exports\FunnelingDetailExport;
+use App\Exports\SkenarioDetailExport;
 
 
 
@@ -907,6 +909,137 @@ public function exportPopup(Request $request)
 
     return Excel::download(new PopupExport($data, $columns), "popup_{$stage}.xlsx");
 }
+public function exportFunnelingDetail(Request $request)
+{
+    $stage = $request->get('stage');
+    $projectType = $request->get('project_type', 'All Project');
+
+    $query = Project::query()->where('category', 'CSF');
+    if ($projectType !== 'All Project') {
+        $query->where('project_type', $projectType);
+    }
+
+    // default columns
+    $columns = ['Regional', 'Witel', 'STO', 'Site', 'IHLD', 'Catuan ID', 'Assign To'];
+    $select  = ['regional', 'witel', 'sto', 'site', 'ihld', 'catuan_id', 'assign_to'];
+
+    // mapping stage → filter + kolom
+    switch ($stage) {
+        case 'delivery_plan':
+            $query->whereNotNull('plan_delivery')->where('drop_data','No');
+            $columns[] = 'Plan Delivery';
+            $select[] = 'plan_delivery';
+            break;
+
+        case 'delivery_done':
+            $query->whereNotNull('realisasi_delivery')->where('drop_data','No');
+            $columns[] = 'Realisasi Delivery';
+            $select[] = 'realisasi_delivery';
+            break;
+
+        case 'instalasi_plan':
+            $query->whereNotNull('plan_instalasi')->where('drop_data','No');
+            $columns[] = 'Plan Instalasi';
+            $select[] = 'plan_instalasi';
+            break;
+
+        case 'instalasi_done':
+            $query->whereNotNull('realisasi_instalasi')->where('drop_data','No');
+            $columns[] = 'Realisasi Instalasi';
+            $select[] = 'realisasi_instalasi';
+            break;
+
+        case 'integrasi_plan':
+            $query->whereNotNull('plan_integrasi')->where('drop_data','No');
+            $columns[] = 'Plan Integrasi';
+            $select[] = 'plan_integrasi';
+            break;
+
+        case 'integrasi_done':
+            $query->whereNotNull('realisasi_integrasi')->where('drop_data','No');
+            $columns[] = 'Realisasi Integrasi';
+            $select[] = 'realisasi_integrasi';
+            break;
+
+        case 'jumlah_port':
+            $query->whereNotNull('jumlah_port');
+            $columns[] = 'Jumlah Port';
+            $select[] = 'jumlah_port';
+            break;
+
+        case 'golive_status':
+            $query->where('status_osp', 'Go Live');
+            $columns[] = 'Status OSP';
+            $select[] = 'status_osp';
+            break;
+
+        case 'uplink_ready':
+        case 'uplink_not_ready':
+            $query->where('status_uplink', $stage === 'uplink_ready' ? 'Ready' : 'Not Ready');
+            $columns[] = 'Status Uplink';
+            $select[] = 'status_uplink';
+            break;
+
+        case 'plan_csf':
+            $query->where(function($q) {
+                $q->where('status_osp', '!=', 'Drop')->orWhereNull('status_osp');
+            });
+            $columns[] = 'Category';
+            $select[] = 'category';
+            break;
+
+        case 'ftth_ready_csf':
+            $query->where('priority_ta', 'P1')
+                  ->where(function($q) {
+                      $q->where('status_osp', '!=', 'Drop')->orWhereNull('status_osp');
+                  });
+            $columns[] = 'Priority TA';
+            $select[] = 'priority_ta';
+            break;
+    }
+
+    // ambil data sesuai select
+    $projects = $query->get($select);
+
+    $data = $projects->map(function($p) use ($select) {
+        return collect($select)->map(fn($col) => $p->$col)->toArray();
+    })->toArray();
+
+    return Excel::download(new FunnelingDetailExport($data, $columns), "funneling_{$stage}.xlsx");
+}
+
+public function exportSkenarioIntegrasi(Request $request)
+{
+    $skenario = $request->get('skenario');
+    $projectType = $request->get('project_type', 'All Project');
+
+    $query = Project::query()->where('category', 'CSF');
+    if ($projectType !== 'All Project') {
+        $query->where('project_type', $projectType);
+    }
+
+    // Default kolom
+    $columns = ['Regional', 'Witel', 'STO', 'Site', 'IHLD', 'Catuan ID', 'Assign To', 'Skenario Integrasi'];
+    $select  = ['regional', 'witel', 'sto', 'site', 'ihld', 'catuan_id', 'assign_to', 'scenario_uplink'];
+
+    // Filter berdasarkan skenario
+    if ($skenario) {
+        $query->where('scenario_uplink', $skenario);
+    }
+
+    // Ambil data
+    $projects = $query->get($select);
+
+    $data = $projects->map(function($p) use ($select) {
+        return collect($select)->map(fn($col) => $p->$col)->toArray();
+    })->toArray();
+
+    return Excel::download(new FunnelingDetailExport($data, $columns), "skenario_{$skenario}.xlsx");
+}
+
+
+
+
 
 }
 

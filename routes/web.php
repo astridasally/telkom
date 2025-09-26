@@ -59,6 +59,10 @@ Route::middleware('auth')->group(function () {
 
     Route::post('/dashboard/export', [ProjectController::class, 'exportFunneling'])->name('funneling.export');
     Route::post('/popup/export', [ProjectController::class, 'exportPopup'])->name('popup.export');
+    Route::get('/export/funneling/{stage}', [ExportController::class, 'exportFunnelingDetail'])->name('export.funneling.detail');
+    Route::get('/export/skenario/{skenario}', [ExportController::class, 'exportSkenarioDetail'])->name('export.skenario.detail');
+    Route::get('/export-funneling-detail', [ProjectController::class, 'exportFunnelingDetail'])->name('export.funneling.detail');
+    Route::get('/export-skenario-integrasi', [ProjectController::class, 'exportSkenarioIntegrasi'])->name('skenario.export');
 
 
 });

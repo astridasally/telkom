@@ -82,21 +82,23 @@
         </tr>
         @endforeach
 
-        <tr class="total-all-row">
-            <td class="regional-header">TOTAL</td>
-            <td>{{ $totalCounts['plan_csf'] }}</td>
-            <td>{{ $totalCounts['ftth_ready_csf'] }}</td>
-            <td>{{ $totalCounts['jumlah_port'] }}</td>
-            <td>{{ $totalCounts['delivery_plan'] }}</td>
-            <td>{{ $totalCounts['delivery_done'] }}</td>
-            <td>{{ $totalCounts['instalasi_plan'] }}</td>
-            <td>{{ $totalCounts['instalasi_done'] }}</td>
-            <td>{{ $totalCounts['integrasi_plan'] }}</td>
-            <td>{{ $totalCounts['integrasi_done'] }}</td>
-            <td>{{ $totalCounts['golive_status'] }}</td>
-            <td>{{ $totalCounts['uplink_ready'] }}</td>
-            <td>{{ $totalCounts['uplink_not_ready'] }}</td>
+            <tr class="total-all-row bg-gray-100 font-semibold">
+            <td class="regional-header px-3 py-2">TOTAL</td>
+            <td class="clickable px-3 py-2 text-blue-1000 hover:text-blue-800 cursor-pointer hover:underline text-center" data-stage="plan_csf">{{ $totalCounts['plan_csf'] }}</td>
+            <td class="clickable px-3 py-2 text-blue-1000 hover:text-blue-800 cursor-pointer hover:underline text-center" data-stage="ftth_ready_csf">{{ $totalCounts['ftth_ready_csf'] }}</td>
+            <td class="clickable px-3 py-2 text-blue-1000 hover:text-blue-800 cursor-pointer hover:underline text-center" data-stage="jumlah_port">{{ $totalCounts['jumlah_port'] }}</td>
+            <td class="clickable px-3 py-2 text-blue-1000 hover:text-blue-800 cursor-pointer hover:underline text-center" data-stage="delivery_plan">{{ $totalCounts['delivery_plan'] }}</td>
+            <td class="clickable px-3 py-2 text-blue-1000 hover:text-blue-800 cursor-pointer hover:underline text-center" data-stage="delivery_done">{{ $totalCounts['delivery_done'] }}</td>
+            <td class="clickable px-3 py-2 text-blue-1000 hover:text-blue-800 cursor-pointer hover:underline text-center" data-stage="instalasi_plan">{{ $totalCounts['instalasi_plan'] }}</td>
+            <td class="clickable px-3 py-2 text-blue-1000 hover:text-blue-800 cursor-pointer hover:underline text-center" data-stage="instalasi_done">{{ $totalCounts['instalasi_done'] }}</td>
+            <td class="clickable px-3 py-2 text-blue-1000 hover:text-blue-800 cursor-pointer hover:underline text-center" data-stage="integrasi_plan">{{ $totalCounts['integrasi_plan'] }}</td>
+            <td class="clickable px-3 py-2 text-blue-1000 hover:text-blue-800 cursor-pointer hover:underline text-center" data-stage="integrasi_done">{{ $totalCounts['integrasi_done'] }}</td>
+            <td class="clickable px-3 py-2 text-blue-1000 hover:text-blue-800 cursor-pointer hover:underline text-center" data-stage="golive_status">{{ $totalCounts['golive_status'] }}</td>
+            <td class="clickable px-3 py-2 text-blue-1000 hover:text-blue-800 cursor-pointer hover:underline text-center" data-stage="uplink_ready">{{ $totalCounts['uplink_ready'] }}</td>
+            <td class="clickable px-3 py-2 text-blue-1000 hover:text-blue-800 cursor-pointer hover:underline text-center" data-stage="uplink_not_ready">{{ $totalCounts['uplink_not_ready'] }}</td>
         </tr>
+
+
     </tbody>
 </table>
 
@@ -292,14 +294,19 @@
                             @endforeach
                         </tbody>
                         <tfoot>
-                            <tr class="total-row">
-                                <td>Total</td>
-                                {{-- Loop melalui setiap kolom skenario untuk menampilkan total per kolom --}}
-                                @foreach($skenarioUplinkColumns as $column)
-                                    <td>{{ $totalSkenarioIntegrasiPerColumn[$column] ?? 0 }}</td>
-                                @endforeach
-                            </tr>
-                        </tfoot>
+                        <tr class="total-row bg-gray-100 font-semibold">
+                            <td class="px-3 py-2">Total</td>
+                            @foreach($skenarioUplinkColumns as $column)
+                                <td 
+                                    class="clickable-skenario px-3 py-2 text-blue-600 hover:text-blue-800 cursor-pointer hover:underline text-center"
+                                    data-skenario="{{ $column }}"
+                                >
+                                    {{ $totalSkenarioIntegrasiPerColumn[$column] ?? 0 }}
+                                </td>
+                            @endforeach
+                        </tr>
+                    </tfoot>
+
                     </table>
                     </div>
                 </div>
@@ -664,6 +671,25 @@ document.getElementById('exportPopupForm').addEventListener('submit', function()
     function closePopup() {
         popup.style.display = 'none';
     }
+</script>
+
+<script>
+    document.querySelectorAll(".total-all-row .clickable").forEach(cell => {
+    cell.addEventListener("click", function() {
+        const stage = this.dataset.stage;
+        window.location.href = `/export-funneling-detail?stage=${stage}&project_type={{ $selectedType }}`;
+    });
+});
+</script>
+<script>
+document.querySelectorAll(".clickable-skenario").forEach(cell => {
+    cell.addEventListener("click", function() {
+        const skenario = this.dataset.skenario;
+        const projectType = "{{ $selectedType }}";
+
+        window.location.href = `/export-skenario-integrasi?skenario=${encodeURIComponent(skenario)}&project_type=${encodeURIComponent(projectType)}`;
+    });
+});
 </script>
 
 
