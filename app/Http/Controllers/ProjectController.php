@@ -497,45 +497,37 @@ public function dashboard(Request $request)
         // SURVEY
         $planSurveyCount = $baseQuery->clone()
             ->whereNotNull('plan_survey')
-            ->where('category', 'CSF')
             ->where('drop_data','No')->count();
 
         $realSurveyCount = $baseQuery->clone()
             ->whereNotNull('realisasi_survey')
-            ->where('category', 'CSF')
             ->where('drop_data','No')->count();
 
         // DELIVERY (untuk dashboard utama)
         $planDeliveryCount = $baseQuery->clone()
             ->whereNotNull('plan_delivery')
-            ->where('category', 'CSF')
             ->where('drop_data','No')->count();
 
         $realDeliveryCount = $baseQuery->clone()
             ->whereNotNull('realisasi_delivery')
-            ->where('category', 'CSF')
             ->where('drop_data','No')->count();
 
         // INSTALASI (untuk dashboard utama)
         $planInstalasiCount = $baseQuery->clone()
             ->whereNotNull('plan_instalasi')
-            ->where('category', 'CSF')
             ->where('drop_data','No')->count();
 
         $realInstalasiCount = $baseQuery->clone()
             ->whereNotNull('realisasi_instalasi')
-            ->where('category', 'CSF')
             ->where('drop_data','No')->count();
 
         // INTEGRASI (untuk dashboard utama)
         $planIntegrasiCount = $baseQuery->clone()
             ->whereNotNull('plan_integrasi')
-            ->where('category', 'CSF')
             ->where('drop_data','No')->count();
 
         $realIntegrasiCount = $baseQuery->clone()
             ->whereNotNull('realisasi_integrasi')
-            ->where('category', 'CSF')
             ->where('drop_data','No')->count();
 
         // DROP
@@ -575,21 +567,21 @@ public function dashboard(Request $request)
         }
 
         $counts = $this->initializeFunnelingMetrics();
-        $counts['plan_csf']         = (clone $query)->where('category','CSF')->where(function($q) {$q->where('status_osp', '!=', 'Drop')->orWhereNull('status_osp'); })->count();
-        $counts['ftth_ready_csf']   = (clone $query)->where('priority_ta', 'P1')->where('category', 'CSF')
+        $counts['plan_csf']         = (clone $query)->where(function($q) {$q->where('status_osp', '!=', 'Drop')->orWhereNull('status_osp'); })->count();
+        $counts['ftth_ready_csf']   = (clone $query)->where('priority_ta', 'P1')
             ->where(function($q) {$q->where('status_osp', '!=', 'Drop')->orWhereNull('status_osp'); })->count();
-        $counts['jumlah_port']      = (clone $query)->whereNotNull('jumlah_port')->where('category', 'CSF')
+        $counts['jumlah_port']      = (clone $query)->whereNotNull('jumlah_port')
             ->where(function($q) {$q->where('status_osp', '!=', 'Drop')->orWhereNull('status_osp');})->sum('jumlah_port');
-        $counts['delivery_plan']    = (clone $query)->whereNotNull('plan_delivery')->where('category', 'CSF')->where('drop_data','No')->count();
-        $counts['delivery_done']    = (clone $query)->whereNotNull('realisasi_delivery')->where('category', 'CSF')->where('drop_data','No')->count();
-        $counts['instalasi_plan']   = (clone $query)->whereNotNull('plan_instalasi')->where('category', 'CSF')->where('drop_data','No')->count();
-        $counts['instalasi_done']   = (clone $query)->whereNotNull('realisasi_instalasi')->where('category', 'CSF')->where('drop_data','No')->count();
-        $counts['integrasi_plan']   = (clone $query)->whereNotNull('plan_integrasi')->where('category', 'CSF')->where('drop_data','No')->count();
-        $counts['integrasi_done']   = (clone $query)->whereNotNull('realisasi_integrasi')->where('category', 'CSF')->where('drop_data','No')->count();
-        $counts['golive_status']    = (clone $query)->where('status_osp', 'Go Live') ->where('category', 'CSF')->count();
-        $counts['uplink_ready']     = (clone $query)->where('status_uplink', 'Ready')->where('category', 'CSF')
+        $counts['delivery_plan']    = (clone $query)->whereNotNull('plan_delivery')->where('drop_data','No')->count();
+        $counts['delivery_done']    = (clone $query)->whereNotNull('realisasi_delivery')->where('drop_data','No')->count();
+        $counts['instalasi_plan']   = (clone $query)->whereNotNull('plan_instalasi')->where('drop_data','No')->count();
+        $counts['instalasi_done']   = (clone $query)->whereNotNull('realisasi_instalasi')->where('drop_data','No')->count();
+        $counts['integrasi_plan']   = (clone $query)->whereNotNull('plan_integrasi')->where('drop_data','No')->count();
+        $counts['integrasi_done']   = (clone $query)->whereNotNull('realisasi_integrasi')->where('drop_data','No')->count();
+        $counts['golive_status']    = (clone $query)->where('status_osp', 'Go Live') ->count();
+        $counts['uplink_ready']     = (clone $query)->where('status_uplink', 'Ready')
             ->where(function($q) {$q->where('status_osp', '!=', 'Drop')->orWhereNull('status_osp'); })->count();
-        $counts['uplink_not_ready'] = (clone $query)->where('status_uplink', 'Not Ready')->where('category', 'CSF')
+        $counts['uplink_not_ready'] = (clone $query)->where('status_uplink', 'Not Ready')
             ->where(function($q) {$q->where('status_osp', '!=', 'Drop')->orWhereNull('status_osp'); })->count();
 
         $tableData[$regionName] = $counts;
@@ -631,8 +623,7 @@ foreach ($regionsForSkenario as $regionalEnum) {
     // ✅ Filter berdasarkan region, drop_data, dan category
     $regionalSkenarioQuery = $baseQuery->clone()
         ->where('regional', $regionName)
-        ->where('drop_data','No')
-        ->where('category', 'CSF');
+        ->where('drop_data','No');
 
     $selectStatements = [];
     foreach ($skenarioUplinkColumns as $columnName) {
@@ -664,7 +655,7 @@ foreach ($regionsForSkenario as $regionalEnum) {
         $failedIntegrasiProjects = $baseQuery->clone()
                                              ->whereNotNull('plan_integrasi') // plan_integrasi sudah diisi
                                              ->where('drop_data','No')
-                                                ->where('category', 'CSF')
+                                                
                                              ->whereNull('realisasi_integrasi')   // realisasi_integrasi masih kosong
                                              ->whereDate('plan_integrasi', '<=', $today) // plan_integrasi adalah hari ini atau di masa lalu
                                              ->with('user')
@@ -679,7 +670,7 @@ foreach ($regionsForSkenario as $regionalEnum) {
         $dailyIntegrasiProjects = $baseQuery->clone()
                                             ->whereDate('plan_integrasi', $today) // Filter berdasarkan tanggal hari ini
                                             ->where('drop_data','No')
-                                            ->where('category', 'CSF')
+                                            
                                             ->with('user') // Eager load user untuk mendapatkan nama mitra
                                             ->select('regional', 'witel', 'sto', 'site', 'ihld', 'catuan_id', 'assign_to') // Pilih kolom yang dibutuhkan
                                             ->get();
@@ -717,7 +708,7 @@ while ($currentDate->lessThanOrEqualTo($lastDate)) {
         ->whereNotNull('plan_integrasi')
         ->where('plan_integrasi', '<=', $currentDate->copy()->endOfMonth()->toDateString())
         ->where('drop_data','No')
-        ->where('category', 'CSF')
+        
         ->count();
     $sCurvePlanData[] = $planIntegrasiCumulative;
 
@@ -727,7 +718,7 @@ while ($currentDate->lessThanOrEqualTo($lastDate)) {
             ->whereNotNull('realisasi_integrasi')
             ->where('realisasi_integrasi', '<=', $currentDate->copy()->endOfMonth()->toDateString())
             ->where('drop_data','No')
-            ->where('category', 'CSF')
+            
             ->count();
     } else {
         $realIntegrasiCumulative = null; // ❌ tidak ada titik setelah bulan terakhir realisasi
@@ -807,7 +798,7 @@ public function getPopupDetail(Request $request)
     $stage = $request->query('stage');
 
     $query = Project::query()
-        ->where('category', 'CSF');
+        ;
 
     // 🔹 Filter Project Type (TAMBAHAN WAJIB)
     if ($request->has('project_type') && $request->project_type !== 'All Project') {
@@ -913,7 +904,7 @@ public function exportFunnelingDetail(Request $request)
     $stage = $request->get('stage');
     $projectType = $request->get('project_type', 'All Project');
 
-    $query = Project::query()->where('category', 'CSF');
+    $query = Project::query();
     if ($projectType !== 'All Project') {
         $query->where('project_type', $projectType);
     }
@@ -1012,7 +1003,7 @@ public function exportSkenarioIntegrasi(Request $request)
     $skenario = $request->get('skenario');
     $projectType = $request->get('project_type', 'All Project');
 
-    $query = Project::query()->where('category', 'CSF')->where('drop_data', 'No');
+    $query = Project::query()->where('drop_data', 'No');
     if ($projectType !== 'All Project') {
         $query->where('project_type', $projectType);
     }
