@@ -657,7 +657,7 @@ foreach ($regionsForSkenario as $regionalEnum) {
                                              ->where('drop_data','No')
                                                 
                                              ->whereNull('realisasi_integrasi')   // realisasi_integrasi masih kosong
-                                             ->whereDate('plan_integrasi', '<=', $today) // plan_integrasi adalah hari ini atau di masa lalu
+                                             ->whereDate('plan_integrasi', '<', $today) // plan_integrasi adalah hari ini atau di masa lalu
                                              ->with('user')
                                              ->select('regional', 'witel', 'sto', 'site', 'ihld', 'catuan_id', 'assign_to','plan_integrasi')
                                              ->get();
